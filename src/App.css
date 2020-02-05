@@ -1,0 +1,63 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  text-align: center;
+}
+
+.header .logo{
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 320px 16px 0;
+  float: left;
+}
+
+.header {
+  padding: 0 50px 0px 25px;
+}
+
+.header .right{
+  /* width: 120px; */
+  /* height: 45px; */
+  /* margin: 16px 30px 16px 0; */
+  float: right;
+}
+
+.logo-icon {
+  height: 24px;
+  width: 24px;
+  margin: 0px 5px 10px 0px
+}
+.user-icon {
+  margin: 0px 6px 2px 0px;
+}
+.user-name {
+  font-size: 13px;
+}
+
+.user-bell {
+  margin: 0px 10px 0px 0px
+}
+
+.status-todo {
+  color: #1d73c6;
+}
+
+.status-done {
+  color: #1b9542;
+}
+/* 
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+} */
