@@ -6,13 +6,13 @@ import {
 const mutation = graphql`
   mutation UpdateAccountMutation(
         $id: ID!, 
-        $name: String,
+        $username: String,
         $roles: [String!],        
         $status: Status
         ) {
     updateAccount(
         id: $id,
-        name: $name,
+        username: $username,
         roles: $roles,
         status: $status
     ) {
