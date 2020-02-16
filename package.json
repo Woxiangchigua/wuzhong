@@ -2,7 +2,7 @@
   "name": "react-admin",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://127.0.0.1:8080/",
+  "proxy": "http://wzga.demo.xgichina.cn/",
   "dependencies": {
     "@babel/core": "7.6.0",
     "@loadable/component": "^5.10.3",
@@ -71,7 +71,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "relay": "get-graphql-schema http://127.0.0.1:8080/api/graphql > ./data/schema.graphql && relay-compiler --src ./src --schema ./data/schema.graphql --watch"
+    "relay": "get-graphql-schema http://wzga.demo.xgichina.cn/api/graphql > ./data/schema.graphql && relay-compiler --src ./src --schema ./data/schema.graphql --watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -91,6 +91,7 @@
   "devDependencies": {
     "babel-plugin-relay": "^7.0.0",
     "graphql": "^14.5.8",
+    "http-proxy-middleware": "^0.20.0",
     "relay-compiler": "^7.0.0",
     "relay-config": "^7.0.0"
   },
