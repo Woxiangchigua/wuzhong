@@ -1,0 +1,13 @@
+.project-item{
+    display: flex;
+      margin-top: 8px;
+      overflow: hidden;
+      font-size: 12px;
+      height: 20px;
+      line-height: 20px;
+      justify-content: space-between;
+}
+
+.gutter-row300{
+    /* width: 300px; */
+}
