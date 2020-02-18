@@ -48,6 +48,7 @@
     "postcss-safe-parser": "4.0.1",
     "react": "^16.10.2",
     "react-app-polyfill": "^1.0.4",
+    "react-big-calendar": "^0.23.0",
     "react-dev-utils": "^9.1.0",
     "react-dom": "^16.10.2",
     "react-relay": "^7.0.0",

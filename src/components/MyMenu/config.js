@@ -17,6 +17,36 @@ const menulist = [{
 		link: '/Home',
 		role: ['costomeruser']
 	}]
+},{
+	name: '会议管理',
+	icon: 'mail',
+	key: 'meeting',
+	role: ['costomeruser'],
+	items: [{
+		name: '会议室管理',
+		icon: '',
+		key: 'meetinglist',
+		link: '/Meeting/List',
+		role: ['costomeruser']
+	}, {
+		name: '申请会议室',
+		icon: '',
+		key: 'addmetting',
+		link: '/Meeting/Add',
+		role: ['costomeruser']
+	}, {
+		name: '申请会议室第二步',
+		icon: '',
+		key: 'addmetting2',
+		link: '/Meeting/Addtwo',
+		role: ['costomeruser']
+	}, {
+		name: '查看会议预约',
+		icon: '',
+		key: 'querymetting',
+		link: '/Meeting/Querymeeting',
+		role: ['costomeruser']
+	}]
 }, {
 	name: '个人设置',
 	icon: 'edit',
@@ -74,6 +104,18 @@ const menulist = [{
 		icon: '',
 		key: 'power',
 		link: '/Account/List',
+		role: ['hospitaluser', 'costomeruser']
+	}, {
+		name: '组织架构',
+		icon: '',
+		key: 'organization',
+		link: '/Organizational/Personnel',
+		role: ['hospitaluser', 'costomeruser']
+	}, {
+		name: '基础数据',
+		icon: '',
+		key: 'BasicData',
+		link: '/Organizational/BasicData',
 		role: ['hospitaluser', 'costomeruser']
 	}]
 }];
