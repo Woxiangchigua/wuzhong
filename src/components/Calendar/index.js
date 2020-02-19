@@ -15,13 +15,19 @@ const events = [
     {
         id: 0,
         title: 'Board meeting',
-        start: new Date('2020-02-18T13:00:00.000Z'),
-        end: new Date('2020-02-18T14:30:00.000Z'),
+        start: new Date('2020-02-19T13:00:00.000Z'),
+        end: new Date('2020-02-19T14:30:00.000Z'),
         resourceId: 'meetingRoom-1',
     },
     {
-        id: 0,
+        id: 1,
         title: 'hello world',
+        start: new Date('2020-02-19T10:00:00.000Z'),
+        end: new Date('2020-02-19T11:30:00.000Z'),
+        resourceId: 'meetingRoom-2',
+    },{
+        id: 2,
+        title: 'hello world2',
         start: new Date('2020-02-18T10:00:00.000Z'),
         end: new Date('2020-02-18T11:30:00.000Z'),
         resourceId: 'meetingRoom-2',
@@ -56,20 +62,19 @@ class Resource extends React.Component {
 
         if (title) {
             let occupy = false
-            // for (const item of list) {
-            //     if (
-            //         (item.start <= start && start <= item.end) ||
-            //         (item.start <= end && end <= item.end) ||
-            //         (start <= item.start && item.start <= end) ||
-            //         (end <= item.start && item.end <= end)
-            //     ) {
-            //         // alert("选择错误")
-            //         console.log("选择错误")
-            //         occupy = true
-            //         return false
-            //     }
-
-            // }
+            for (const item of list) {
+                if (
+                    (start <= item.start && end >= item.end && resourceId === item.resourceId) ||
+                    (end >= item.start && end <= item.end && resourceId === item.resourceId) ||
+                    (start >= item.start && start <= item.end && resourceId === item.resourceId) ||
+                    (start >= item.start && end <= item.end && resourceId === item.resourceId)
+                ) {
+                    // alert("选择错误")
+                    console.log("选择错误")
+                    occupy = true
+                    return false
+                }
+            }
             if (!occupy) {
                 console.log(111)
                 this.setState({
