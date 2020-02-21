@@ -14,7 +14,9 @@ import {
   PageHeader,
   Table,
   Button,
-  Divider
+  Divider,
+	DatePicker,
+	Select
 } from 'antd';
 
 const query = graphql`
@@ -98,17 +100,17 @@ function Home(props) {
     },
   ];
   let handleSubmit = e => {
-    // console.log(props.environment,)
+    // console.log(props.startValue,)
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         CreateMeeting.commit(
           props.environment,
-          new Date().toISOString(),
+          new Date("2020-02-22T14:34:10.187Z").toISOString(),
           5,
           values.number,
-          new Date().toISOString(),
+          new Date("2020-02-22T15:34:10.187Z").toISOString(),
           values.meetingName,
           values.organizer, 
           'configuration',
@@ -134,14 +136,14 @@ function Home(props) {
   return (
     <div style={{ backgroundColor: '#f0f2f5' }}>
       <Card title="" bordered={false} >
-        <Breadcrumb style={{ margin: '15px 0px' }}>
+        <Breadcrumb style={{ margin: '0px 0px 15px 0px' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
           <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
         </Breadcrumb>
         <PageHeader
           title="会议室预定表"
           subTitle="用于内部各个会议室的预定功能"
-        />,
+        />
         </Card>
       {/* <Divider />
         <PageHeader 
@@ -184,6 +186,7 @@ function Home(props) {
     </Card> 
       <Divider />
 
+		
       {/* <PageHeader 
             subTitle="基本信息"
         />, */}
@@ -225,7 +228,7 @@ function Home(props) {
 
             </Form.Item>
           </Col>
-          <Col span={12}>
+          <Col span={12} className="meeting_requirements">
             <Form.Item label="会议要求" >
               {getFieldDecorator('intro', {
                 rules: [{ required: true, message: '请输入会议要求!' }],
@@ -241,7 +244,7 @@ function Home(props) {
         <div style={{ clear: "both" }}></div>
         <Divider />
         <Card title="参会人员" style={{ margin: '0px 0 20px 0' }}>
-          <Table columns={columns} dataSource={data} pagination={false} />,
+          <Table columns={columns} dataSource={data} pagination={false} />
        <Button icon="plus" style={{ margin: '5px 0 20px 0', width: '100%' }}>
             添加负责人
               </Button></Card>
@@ -254,7 +257,7 @@ function Home(props) {
               暂存
               </Button>
             <Button>
-              上一步
+              取消
               </Button>
           </Form.Item>
         </Col>
