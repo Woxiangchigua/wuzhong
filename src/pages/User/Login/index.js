@@ -48,10 +48,11 @@ function Login(props) {
         values.password || '',
         (response, errors) => {
           if (errors) {
-            this.setState({
-              err: true,
-              message: errors[0].message
-            })
+            message.error(errors[0].message);
+            // this.setState({
+            //   err: true,
+            //   message: errors[0].message
+            // })
           } else {
             // this.props.callback(response.generateTokenMutation)
             message.success('登录成功');
