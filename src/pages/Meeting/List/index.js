@@ -81,16 +81,16 @@ function Lists(props) {
       />
       <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }}>
         <TabPane tab="待处理" key="1">
-          <TableAwait />
+          <TableAwait environment={environment} />
         </TabPane>
         <TabPane tab="全部待开会议" key="2">
-          <TableTODOAll />
+          <TableTODOAll environment={environment} />
         </TabPane>
         <TabPane tab="占用中" key="3">
-          <TableOccupy />
+          <TableOccupy environment={environment} />
         </TabPane>
         <TabPane tab="我的待开会议" key="4">
-          <TableTODO />
+          <TableTODO environment={environment} />
         </TabPane>
       </Tabs>
     </div>

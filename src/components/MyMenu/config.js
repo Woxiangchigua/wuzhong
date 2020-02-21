@@ -1,25 +1,19 @@
 
 const menulist = [{
-	name: '首页',
-	icon: 'audio',
+	name: '分局主页',
+	icon: '',
 	key: 'callcenter',
 	role: ['costomeruser'],
 	items: [{
-		name: '系统首页',
+		name: '分局主页',
 		icon: '',
 		key: 'calllist',
-		link: '/Home',
-		role: ['costomeruser']
-	}, {
-		name: '文件首页',
-		icon: '',
-		key: 'calldone',
 		link: '/Home',
 		role: ['costomeruser']
 	}]
 },{
 	name: '会议管理',
-	icon: 'mail',
+	icon: '',
 	key: 'meeting',
 	role: ['costomeruser'],
 	items: [{
@@ -29,94 +23,17 @@ const menulist = [{
 		link: '/Meeting/List',
 		role: ['costomeruser']
 	}, {
-		name: '申请会议室',
+		name: '会议室申请',
 		icon: '',
-		key: 'addmetting',
-		link: '/Meeting/Add',
+		key: 'creatmetting',
+		link: '/Meeting/Creatmeeting',
 		role: ['costomeruser']
 	}, {
-		name: '申请会议室第二步',
+		name: '会议纪要',
 		icon: '',
-		key: 'addmetting2',
-		link: '/Meeting/Addtwo',
+		key: 'mettingminutes',
+		link: '/Meeting/Meetingminutes',
 		role: ['costomeruser']
-	}, {
-		name: '查看会议预约',
-		icon: '',
-		key: 'querymetting',
-		link: '/Meeting/Querymeeting',
-		role: ['costomeruser']
-	}]
-}, {
-	name: '个人设置',
-	icon: 'edit',
-	key: 'userset',
-	role: ['costomeruser', 'hospitaluser'],
-	items: [{
-		name: '修改密码',
-		icon: '',
-		key: 'usereditpwd',
-		link: '/User/EditPwd',
-		role: ['costomeruser', 'hospitaluser']
-	}, {
-		name: '个人信息',
-		icon: '',
-		key: 'userinfo',
-		link: '/User/Info',
-		role: ['costomeruser', 'hospitaluser']
-	}]
-}, {
-	name: '订单管理',
-	icon: 'tool',
-	key: 'costomer',
-	role: ['costomeruser'],
-	items: [{
-		name: '出票管理',
-		icon: '',
-		key: 'costomerlist',
-		link: '/Building',
-		role: ['costomeruser']
-	}, {
-		name: '出票统计',
-		icon: '',
-		key: 'state',
-		link: '/Building',
-		role: ['costomeruser']
-	}]
-}, {
-	name: '系统设置',
-	icon: 'setting',
-	key: 'system',
-	role: ['hospitaluser', 'costomeruser'],
-	items: [{
-		name: '平台信息',
-		icon: '',
-		key: 'Hospital',
-		link: '/Hospital'
-	}, {
-		name: '角色管理',
-		icon: '',
-		key: 'role',
-		link: '/Role/List',
-		role: ['hospitaluser', 'costomeruser']
-	}, {
-		name: '账号管理',
-		icon: '',
-		key: 'power',
-		link: '/Account/List',
-		role: ['hospitaluser', 'costomeruser']
-	}, {
-		name: '组织架构',
-		icon: '',
-		key: 'organization',
-		link: '/Organizational/Personnel',
-		role: ['hospitaluser', 'costomeruser']
-	}, {
-		name: '基础数据',
-		icon: '',
-		key: 'BasicData',
-		link: '/Organizational/BasicData',
-		role: ['hospitaluser', 'costomeruser']
 	}]
 }];
 
