@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider } from 'antd';
+import { Table, Divider,Popconfirm,Modal,Button } from 'antd';
 
-
+function Lists(props) {
+const { confirm } = Modal;
 const query = graphql`
     query TableAwait_MeetingListQuery{
         meetingList(first:1000,skip:0){
@@ -81,17 +83,50 @@ const columns = [
     },
     {
         title: '操作',
-        key: 'action',
+        dataIndex:'delete',
+        key: 'delete',
         render: (text, record) => (
             <span>
                 <a>详情</a>
                 <Divider type="vertical" />
-                <a>删除</a>
+      <Button onClick={() => {showDeleteConfirm(record.id)}} type="link">
+      删除
+    </Button>
             </span>
         ),
     },
 ];
 
+function showDeleteConfirm(id){
+    confirm({
+      title: '你确定要删除这条会议申请吗？',
+      okText: '确认',
+      cancelText: '取消',
+      onOk() {
+        DeleteMeeting.commit(
+            props.environment,
+            id,
+            (response, errors) => {
+                if (errors) {
+                console.log(errors)
+                } else {
+                console.log(response);
+                }
+            },
+            (response, errors) => {
+                if (errors) {
+                console.log(errors)
+                } else {
+                console.log(response);
+                }
+            }
+        );
+      },
+      onCancel() {
+        console.log('取消删除');
+      },
+    });
+  }
 class TableAwait extends Component {
     state = {
         environment: this.props.environment,
@@ -107,7 +142,6 @@ class TableAwait extends Component {
     }
 }
 
-function Lists(props) {
     const environment = props.environment;
     return (
         <div>
