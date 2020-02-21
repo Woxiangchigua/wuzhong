@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Calendar from '../../../components/Calendar/index'
+import Calendar from '../../../components/CalendarQuery/index'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Button, Breadcrumb, Card, Table, Tabs, Divider } from 'antd';
 import './index.css';

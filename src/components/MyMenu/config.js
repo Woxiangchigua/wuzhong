@@ -1,7 +1,7 @@
 
 const menulist = [{
 	name: '分局主页',
-	icon: '',
+	icon: 'compass',
 	key: 'callcenter',
 	role: ['costomeruser'],
 	items: [{
@@ -13,7 +13,7 @@ const menulist = [{
 	}]
 },{
 	name: '会议管理',
-	icon: '',
+	icon: 'mail',
 	key: 'meeting',
 	role: ['costomeruser'],
 	items: [{

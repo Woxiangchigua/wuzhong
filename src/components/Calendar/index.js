@@ -12,26 +12,7 @@ const localizer = momentLocalizer(moment)
 // import ExampleControlSlot from '../ExampleControlSlot'
 
 const events = [
-    {
-        id: 0,
-        title: 'Board meeting',
-        start: new Date('2020-02-19T13:00:00.000Z'),
-        end: new Date('2020-02-19T14:30:00.000Z'),
-        resourceId: 'meetingRoom-1',
-    },
-    {
-        id: 1,
-        title: 'hello world',
-        start: new Date('2020-02-19T10:00:00.000Z'),
-        end: new Date('2020-02-19T11:30:00.000Z'),
-        resourceId: 'meetingRoom-2',
-    },{
-        id: 2,
-        title: 'hello world2',
-        start: new Date('2020-02-18T10:00:00.000Z'),
-        end: new Date('2020-02-18T11:30:00.000Z'),
-        resourceId: 'meetingRoom-2',
-    },
+
 ]
 
 
@@ -49,8 +30,8 @@ class Resource extends React.Component {
         this.newEvent = this.newEvent.bind(this)
     }
 
-    handleSelect = ({ start, end, resourceId }) => {
-        const title = window.prompt('New Event name')
+    handleSelect = ({ props, start, end, resourceId }) => {
+        const title = window.prompt('请输入会议名称')
         // console.log(new Date(start).toISOString(), new Date(end).toISOString(), title)
         let list = this.state.events
         if (this.state.selected) {
@@ -89,6 +70,13 @@ class Resource extends React.Component {
                     ],
                     selected: true
                 })
+
+                this.props.parent(this, {
+                    start,
+                    end,
+                    title,
+                    resourceId
+                })
             }
         }
     }
@@ -106,6 +94,9 @@ class Resource extends React.Component {
         }
 
         const updatedEvent = { ...event, start, end, allDay }
+        // console.log(updatedEvent)
+
+        this.props.parent(this, updatedEvent)
 
         const nextEvents = [...events]
         nextEvents.splice(idx, 1, updatedEvent)
@@ -129,6 +120,14 @@ class Resource extends React.Component {
         this.setState({
             events: nextEvents,
         })
+
+        for (const item of events) {
+            if (item.id === event.id) {
+                this.props.parent(this, { ...item, start, end })
+                return
+            }
+        }
+        // console.log("这里是滑动的");
 
         //alert(`${event.title} was resized to ${start}-${end}`)
     }

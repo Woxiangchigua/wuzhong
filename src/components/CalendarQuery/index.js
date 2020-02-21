@@ -34,8 +34,7 @@ class Resource extends React.Component {
             events,
             selected: false
         }
-        this.moveEvent = this.moveEvent.bind(this)
-        this.newEvent = this.newEvent.bind(this)
+  
     }
 
     render() {
