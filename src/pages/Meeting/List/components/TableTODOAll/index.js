@@ -31,48 +31,48 @@ const query = graphql`
     }`
 
     const columns = [
-        {
-          title: '申请编号',
-          dataIndex: 'number',
-          key: 'number',
-          className: 'tabcolums'
-        },
-        {
-          title: '会议名称',
-          dataIndex: 'meetingname',
-          key: 'meetingname',
-          className: 'tabcolums'
-        },
-        {
-          title: '预定状态',
-          dataIndex: 'state',
-          key: 'state',
-          className: 'tabcolums'
-        },
-        {
-          title: '会议室',
-          dataIndex: 'meetname',
-          key: 'meetname',
-          className: 'tabcolums'
-        },
-        {
-          title: '日期',
-          dataIndex: 'date',
-          key: 'date',
-          className: 'tabcolums'
-        },
-        {
-          title: '开始时间',
-          dataIndex: 'starttime',
-          key: 'starttime',
-          className: 'tabcolums'
-        },
-        {
-          title: '结束时间',
-          dataIndex: 'endtime',
-          key: 'endtime',
-          className: 'tabcolums'
-        },
+      {
+        title: '申请编号',
+        dataIndex: 'snumber',
+        key: 'snumber',
+        className: 'tabcolums'
+      },
+      {
+        title: '会议名称',
+        dataIndex: 'meetingName',
+        key: 'meetingName',
+        className: 'tabcolums'
+      },
+      {
+        title: '预定状态',
+        dataIndex: 'status',
+        key: 'status',
+        className: 'tabcolums'
+      },
+      {
+        title: '会议室',
+        dataIndex: 'meetmeetingRoomnamename',
+        key: 'meetingRoomname',
+        className: 'tabcolums'
+      },
+      {
+        title: '日期',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        className: 'tabcolums'
+      },
+      {
+        title: '开始时间',
+        dataIndex: 'beginTime',
+        key: 'beginTime',
+        className: 'tabcolums'
+      },
+      {
+        title: '结束时间',
+        dataIndex: 'endTime',
+        key: 'endTime',
+        className: 'tabcolums'
+      },
         {
           title: '操作',
           key: 'action',
