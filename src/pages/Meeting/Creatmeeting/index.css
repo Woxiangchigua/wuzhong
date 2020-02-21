@@ -512,3 +512,43 @@ button.rbc-input::-moz-focus-inner {
   height: 1px;
   background-color: #74ad31;
   pointer-events: none; }
+
+.ant-page-header-heading-title {
+	float: none;
+	margin-bottom: 10px;
+}
+
+.ant-page-header-heading-sub-title {
+	float: none;
+}
+
+.ant-page-header {
+	padding: 0;
+}
+
+.ant-layout-content {
+	padding: 0!important;
+}
+
+.ant-divider-horizontal {
+	height: 0;
+}
+
+.ant-form-item-label {
+	display: block!important;
+	text-align: left;
+	line-height: 30px;
+}
+
+.ant-form-inline .ant-form-item {
+    margin-bottom: 5px;
+		width: 80%;
+}
+
+.ant-form-item-control-wrapper {
+    width: 100%;
+}
+
+.meeting_requirements {
+	width: 70%;
+}

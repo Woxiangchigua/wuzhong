@@ -26,7 +26,7 @@ const menulist = [{
 		name: '会议室申请',
 		icon: '',
 		key: 'creatmetting',
-		link: '/Meeting/Creatmetting',
+		link: '/Meeting/Creatmeeting',
 		role: ['costomeruser']
 	}, {
 		name: '会议纪要',
