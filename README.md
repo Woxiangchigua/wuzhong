@@ -1,3 +1,7 @@
+### 指定node-sass的下载源：
+
+	yarn config set sass-binary-site http://npm.taobao.org/mirrors/node-sass
+
 ### 安装依赖包
 
 	yarn install
