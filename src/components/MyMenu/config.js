@@ -22,13 +22,15 @@ const menulist = [{
 		key: 'meetinglist',
 		link: '/Meeting/List',
 		role: ['costomeruser']
-	}, {
-		name: '会议室申请',
-		icon: '',
-		key: 'creatmetting',
-		link: '/Meeting/Creatmeeting',
-		role: ['costomeruser']
-	}, {
+	}, 
+	// {
+	// 	name: '会议室申请',
+	// 	icon: '',
+	// 	key: 'creatmetting',
+	// 	link: '/Meeting/Creatmeeting',
+	// 	role: ['costomeruser']
+	// }, 
+	{
 		name: '会议纪要',
 		icon: '',
 		key: 'mettingminutes',

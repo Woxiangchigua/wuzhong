@@ -34,8 +34,8 @@ const query = graphql`
     const columns = [
       {
         title: '申请编号',
-        dataIndex: 'snumber',
-        key: 'snumber',
+        dataIndex: 'id',
+        key: 'id',
         className: 'tabcolums'
       },
       {

@@ -19,7 +19,7 @@ import {
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import dateFormat from '../../../ utils/dateFormat'
 import {
-  useHistory,
+  useHistory, Link
 } from "react-router-dom";
 
 const query = graphql`
@@ -154,12 +154,12 @@ function MeetingDetail(props) {
               });
             } else {
               // console.log(response);
-                Modal.success({
-                  content: '审核成功',
-                  onOk() {
-                    history.goBack()
-                  },
-                });
+              Modal.success({
+                content: '审核成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
             }
           },
           (response, errors) => {
@@ -224,7 +224,9 @@ function MeetingDetail(props) {
         <Col span={24}>
           <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室和会议时间</p>
           <ButtonGroup style={{ marginLeft: "75%" }}>
-            <Button>编辑</Button>
+            <Link to={"/Meeting/Updatemeeting/" + Detail.id}>
+              <Button>编辑</Button>
+            </Link>
             <Button onClick={showConfirm}>提交审核</Button>
           </ButtonGroup>
           <Button type="primary" style={{ marginLeft: "10px" }} onClick={showDeleteConfirm}>
