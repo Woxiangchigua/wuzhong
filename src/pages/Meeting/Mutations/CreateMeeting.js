@@ -8,7 +8,7 @@ const mutation = graphql`
     $configuration: String!
     $intro: String!
     $beginTime: DateTime!
-    $meetingRoomId: Int!
+    $meetingRoomId: ID!
     $number: Int!
     $endTime: DateTime!
     $meetingName: String!

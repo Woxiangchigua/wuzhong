@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Table, Divider } from 'antd';
-
+import dateFormat from '../../../../../ utils/dateFormat'
+import { Link } from "react-router-dom";
 
 const query = graphql`
     query TableTODO_MeetingListQuery{
@@ -33,8 +34,8 @@ const query = graphql`
     const columns = [
       {
         title: '申请编号',
-        dataIndex: 'snumber',
-        key: 'snumber',
+        dataIndex: 'id',
+        key: 'id',
         className: 'tabcolums'
       },
       {
@@ -47,38 +48,63 @@ const query = graphql`
         title: '预定状态',
         dataIndex: 'status',
         key: 'status',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
+            </span>
+          ),
       },
       {
         title: '会议室',
         dataIndex: 'meetingRoomname',
         key: 'meetingRoomname',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {record.meetingRoom.name}
+            </span>
+        ),
       },
       {
         title: '日期',
         dataIndex: 'createdAt',
         key: 'createdAt',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {dateFormat("YYYY-mm-dd",new Date(record.createdAt))}
+            </span>
+          ),
       },
       {
         title: '开始时间',
         dataIndex: 'beginTime',
         key: 'beginTime',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {dateFormat("HH:MM",new Date(record.beginTime))}
+            </span>
+          ),
       },
       {
         title: '结束时间',
         dataIndex: 'endTime',
         key: 'endTime',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {dateFormat("HH:MM",new Date(record.endTime))}
+            </span>
+          ),
       },
         {
           title: '操作',
           key: 'action',
           render: (text, record) => (
             <span>
-              <a>详情</a>
+              <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
               <Divider type="vertical" />
               <a>删除</a>
             </span>

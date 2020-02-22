@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Calendar from '../../../components/Calendar/index'
+import Calendar from '../../../components/CalendarQuery/index'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Button, Breadcrumb, Card, Table, Tabs, Divider } from 'antd';
 import './index.css';
@@ -7,6 +7,9 @@ import TableAwait from './components/TableAwait/index'
 import TableOccupy from './components/TableOccupy/index'
 import TableTODO from './components/TableTODO/index'
 import TableTODOAll from './components/TableTODOAll/index'
+import {
+  useHistory,Link
+} from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const { TabPane } = Tabs;
@@ -53,7 +56,9 @@ function Lists(props) {
           <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
         </Breadcrumb>
         <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
+        <Link to={"/Meeting/Creatmeeting"}>
           <Button>会议申请</Button>
+          </Link>
           <Button>会议纪要</Button>
         </ButtonGroup>
       </Card>

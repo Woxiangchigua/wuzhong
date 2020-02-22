@@ -1,6 +1,6 @@
 import React from 'react';
-import CreateMeeting from '../Mutations/CreateMeeting'
-import Calendar from '../../../components/Calendar/index'
+import UpdateMeeting from '../Mutations/UpdateMeeting'
+import Calendar from '../../../components/CalendarUpdate/index'
 import { useHistory } from "react-router-dom";
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import './index.css';
@@ -72,26 +72,56 @@ const data = [
 ];
 
 const query = graphql`
-    query Creatmeeting_MeetingRoomListQuery{
+    query Updatemeeting_MeetingRoomListQuery($id:ID!){
         meetingRoomList{
         edges{
             id,
             name
         }
         }
+        meeting(id:$id){
+          applyUserId,
+          beginTime,
+          configuration,
+          createdAt,
+          deletedAt,
+          endTime,
+          id,
+          intro,
+          meetingName,
+          meetingRoom{
+            id,
+            name
+          },
+          meetingRoomId,
+          number,
+          organizer,
+          review,
+          reviewUserId,
+          status,
+          updatedAt
+        }
     }`
-
 var childrenMsg = {}
 function AddMeeting(props) {
   let history = useHistory();
   const environment = props.environment
+  const meetingId = props.meetingId
   const resourceMap = props.meetingRoomList.edges.map(function (edge, index) {
     return { 'resourceId': edge.id, 'resourceTitle': edge.name }
   })
+  const meetingDetail = props.meetingDetail
   const loading = false
+  const events = []
+  events.push({
+    title: meetingDetail.meetingName,
+    start: new Date(meetingDetail.beginTime),
+    end: new Date(meetingDetail.endTime),
+    resourceId: meetingDetail.meetingRoomId,
+  })
 
+  console.log(meetingId)
 
-  
   function getChildrenMsg(result, msg) {
     console.log(msg)
     // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
@@ -102,14 +132,15 @@ function AddMeeting(props) {
 
   function handleSubmit(e) {
     let obj = childrenMsg
-    console.log(obj)
+    // console.log(obj)
     // return false
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        CreateMeeting.commit(
+        UpdateMeeting.commit(
           props.environment,
+          meetingId,
           new Date(obj.start).toISOString(),
           obj.resourceId,
           values.number,
@@ -129,10 +160,9 @@ function AddMeeting(props) {
               Modal.success({
                 content: '提交成功',
                 onOk() {
-                  history.goBack()
+                  history.push('/Meeting/List')
                 },
               });
-              
             }
           },
           (response, errors) => {
@@ -146,7 +176,6 @@ function AddMeeting(props) {
       }
     });
   };
-
   function goBack(){
     history.goBack()
   }
@@ -156,7 +185,7 @@ function AddMeeting(props) {
     <>
       <Card title="会议室和会议时间" bordered={false} >
         <div style={{ height: 500 }}>
-          <Calendar resourceMap={resourceMap} parent={getChildrenMsg} />
+          <Calendar resourceMap={resourceMap} item={events} parent={getChildrenMsg} />
         </div>
 
       </Card>
@@ -167,6 +196,7 @@ function AddMeeting(props) {
           <Col span={8}>
             <Form.Item label="主办单位" >
               {getFieldDecorator('organizer', {
+                initialValue: meetingDetail.organizer,
                 rules: [{ required: true, message: '请输入呈报单位!' }],
               })(
                 <Input
@@ -179,6 +209,7 @@ function AddMeeting(props) {
           <Col span={8}>
             <Form.Item label="会议名称" >
               {getFieldDecorator('meetingName', {
+                initialValue: meetingDetail.meetingName,
                 rules: [{ required: true, message: '请输入会议名称!' }],
               })(
                 <Input
@@ -191,6 +222,7 @@ function AddMeeting(props) {
           <Col span={8}>
             <Form.Item label="参会人数" >
               {getFieldDecorator('number', {
+                initialValue: meetingDetail.number,
                 rules: [{ required: true, message: '请输入参会人数!' }],
               })(
                 <Input
@@ -203,6 +235,7 @@ function AddMeeting(props) {
           <Col span={12} className="meeting_requirements">
             <Form.Item label="会议要求" >
               {getFieldDecorator('intro', {
+                initialValue: meetingDetail.intro,
                 rules: [{ required: true, message: '请输入会议要求!' }],
               })(
                 <TextArea
@@ -244,8 +277,8 @@ function AddMeeting(props) {
 const AddMeeting2 = Form.create({ name: 'horizontal_login' })(AddMeeting)
 
 function Home(props) {
-
-  console.log(props)
+  const meetingId=props.id
+  console.log(props.id)
   const environment = props.environment;
 
 
@@ -267,6 +300,7 @@ function Home(props) {
       <QueryRenderer
         environment={environment}
         query={query}
+        variables={{ id: props.id }}
         render={({ error, props, retry }) => {
           if (error) {
             return (
@@ -278,7 +312,7 @@ function Home(props) {
 
               return (
                 <>
-                  <AddMeeting2 environment={environment} meetingRoomList={props.meetingRoomList} ref="children" />
+                  <AddMeeting2 environment={environment} meetingRoomList={props.meetingRoomList} meetingDetail={props.meeting} meetingId={meetingId} ref="children" />
                 </>
               )
             }
