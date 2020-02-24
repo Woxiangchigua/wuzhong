@@ -5,8 +5,16 @@ import dateFormat from '../../../../../ utils/dateFormat'
 import { Link } from "react-router-dom";
 
 const query = graphql`
-    query TableOccupy_MeetingListQuery{
-        meetingList(first:1000,skip:0){
+    query TableOccupy_MeetingListQuery(
+      $order: String = ""
+      $meetingName: String = ""
+){
+  adminUsingMeetingList(
+      order: $order
+      first: 10000
+      skip: 0
+      meetingName: $meetingName
+      ){
           edges{
             applyUserId,
             beginTime,
@@ -140,8 +148,11 @@ function Lists(props) {
 
             <QueryRenderer
                 environment={environment}
-                query={query
-                }
+                query={query}
+                variables={{
+                  order:'',
+                  meetingName:props.searchKey3
+              }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (
@@ -149,9 +160,9 @@ function Lists(props) {
                                 <h1>Error!</h1><br />{error.message}
                             </div>)
                     } else if (props) {
-                        if (props.meetingList) {
+                        if (props.adminUsingMeetingList) {
                             return (
-                                <TableOccupy environment={environment} meetingList={props.meetingList} />
+                                <TableOccupy environment={environment} meetingList={props.adminUsingMeetingList} />
 
                             )
                         }

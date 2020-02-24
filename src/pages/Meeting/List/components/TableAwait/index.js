@@ -1,15 +1,27 @@
 import React, { Component } from 'react'
 import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider, Popconfirm, Modal, Button } from 'antd';
+import { Table, Divider, Modal, Button } from 'antd';
 import dateFormat from '../../../../../ utils/dateFormat'
 import { Link } from "react-router-dom";
 
 function Lists(props) {
     const { confirm } = Modal;
     const query = graphql`
-    query TableAwait_MeetingListQuery{
-        meetingList(first:1000,skip:0){
+    query TableAwait_MeetingListQuery(
+            $order: String = ""
+            $status: enumTypeMeetingStatus!
+            $review: EnumTypeAuditMeetingType!
+            $meetingName: String = ""
+    ){
+        adminPendingMeetingList(
+            order: $order
+            first: 10000
+            skip: 0
+            status: $status
+            review: $review
+            meetingName: $meetingName
+            ){
           edges{
             applyUserId,
             beginTime,
@@ -154,12 +166,21 @@ function Lists(props) {
             },
         });
     }
+
     class TableAwait extends Component {
-        state = {
-            environment: this.props.environment,
-            resourceMap: this.props.meetingList.edges,
-            loading: false,
-        };
+        constructor(props){
+            super(props)
+            this.state = {
+                environment: props.environment,
+                resourceMap: props.meetingList.edges,
+                loading: false,
+                
+            };
+            
+        }
+        
+        
+        
         render() {
             return (
                 <div>
@@ -175,11 +196,15 @@ function Lists(props) {
     const environment = props.environment;
     return (
         <div>
-
             <QueryRenderer
                 environment={environment}
-                query={query
-                }
+                query={query}
+                variables={{
+                    order:'',
+                    status:'MEETING_AWAIT',
+                    review:'MEETING_CHECK_PENDING_ADMIN',
+                    meetingName:props.searchKey
+                }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (
@@ -187,9 +212,9 @@ function Lists(props) {
                                 <h1>Error!</h1><br />{error.message}
                             </div>)
                     } else if (props) {
-                        if (props.meetingList) {
+                        if (props.adminPendingMeetingList) {
                             return (
-                                <TableAwait environment={environment} meetingList={props.meetingList} />
+                                <TableAwait environment={environment} meetingList={props.adminPendingMeetingList} />
 
                             )
                         }
