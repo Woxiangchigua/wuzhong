@@ -80,16 +80,13 @@ function MainLayout() {
 
   let qsql = graphql`
     query AppAccountRelayQuery {
-      account {
+      viewer {
         id
         username
         user {
           ... on HospitalUser {
             id
             name
-            hospital {
-              id
-            }
           }
           ... on CostomerUser {
             id
@@ -115,9 +112,9 @@ function MainLayout() {
 
           </div>)
       } else if (props) {
-        if (props.account) {
+        if (props.viewer) {
           // return this.props.callback(this.state.token, props.user);
-          return <MultiLayout environment={environment} user={props.account.user} />
+          return <MultiLayout environment={environment} user={props.viewer.user} />
         }
       }
       return <div>Loading</div>;
