@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Table, Divider } from 'antd';
-
+import dateFormat from '../../../../../ utils/dateFormat'
+import { Link } from "react-router-dom";
 
 const query = graphql`
-    query TableOccupy_MeetingListQuery{
-        meetingList(first:1000,skip:0){
+    query TableOccupy_MeetingListQuery(
+      $order: String = ""
+      $meetingName: String = ""
+){
+  adminUsingMeetingList(
+      order: $order
+      first: 10000
+      skip: 0
+      meetingName: $meetingName
+      ){
           edges{
             applyUserId,
             beginTime,
@@ -33,8 +42,8 @@ const query = graphql`
     const columns = [
       {
         title: '申请编号',
-        dataIndex: 'snumber',
-        key: 'snumber',
+        dataIndex: 'id',
+        key: 'id',
         className: 'tabcolums'
       },
       {
@@ -53,38 +62,63 @@ const query = graphql`
         title: '预定状态',
         dataIndex: 'status',
         key: 'status',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
+            </span>
+          ),
       },
       {
         title: '会议室',
         dataIndex: 'meetingRoomname',
         key: 'meetingRoomname',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {record.meetingRoom.name}
+            </span>
+        ),
       },
       {
         title: '日期',
         dataIndex: 'createdAt',
         key: 'createdAt',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {dateFormat("YYYY-mm-dd",new Date(record.createdAt))}
+            </span>
+          ),
       },
       {
         title: '开始时间',
         dataIndex: 'beginTime',
         key: 'beginTime',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {dateFormat("HH:MM",new Date(record.beginTime))}
+            </span>
+          ),
       },
       {
         title: '结束时间',
         dataIndex: 'endTime',
         key: 'endTime',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+              {dateFormat("HH:MM",new Date(record.endTime))}
+            </span>
+          ),
       },
         {
           title: '操作',
           key: 'action',
           render: (text, record) => (
             <span>
-              <a>详情</a>
+              <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
               <Divider type="vertical" />
               <a>删除</a>
             </span>
@@ -114,8 +148,11 @@ function Lists(props) {
 
             <QueryRenderer
                 environment={environment}
-                query={query
-                }
+                query={query}
+                variables={{
+                  order:'',
+                  meetingName:props.searchKey3
+              }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (
@@ -123,9 +160,9 @@ function Lists(props) {
                                 <h1>Error!</h1><br />{error.message}
                             </div>)
                     } else if (props) {
-                        if (props.meetingList) {
+                        if (props.adminUsingMeetingList) {
                             return (
-                                <TableOccupy environment={environment} meetingList={props.meetingList} />
+                                <TableOccupy environment={environment} meetingList={props.adminUsingMeetingList} />
 
                             )
                         }

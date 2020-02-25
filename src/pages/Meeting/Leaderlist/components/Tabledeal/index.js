@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider,Popconfirm,Modal,Button,Input } from 'antd';
+import { Table, Divider,Popconfirm,Modal,Button,Input  } from 'antd';
 import { Link } from "react-router-dom";
+import dateFormat from '../../../../../ utils/dateFormat'
 
+const { TextArea } = Input;
 function Lists(props) {
 const { confirm } = Modal;
-const { Search } = Input;
 const query = graphql`
-    query Tabledeal_MeetingListQuery{
-        applyPendingMeetingList(first:10,skip:0,meetingName:"",order:""){
+    query Tabledeal_MeetingListQuery(
+        $order: String = ""
+        $meetingName: String = ""
+    ){
+        applyPendingMeetingList(first:10,skip:0,meetingName:$meetingName,order:$order){
           edges{
             applyUserId,
             beginTime,
@@ -37,8 +41,8 @@ const query = graphql`
 const columns = [
     {
         title: '申请编号',
-        dataIndex: 'snumber',
-        key: 'snumber',
+        dataIndex: 'id',
+        key: 'id',
         className: 'tabcolums'
     },
     {
@@ -57,31 +61,56 @@ const columns = [
         title: '预定状态',
         dataIndex: 'status',
         key: 'status',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
+            </span>
+        ),
     },
     {
         title: '会议室',
         dataIndex: 'meetingRoomname',
         key: 'meetingRoomname',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {record.meetingRoom.name}
+            </span>
+        ),
     },
     {
         title: '日期',
         dataIndex: 'createdAt',
         key: 'createdAt',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {dateFormat("YYYY-mm-dd", new Date(record.createdAt))}
+            </span>
+        ),
     },
     {
         title: '开始时间',
         dataIndex: 'beginTime',
         key: 'beginTime',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {dateFormat("HH:MM", new Date(record.beginTime))}
+            </span>
+        ),
     },
     {
         title: '结束时间',
         dataIndex: 'endTime',
         key: 'endTime',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {dateFormat("HH:MM", new Date(record.endTime))}
+            </span>
+        ),
     },
     {
         title: '操作',
@@ -91,17 +120,19 @@ const columns = [
             <span>
             <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
                 <Divider type="vertical" />
-      <Button onClick={() => {showDeleteConfirm(record.id)}} type="link">
+      <Button onClick={() => {showModal(record.id)}} type="link">
+      {/* <Button onClick={this.showModal} type="link"> */}
       审核
     </Button>
             </span>
         ),
     },
 ];
-
-function showDeleteConfirm(id){
+function showModal(id){
+    let value = '';
     confirm({
       title: '你需要审核这个会议任务',
+      content: (<TextArea rows={4} onChange={(e)=>{value=e;console.log(e)}} />),
       okText: '同意',
       cancelText: '不同意',
       onOk() {
@@ -138,10 +169,6 @@ class TableAwait extends Component {
     render() {
         return (
             <div>
-            <Search
-              onSearch={value => console.log(value)}
-              style={{ width: 200,marginLeft:'85%'}}
-            />
                 <Table columns={columns} dataSource={this.state.resourceMap} pagination={false} />
             </div>
         )
@@ -154,8 +181,11 @@ class TableAwait extends Component {
 
             <QueryRenderer
                 environment={environment}
-                query={query
-                }
+                query={query}
+                variables={{
+                    order:'',
+                    meetingName:props.searchKey
+                }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (
@@ -163,9 +193,9 @@ class TableAwait extends Component {
                                 <h1>Error!</h1><br />{error.message}
                             </div>)
                     } else if (props) {
-                        if (props.meetingList) {
+                        if (props.applyPendingMeetingList) {
                             return (
-                                <TableAwait environment={environment} meetingList={props.meetingList} />
+                                <TableAwait environment={environment} meetingList={props.applyPendingMeetingList} />
 
                             )
                         }

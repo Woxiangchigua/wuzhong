@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Calendar from '../../../components/Calendar/index'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Button, Breadcrumb, Card, Table, Tabs, Divider } from 'antd';
+import { Button, Breadcrumb, Card, Table, Tabs, Divider,Input } from 'antd';
 import './index.css';
 import Tableuser from './components/Tableuser/index'
+import { Link } from "react-router-dom";
 
+const { Search } = Input;
 const ButtonGroup = Button.Group;
 const { TabPane } = Tabs;
 const query = graphql`
@@ -36,12 +38,25 @@ class AddMeeting extends Component {
 
 
 
-function callback(key) {
-  console.log(key);
-}
-
 function Lists(props) {
+  const [searchKey, setSearchKey] = useState('');
   const environment = props.environment;
+  const operations = <Search
+    placeholder="输入会议名称"
+    onSearch={search}
+    style={{ width: 200 }}
+  />;
+  let defaultActiveKey = "1"
+  function callback(key) {
+
+    defaultActiveKey = key
+    console.log(defaultActiveKey);
+  }
+
+  function search(value) {
+      setSearchKey(value)
+  }
+
   return (
     <div>
       <Card bordered={false} >
@@ -50,7 +65,9 @@ function Lists(props) {
           <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
         </Breadcrumb>
         <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
-          <Button>会议申请</Button>
+        <Link to={"/Meeting/Creatmeeting"}>
+            <Button>会议申请</Button>
+          </Link>
           <Button>会议纪要</Button>
         </ButtonGroup>
       </Card>
@@ -76,9 +93,9 @@ function Lists(props) {
           return <div>Loading</div>;
         }}
       />
-      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }}>
+      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
         <TabPane tab="我的待开会议" key="1">
-          <Tableuser environment={environment} />
+          <Tableuser environment={environment} searchKey={searchKey}/>
         </TabPane>
       </Tabs>
     </div>

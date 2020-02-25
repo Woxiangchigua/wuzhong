@@ -12,7 +12,26 @@ const localizer = momentLocalizer(moment)
 // import ExampleControlSlot from '../ExampleControlSlot'
 
 const events = [
-
+    {
+        id: 0,
+        title: 'Board meeting',
+        start: new Date('2020-02-19T13:00:00.000Z'),
+        end: new Date('2020-02-19T14:30:00.000Z'),
+        resourceId: 'meetingRoom-1',
+    },
+    {
+        id: 1,
+        title: 'hello world',
+        start: new Date('2020-02-19T10:00:00.000Z'),
+        end: new Date('2020-02-19T11:30:00.000Z'),
+        resourceId: 'meetingRoom-2',
+    }, {
+        id: 2,
+        title: 'hello world2',
+        start: new Date('2020-02-18T10:00:00.000Z'),
+        end: new Date('2020-02-18T11:30:00.000Z'),
+        resourceId: 'meetingRoom-2',
+    },
 ]
 
 
@@ -23,23 +42,24 @@ class Resource extends React.Component {
         super(props)
 
         this.state = {
-            events,
-            selected: false
+            events: props.item,
+            selected: false,
+
         }
         this.moveEvent = this.moveEvent.bind(this)
         this.newEvent = this.newEvent.bind(this)
     }
 
-    handleSelect = ({ props, start, end, resourceId }) => {
+    handleSelect = ({ start, end, resourceId }) => {
         const title = window.prompt('请输入会议名称')
         // console.log(new Date(start).toISOString(), new Date(end).toISOString(), title)
         let list = this.state.events
-        if (this.state.selected) {
-            list.splice(list.length - 1, 1)
-            this.setState({
-                event: list
-            })
-        }
+        // if (this.state.selected) {
+        //     list.splice(list.length - 1, 1)
+        //     this.setState({
+        //         event: list
+        //     })
+        // }
 
         if (title) {
             let occupy = false
@@ -53,10 +73,15 @@ class Resource extends React.Component {
                     // alert("选择错误")
                     console.log("选择错误")
                     occupy = true
+                    
                     return false
                 }
             }
             if (!occupy) {
+                list.splice(list.length - 1, 1)
+                    this.setState({
+                        event: list
+                    })
                 console.log(111)
                 this.setState({
                     events: [
@@ -70,14 +95,14 @@ class Resource extends React.Component {
                     ],
                     selected: true
                 })
-
-                this.props.parent(this, {
-                    start,
-                    end,
-                    title,
-                    resourceId
-                })
             }
+
+            this.props.parent(this, {
+                start,
+                end,
+                title,
+                resourceId
+            })
         }
     }
 
@@ -94,7 +119,6 @@ class Resource extends React.Component {
         }
 
         const updatedEvent = { ...event, start, end, allDay }
-        // console.log(updatedEvent)
 
         this.props.parent(this, updatedEvent)
 
@@ -104,6 +128,13 @@ class Resource extends React.Component {
         this.setState({
             events: nextEvents,
         })
+
+        for (const item of events) {
+            if (item.id === event.id) {
+                this.props.parent(this, { ...item, start, end })
+                return
+            }
+        }
 
         // alert(`${event.title} was dropped onto ${updatedEvent.start}`)
     }
@@ -120,14 +151,6 @@ class Resource extends React.Component {
         this.setState({
             events: nextEvents,
         })
-
-        for (const item of events) {
-            if (item.id === event.id) {
-                this.props.parent(this, { ...item, start, end })
-                return
-            }
-        }
-        // console.log("这里是滑动的");
 
         //alert(`${event.title} was resized to ${start}-${end}`)
     }

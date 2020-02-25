@@ -18,10 +18,13 @@ import {
 } from 'antd';
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import dateFormat from '../../../ utils/dateFormat'
+import {
+  useHistory, Link
+} from "react-router-dom";
 
 const query = graphql`
-query Querymeeting_MeetingDetailQuery{
-  meeting(id:"meeting-1"){
+query Querymeeting_MeetingDetailQuery($id:ID!){
+  meeting(id:$id){
     applyUserId,
     beginTime,
     configuration,
@@ -45,7 +48,10 @@ query Querymeeting_MeetingDetailQuery{
   }
   }`
 
+
+
 function MeetingDetail(props) {
+  let history = useHistory();
   console.log(props)
   const Detail = props.meetingRoomDetail
   // const { getFieldDecorator } = props.form;
@@ -100,9 +106,18 @@ function MeetingDetail(props) {
           Detail.intro,
           (response, errors) => {
             if (errors) {
-              console.log(errors)
+              // console.log(errors)
+              Modal.error({
+                title: errors[0].message,
+              });
             } else {
-              console.log(response);
+              // console.log(response);
+              Modal.success({
+                content: '提交成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
             }
           },
           (response, errors) => {
@@ -129,20 +144,29 @@ function MeetingDetail(props) {
         console.log('确认');
         AuditMeeting.commit(
           props.environment,
-          "meeting-1",
+          Detail.id,
           'MEETING_PASS',
           (response, errors) => {
             if (errors) {
-              console.log(errors)
+              // console.log(errors)
+              Modal.error({
+                title: errors[0].message,
+              });
             } else {
-              console.log(response);
+              // console.log(response);
+              Modal.success({
+                content: '审核成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
             }
           },
           (response, errors) => {
             if (errors) {
-              console.log(errors)
+              // console.log(errors)
             } else {
-              console.log(response);
+              // console.log(response);
             }
           }
         );
@@ -151,13 +175,22 @@ function MeetingDetail(props) {
         console.log('取消');
         AuditMeeting.commit(
           props.environment,
-          "meeting-1",
+          Detail.id,
           'MEETING_EDIT_OR_FAIL',
           (response, errors) => {
             if (errors) {
-              console.log(errors)
+              // console.log(errors)
+              Modal.error({
+                title: errors[0].message,
+              });
             } else {
-              console.log(response);
+              // console.log(response);
+              Modal.success({
+                content: '审核成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
             }
           },
           (response, errors) => {
@@ -170,6 +203,9 @@ function MeetingDetail(props) {
         );
       },
     });
+  }
+  function goBack() {
+    history.goBack()
   }
   return (
     <div style={{ backgroundColor: '#f0f2f5' }}>
@@ -188,7 +224,9 @@ function MeetingDetail(props) {
         <Col span={24}>
           <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室和会议时间</p>
           <ButtonGroup style={{ marginLeft: "75%" }}>
-            <Button>编辑</Button>
+            <Link to={"/Meeting/Updatemeeting/" + Detail.id}>
+              <Button>编辑</Button>
+            </Link>
             <Button onClick={showConfirm}>提交审核</Button>
           </ButtonGroup>
           <Button type="primary" style={{ marginLeft: "10px" }} onClick={showDeleteConfirm}>
@@ -200,11 +238,11 @@ function MeetingDetail(props) {
           <Descriptions.Item label="主办单位">{Detail.organizer}</Descriptions.Item>
           <Descriptions.Item label="会议名称">{Detail.meetingName}</Descriptions.Item>
           <Descriptions.Item label="会议室">{Detail.meetingRoom.name}</Descriptions.Item>
-          <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM",new Date(Detail.beginTime))}</Descriptions.Item>
+          <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM", new Date(Detail.beginTime))}</Descriptions.Item>
           <Descriptions.Item label="参会人数">{Detail.number}</Descriptions.Item>
           <Descriptions.Item label="申请人">{Detail.applyUserId}</Descriptions.Item>
-          <Descriptions.Item label="申请日期">{dateFormat("YYYY-mm-dd",new Date(Detail.beginTime))}</Descriptions.Item>
-          <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM",new Date(Detail.endTime))}</Descriptions.Item>
+          <Descriptions.Item label="申请日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
+          <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM", new Date(Detail.endTime))}</Descriptions.Item>
           <Descriptions.Item label="会议状态">
             <Badge
               status={Detail.status === 'MEETING_END' ? 'default' : Detail.status === 'MEETING_CANCEL' ? 'error' : Detail.status === 'MEETING_AWAIT' ? 'success' : ''}
@@ -228,7 +266,7 @@ function MeetingDetail(props) {
         </Card>
 
         <Col span={24}>
-          <Button type="primary" style={{ marginLeft: "48%" }}>
+          <Button type="primary" onClick={goBack} style={{ marginLeft: "48%" }}>
             关闭
             </Button>
         </Col>
@@ -238,11 +276,12 @@ function MeetingDetail(props) {
 }
 
 function List(props) {
+  console.log(props)
   const environment = props.environment;
   return (<QueryRenderer
     environment={environment}
-    query={query
-    }
+    query={query}
+    variables={{ id: props.id }}
     render={({ error, props, retry }) => {
       if (error) {
         return (

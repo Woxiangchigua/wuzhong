@@ -3,6 +3,7 @@ import Calendar from '../../../components/Calendar/index'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Button, Breadcrumb, Card, Table, Divider } from 'antd';
 import './index.css';
+import dateFormat from '../../../ utils/dateFormat'
 
 const ButtonGroup = Button.Group;
 const query = graphql`
@@ -34,15 +35,20 @@ const query = graphql`
 const columns = [
     {
         title: '申请编号',
-        dataIndex: 'sqnumber',
-        key: 'sqnumber',
+        dataIndex: 'id',
+        key: 'id',
         className: 'tabcolums'
     },
     {
         title: '会议名称',
         dataIndex: 'meetingName',
         key: 'meetingName',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {record.meetingRoom.name}
+            </span>
+        ),
     },
     {
         title: '会议纪要',
@@ -60,7 +66,12 @@ const columns = [
         title: '日期',
         dataIndex: 'createdAt',
         key: 'createdAt',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <span>
+                {dateFormat("YYYY-mm-dd", new Date(record.createdAt))}
+            </span>
+        ),
     },
     {
         title: '主办部门',

@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
 import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider,Popconfirm,Modal,Button,Input } from 'antd';
+import { Table, Divider,Popconfirm,Modal,Button } from 'antd';
 import { Link } from "react-router-dom";
 
 const { confirm } = Modal;
-const { Search } = Input;
 
 function Lists(props) {
 const query = graphql`
-    query Tableuser_MeetingListQuery{
-      myAwaitMeetingList(first:10,skip:0,meetingName:"",order:""){
+    query Tableuser_MeetingListQuery(
+      $order: String = ""
+      $meetingName: String = ""
+){
+  myAwaitMeetingList(
+      order: $order
+      first: 10000
+      skip: 0
+      meetingName: $meetingName
+      ){
           edges{
             applyUserId,
             beginTime,
@@ -132,10 +139,6 @@ class TableTODO extends Component {
     render() {
         return (
             <div>
-              <Search
-                onSearch={value => console.log(value)}
-                style={{ width: 200,marginLeft:'85%'}}
-              />
                 <Table columns={columns} dataSource={this.state.resourceMap} pagination={false} />
             </div>
         )
@@ -148,8 +151,11 @@ class TableTODO extends Component {
 
             <QueryRenderer
                 environment={environment}
-                query={query
-                }
+                query={query}
+                variables={{
+                  order:'',
+                  meetingName:props.searchKey
+              }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (
@@ -157,9 +163,9 @@ class TableTODO extends Component {
                                 <h1>Error!</h1><br />{error.message}
                             </div>)
                     } else if (props) {
-                        if (props.meetingList) {
+                        if (props.myAwaitMeetingList) {
                             return (
-                                <TableTODO environment={environment} meetingList={props.meetingList} />
+                                <TableTODO environment={environment} meetingList={props.myAwaitMeetingList} />
 
                             )
                         }

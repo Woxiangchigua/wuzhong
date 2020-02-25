@@ -1,7 +1,7 @@
 
 const menulist = [{
 	name: '分局主页',
-	icon: '',
+	icon: 'compass',
 	key: 'callcenter',
 	role: ['costomeruser'],
 	items: [{
@@ -9,30 +9,6 @@ const menulist = [{
 		icon: '',
 		key: 'calllist',
 		link: '/Home',
-		role: ['costomeruser']
-	}]
-},{
-	name: '会议管理',
-	icon: '',
-	key: 'meeting',
-	role: ['costomeruser'],
-	items: [{
-		name: '会议室管理',
-		icon: '',
-		key: 'meetinglist',
-		link: '/Meeting/List',
-		role: ['costomeruser']
-	}, {
-		name: '会议室申请',
-		icon: '',
-		key: 'creatmeeting',
-		link: '/Meeting/Creatmeeting',
-		role: ['costomeruser']
-	}, {
-		name: '会议纪要',
-		icon: '',
-		key: 'mettingminutes',
-		link: '/Meeting/Meetingminutes',
 		role: ['costomeruser']
 	}, {
 		name: '普通用户会议页面',
@@ -45,6 +21,32 @@ const menulist = [{
 		icon: '',
 		key: 'leaderlist',
 		link: '/Meeting/Leaderlist',
+		role: ['costomeruser']
+	}]
+},{
+	name: '会议管理',
+	icon: 'mail',
+	key: 'meeting',
+	role: ['costomeruser'],
+	items: [{
+		name: '会议室管理',
+		icon: '',
+		key: 'meetinglist',
+		link: '/Meeting/List',
+		role: ['costomeruser']
+	}, 
+	// {
+	// 	name: '会议室申请',
+	// 	icon: '',
+	// 	key: 'creatmetting',
+	// 	link: '/Meeting/Creatmeeting',
+	// 	role: ['costomeruser']
+	// }, 
+	{
+		name: '会议纪要',
+		icon: '',
+		key: 'mettingminutes',
+		link: '/Meeting/Meetingminutes',
 		role: ['costomeruser']
 	}]
 }];
