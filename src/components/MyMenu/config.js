@@ -10,6 +10,18 @@ const menulist = [{
 		key: 'calllist',
 		link: '/Home',
 		role: ['costomeruser']
+	}, {
+		name: '普通用户会议页面',
+		icon: '',
+		key: 'userlist',
+		link: '/Meeting/Userlist',
+		role: ['costomeruser']
+	}, {
+		name: '领导会议页面',
+		icon: '',
+		key: 'leaderlist',
+		link: '/Meeting/Leaderlist',
+		role: ['costomeruser']
 	}]
 },{
 	name: '会议管理',
