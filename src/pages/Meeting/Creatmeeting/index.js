@@ -245,8 +245,7 @@ function AddMeeting(props) {
         </Col>
       </Form>
 
-
-      <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible} CallBack={modalAddAttendeesCallback.bind(this)} />
+      <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible}  callback={modalAddAttendeesCallback.bind(this)} />
     </>
 
   )

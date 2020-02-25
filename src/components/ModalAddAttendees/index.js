@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useState }from 'react';
 import {
 	Modal, 
 	Form, 
@@ -8,10 +8,10 @@ import {
 	Table
 }
 from 'antd';
-
+import difference from 'lodash/difference';
 import DepartmentTreeSelect from '@/components/DepartmentTreeSelect'
 //
-const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
+const TableTransfer = ({ Columns, ...restProps }) => (
   <Transfer {...restProps} showSelectAll={false}>
     {({
       direction,
@@ -21,20 +21,23 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
       selectedKeys: listSelectedKeys,
       disabled: listDisabled,
     }) => {
-      const columns = direction === 'left' ? leftColumns : rightColumns;
 
       const rowSelection = {
         getCheckboxProps: item => ({ disabled: listDisabled || item.disabled }),
         onSelectAll(selected, selectedRows) {
-          // const treeSelectedKeys = selectedRows
-          //   .filter(item => !item.disabled)
-          //   .map(({ key }) => key);
-          // const diffKeys = selected
-          //   ? difference(treeSelectedKeys, listSelectedKeys)
-          //   : difference(listSelectedKeys, treeSelectedKeys);
-          // onItemSelectAll(diffKeys, selected);
+
+          const treeSelectedKeys = selectedRows
+            .filter(item => !item.disabled)
+            .map(({ id }) => id);
+          const diffKeys = selected
+            ? difference(treeSelectedKeys, listSelectedKeys)
+            : difference(listSelectedKeys, treeSelectedKeys);
+           console.log('diffKeys==>',diffKeys)
+           console.log('selected==>',selected)
+          onItemSelectAll(diffKeys, selected);
         },
         onSelect({ key }, selected) {
+        console.log('onSelect==>',key,selected)
           onItemSelect(key, selected);
         },
         selectedRowKeys: listSelectedKeys,
@@ -45,7 +48,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
       	<>	
 	        <Table
 	          rowSelection={rowSelection}
-	          columns={columns}
+	          columns={Columns}
 	          dataSource={filteredItems}
 	          size="small"
 	          style={{ pointerEvents: listDisabled ? 'none' : null }}
@@ -62,7 +65,7 @@ const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   </Transfer>
 );
 
-const leftTableColumns = [{
+const tableColumns = [{
 	title: '姓名',
 	dataIndex: 'name',
 	key: 'name',
@@ -75,73 +78,48 @@ const leftTableColumns = [{
 	dataIndex: 'department',
 	key: 'department',
 }];
-const rightTableColumns = [{
-	title: '参会人姓名',
-	dataIndex: 'name',
-	key: 'name'
-}, {
-	title: '工号',
-	dataIndex: 'num',
-	key: 'num'
-}, {
-	title: '所属部门',
-	dataIndex: 'department',
-	key: 'department'
-}];
 
 
-//
-//
-const mockData = []
-
-for (let i = 0; i < 20; i++) {
-	mockData.push({
-		key: i + 1,
-		name: '张三' + (i + 1),
-		num: i + 1,
-		department: '治安大队'
-	});
-}
-
-const targetKeys = [];
 function ModalAddAttendees(props) {
-	const {Visible, CallBack} = props;
+	const {Visible, callback} = props;
 	const environment = props.environment;
+	const [targetKeys, setTargetKeys] = useState([]);
 
-
+	//假数据
+	
+	const mockData = []
+	for (let i = 0; i < 20; i++) {
+		mockData.push({
+			key : i,
+			id: 'id'+(i + 1),
+			name: '张三' + (i + 1),
+			num: i + 1,
+			department: '治安大队'
+		});
+	}
+	const [DataSource, setDataSource] = useState(mockData);
 
 	let handleOk = () => {
-		CallBack('ok');
+		console.log("handleOk=>",targetKeys)
+		callback('ok',DataSource.filter((d)=>{
+			return targetKeys.indexOf(d.key)>-1; 
+		}));
 	};
 
 	let handleCancel = () => {
-		CallBack('cancel');
+		callback('cancel');
 	};
+
+	//部门选择器组件返回接收
 	let departmentTreeSelectCallback = (id) => { 
 		console.log('departmentTreeSelectCallback==>',id);
 	}
-	// state = {
-	//     targetKeys: originTargetKeys,
-	//     disabled: false,
-	// };
 
 	const onChange = nextTargetKeys => {
-		// this.setState({
-		// 	targetKeys: nextTargetKeys
-		// });
+		console.log('nextTargetKeys',nextTargetKeys)
+		setTargetKeys(nextTargetKeys);
 	};
 
-	const triggerDisable = disabled => {
-		// this.setState({
-		// 	disabled
-		// });
-	};
-
-	const triggerShowSearch = showSearch => {
-		// this.setState({
-		// 	showSearch
-		// });
-	};
     return (
     	<Modal
           visible={Visible}
@@ -160,16 +138,11 @@ function ModalAddAttendees(props) {
         >
         <DepartmentTreeSelect  environment={environment} callback={departmentTreeSelectCallback}/>
         <TableTransfer
-          dataSource={mockData}
+          dataSource={DataSource}
           targetKeys={targetKeys}
-          disabled={false}
           onChange={onChange}
-          filterOption={(inputValue, item) =>
-            item.title.indexOf(inputValue) !== -1 || item.tag.indexOf(inputValue) !== -1
-          }
           titles = {["",'已选择']}
-          leftColumns={leftTableColumns}
-          rightColumns={rightTableColumns}
+          Columns={tableColumns}
         />
           
         </Modal>
@@ -177,4 +150,4 @@ function ModalAddAttendees(props) {
     );
 }
 
-export default Form.create({ name: 'ModalAddAttendees' })(ModalAddAttendees);
+export default ModalAddAttendees
