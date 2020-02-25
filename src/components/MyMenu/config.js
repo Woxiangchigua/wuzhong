@@ -36,6 +36,13 @@ const menulist = [{
 		key: 'mettingminutes',
 		link: '/Meeting/Meetingminutes',
 		role: ['costomeruser']
+	},
+	{
+		name: '申请人会议主页',
+		icon: '',
+		key: 'applicant',
+		link: '/Meeting/Applicant',
+		role: ['costomeruser']
 	}]
 }];
 
