@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CreateMeeting from '../Mutations/CreateMeeting'
 import Calendar from '../../../components/Calendar/index'
 import { useHistory } from "react-router-dom";
@@ -16,6 +16,8 @@ import {
   Divider,
   Modal
 } from 'antd';
+
+import ModalAddAttendees from '@/components/ModalAddAttendees';
 
 
 const { TextArea } = Input;
@@ -84,13 +86,20 @@ const query = graphql`
 var childrenMsg = {}
 function AddMeeting(props) {
   let history = useHistory();
+  //添加与会负责人
+  const [modalAddAttendeesVisible, setModalAddAttendeesVisible] = useState(false);
+
   const environment = props.environment
   const resourceMap = props.meetingRoomList.edges.map(function (edge, index) {
     return { 'resourceId': edge.id, 'resourceTitle': edge.name }
   })
   const loading = false
 
-
+  //添加负责人返回
+  let modalAddAttendeesCallback = (a, d) => {
+    setModalAddAttendeesVisible(false);
+    console.log(a,d)
+  }
   
   function getChildrenMsg(result, msg) {
     console.log(msg)
@@ -217,7 +226,7 @@ function AddMeeting(props) {
         <Divider />
         <Card title="参会人员" style={{ margin: '0px 0 20px 0' }}>
           <Table columns={columns} dataSource={data} pagination={false} />
-          <Button icon="plus" style={{ margin: '5px 0 20px 0', width: '100%' }}>
+          <Button icon="plus" onClick={()=>{ setModalAddAttendeesVisible(true) }}  style={{ margin: '5px 0 20px 0', width: '100%' }}>
             添加负责人
           </Button>
         </Card>
@@ -235,6 +244,9 @@ function AddMeeting(props) {
           </Form.Item>
         </Col>
       </Form>
+
+
+      <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible} CallBack={modalAddAttendeesCallback.bind(this)} />
     </>
 
   )
