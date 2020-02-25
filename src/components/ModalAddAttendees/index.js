@@ -28,7 +28,7 @@ const TableTransfer = ({ Columns, ...restProps }) => (
 
           const treeSelectedKeys = selectedRows
             .filter(item => !item.disabled)
-            .map(({ id }) => id);
+            .map(({ key }) => key);
           const diffKeys = selected
             ? difference(treeSelectedKeys, listSelectedKeys)
             : difference(listSelectedKeys, treeSelectedKeys);
