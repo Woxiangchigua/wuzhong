@@ -3,58 +3,58 @@ const menulist = [{
 	name: '分局主页',
 	icon: 'compass',
 	key: 'callcenter',
-	role: ['costomeruser'],
+	role: ['employee'],
 	items: [{
 		name: '分局主页',
 		icon: '',
 		key: 'calllist',
 		link: '/Home',
-		role: ['costomeruser']
+		role: ['employee']
 	}, {
 		name: '普通用户会议页面',
 		icon: '',
 		key: 'userlist',
 		link: '/Meeting/Userlist',
-		role: ['costomeruser']
+		role: ['employee']
 	}, {
 		name: '领导会议页面',
 		icon: '',
 		key: 'leaderlist',
 		link: '/Meeting/Leaderlist',
-		role: ['costomeruser']
+		role: ['employee']
 	}]
-},{
+}, {
 	name: '会议管理',
 	icon: 'mail',
 	key: 'meeting',
-	role: ['costomeruser'],
+	role: ['employee'],
 	items: [{
 		name: '会议室管理',
 		icon: '',
 		key: 'meetinglist',
 		link: '/Meeting/List',
-		role: ['costomeruser']
-	}, 
+		role: ['employee']
+	},
 	// {
 	// 	name: '会议室申请',
 	// 	icon: '',
 	// 	key: 'creatmetting',
 	// 	link: '/Meeting/Creatmeeting',
-	// 	role: ['costomeruser']
+	// 	role: ['employee']
 	// }, 
 	{
 		name: '会议纪要',
 		icon: '',
 		key: 'mettingminutes',
 		link: '/Meeting/Meetingminutes',
-		role: ['costomeruser']
+		role: ['employee']
 	},
 	{
 		name: '申请人会议主页',
 		icon: '',
 		key: 'applicant',
 		link: '/Meeting/Applicant',
-		role: ['costomeruser']
+		role: ['employee']
 	}]
 }];
 

@@ -135,21 +135,9 @@ function Info(props) {
         id
 	    username
 	    user {
-	    	... on HospitalUser {
+	    	... on Employee {
 	    		id
 	    		name
-			    sex
-			    birthday
-			    mobile
-			    remark
-	    	}
-	    	... on CostomerUser {
-	    		id
-	    		name
-			    sex
-			    birthday
-			    mobile
-			    remark
 	    	}
 	    }
 	    

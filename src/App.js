@@ -78,46 +78,40 @@ function MainLayout() {
   const [token] = useLocalStorage('token', '');
   const environment = Environment(token)
 
-  let qsql = graphql`
-    query AppAccountRelayQuery {
-      viewer {
-        id
-        username
-        user {
-          ... on HospitalUser {
+  return (
+    <QueryRenderer
+      environment={environment}
+      query={graphql`
+        query AppAccountRelayQuery {
+          viewer {
             id
-            name
+            username
+            user {
+              ... on Employee {
+                id
+                name
+              }
+            }
           }
-          ... on CostomerUser {
-            id
-            name
+        }`
+      }
+      render={({ error, props, retry }) => {
+        if (error) {
+          return (
+            <div>
+              <h1>Error!</h1><br />{error.message}       <Link to="/User/Login">重新登陆</Link>
+              <Redirect
+                to={{
+                  pathname: "/User/Login/"
+                }}
+              />
+            </div>)
+        } else if (props) {
+          if (props.viewer) {
+            return <MultiLayout environment={environment} user={props.viewer.user} />
           }
         }
-      }
-    }`;
-  let loginType = '';
-  return (<QueryRenderer
-    environment={environment}
-    query={qsql}
-    render={({ error, props }) => {
-      if (error) {
-        return (
-          <div>
-            <h1>Error!</h1><br />{error.message}       <Link to="/User/Login">重新登陆</Link>
-            <Redirect
-              to={{
-                pathname: "/User/Login/"
-              }}
-            />
-
-          </div>)
-      } else if (props) {
-        if (props.viewer) {
-          // return this.props.callback(this.state.token, props.user);
-          return <MultiLayout environment={environment} user={props.viewer.user} />
-        }
-      }
-      return <div>Loading</div>;
-    }}
-  />);
+        return <div>Loading</div>;
+      }}
+    />);
 }
