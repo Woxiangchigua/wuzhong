@@ -105,7 +105,6 @@ for (let i = 0; i < 20; i++) {
 
 const targetKeys = [];
 function ModalAddAttendees(props) {
-	const { getFieldDecorator } = props.form;
 	const {Visible, CallBack} = props;
 	const environment = props.environment;
 
@@ -118,8 +117,8 @@ function ModalAddAttendees(props) {
 	let handleCancel = () => {
 		CallBack('cancel');
 	};
-	let departmentTreeSelectCallback = (d) => { 
-
+	let departmentTreeSelectCallback = (id) => { 
+		console.log('departmentTreeSelectCallback==>',id);
 	}
 	// state = {
 	//     targetKeys: originTargetKeys,

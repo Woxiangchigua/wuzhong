@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TreeSelect } from 'antd';
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 
@@ -34,8 +34,9 @@ const mockdata = {
   ]
 };
 function DepartmentTreeSelect(props) {
+	const {callback} = props;
     const environment = props.environment;
-    return <ShowView environment={environment} data={mockdata} />
+    return <ShowView environment={environment} data={mockdata} callback={callback} />
     // return (<QueryRenderer
     //     environment={environment}
     //     query={query
@@ -60,42 +61,42 @@ function DepartmentTreeSelect(props) {
 }
 
 function ShowView(props) {
-	const { data } = props;
-	const environment = props.environment;
-	const treeData = data.subOrgs.map((d)=>{
+	const { data , callback } = props;
+	const [treeData, setTreeData] = useState(data.subOrgs.map((d)=>{
 		return {
 			id: d.id,
 			pId: 0,
 			value: d.id,
-			title: d.name
+			title: d.name,
+			isLeaf: false
 		};
-	});
-	const onLoadData = treeNode => {
-		// new Promise(resolve => {
-		//   const { id } = treeNode.props;
-		//   setTimeout(() => {
-		//     this.setState({
-		//       treeData: this.state.treeData.concat([
-		//         this.genTreeNode(id, false),
-		//         this.genTreeNode(id, true),
-		//       ]),
-		//     });
-		//     resolve();
-		//   }, 300);
-		// })
-		setTimeout(() => {
-			//     this.setState({
-			//       treeData: this.state.treeData.concat([
-			//         this.genTreeNode(id, false),
-			//         this.genTreeNode(id, true),
-			//       ]),
-			//     });
-			//     resolve();
-		}, 300);
-	};
-	const onChange = value => {
-		console.log('onChange==',value);
+	}));
+	const environment = props.environment;
+	const onLoadData = treeNode => new Promise(resolve => {
+      const { id } = treeNode.props;
+      console.log('onLoadData==>',id)
+      	//#todo 获取数据
+	    // fetchQuery(environment, query, {
+	    //     id: id,
+	    // }).then(data => {
+	        
+	    // });
+	    //假数据
+	    setTimeout(() => {
+		    setTreeData(treeData.concat([{
+		    	id: id+1,
+				pId: id,
+				value: id+1,
+				title: '部门'+(id+1),
+		    }]))
+	        resolve();
+      	}, 300);
+	    
+    });
+	const onChange = (id, value, p) => {
+		console.log('onChange==>', id);
 		// this.setState({ value });
+		callback(id, value, p);
 	};
 	return ( 
 		<TreeSelect 
@@ -109,15 +110,9 @@ function ShowView(props) {
 			// value={this.state.value}
 			// dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
 			placeholder = '选择部门'
-			onChange = {
-				onChange
-			}
-			loadData = {
-				onLoadData
-			}
-			treeData = {
-				treeData
-			}
+			onChange = { onChange }
+			loadData = { onLoadData }
+			treeData = { treeData }
 		/>
 	);
    
