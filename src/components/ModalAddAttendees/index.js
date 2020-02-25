@@ -5,83 +5,12 @@ import {
 	Button, 
 	Input,
 	Transfer,
-	Table,
-	TreeSelect
+	Table
 }
 from 'antd';
 
-const DepartmentTreeSelect = (props) => {
-	const treeData = [{
-		id: 1,
-		pId: 0,
-		value: '1',
-		title: '治安大队'
-	}, {
-		id: 2,
-		pId: 0,
-		value: '2',
-		title: '交警大队'
-	}, {
-		id: 3,
-		pId: 0,
-		value: '3',
-		title: '刑侦大队'
-	}];
-	const onLoadData = treeNode => {
-		// new Promise(resolve => {
-		//   const { id } = treeNode.props;
-		//   setTimeout(() => {
-		//     this.setState({
-		//       treeData: this.state.treeData.concat([
-		//         this.genTreeNode(id, false),
-		//         this.genTreeNode(id, true),
-		//       ]),
-		//     });
-		//     resolve();
-		//   }, 300);
-		// })
-		setTimeout(() => {
-			//     this.setState({
-			//       treeData: this.state.treeData.concat([
-			//         this.genTreeNode(id, false),
-			//         this.genTreeNode(id, true),
-			//       ]),
-			//     });
-			//     resolve();
-		}, 300);
-	};
-	const onChange = value => {
-		console.log(value);
-		// this.setState({ value });
-	};
-	console.log()
-	return ( 
-		<TreeSelect 
-			treeDataSimpleMode 
-			style = {
-				{
-					width: '40%',
-					margin: '0px 5px 10px 0px'
-				}
-			}
-		// value={this.state.value}
-			// dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-			placeholder = '选择部门'
-			onChange = {
-				onChange
-			}
-			loadData = {
-				onLoadData
-			}
-			treeData = {
-				treeData
-			}
-		/>
-	)
-
-};
-
-//穿梭框
+import DepartmentTreeSelect from '@/components/DepartmentTreeSelect'
+//
 const TableTransfer = ({ leftColumns, rightColumns, ...restProps }) => (
   <Transfer {...restProps} showSelectAll={false}>
     {({
@@ -180,6 +109,8 @@ function ModalAddAttendees(props) {
 	const {Visible, CallBack} = props;
 	const environment = props.environment;
 
+
+
 	let handleOk = () => {
 		CallBack('ok');
 	};
@@ -187,6 +118,9 @@ function ModalAddAttendees(props) {
 	let handleCancel = () => {
 		CallBack('cancel');
 	};
+	let departmentTreeSelectCallback = (d) => { 
+
+	}
 	// state = {
 	//     targetKeys: originTargetKeys,
 	//     disabled: false,
@@ -225,7 +159,7 @@ function ModalAddAttendees(props) {
             </Button>,
           ]}
         >
-        <DepartmentTreeSelect />
+        <DepartmentTreeSelect  environment={environment} callback={departmentTreeSelectCallback}/>
         <TableTransfer
           dataSource={mockData}
           targetKeys={targetKeys}
