@@ -131,8 +131,7 @@ function Info(props) {
   let form = props.form;
   let qsql = graphql`
     query InfoAccountRelayQuery {
-      account {
-        id
+      account(id:1) {
 	    username
 	    user {
 	    	... on HospitalUser {

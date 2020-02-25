@@ -25,14 +25,26 @@ const menulist = [{
 	}, {
 		name: '会议室申请',
 		icon: '',
-		key: 'creatmetting',
-		link: '/Meeting/Creatmetting',
+		key: 'creatmeeting',
+		link: '/Meeting/Creatmeeting',
 		role: ['costomeruser']
 	}, {
 		name: '会议纪要',
 		icon: '',
 		key: 'mettingminutes',
 		link: '/Meeting/Meetingminutes',
+		role: ['costomeruser']
+	}, {
+		name: '普通用户会议页面',
+		icon: '',
+		key: 'userlist',
+		link: '/Meeting/Userlist',
+		role: ['costomeruser']
+	}, {
+		name: '领导会议页面',
+		icon: '',
+		key: 'leaderlist',
+		link: '/Meeting/Leaderlist',
 		role: ['costomeruser']
 	}]
 }];

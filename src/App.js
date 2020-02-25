@@ -80,7 +80,7 @@ function MainLayout() {
 
   let qsql = graphql`
     query AppAccountRelayQuery {
-      account {
+      account(id:1) {
         id
         username
         user {
