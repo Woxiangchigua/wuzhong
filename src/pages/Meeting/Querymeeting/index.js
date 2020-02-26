@@ -104,6 +104,7 @@ function MeetingDetail(props) {
           Detail.organizer,
           Detail.configuration,
           Detail.intro,
+          [],
           (response, errors) => {
             if (errors) {
               // console.log(errors)

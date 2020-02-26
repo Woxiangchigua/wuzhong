@@ -149,6 +149,7 @@ function AddMeeting(props) {
           values.organizer,
           'configuration',
           values.intro,
+          [],
           (response, errors) => {
             if (errors) {
               console.log(errors)
