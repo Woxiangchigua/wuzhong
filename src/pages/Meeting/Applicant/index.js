@@ -14,13 +14,28 @@ const { Search } = Input;
 const ButtonGroup = Button.Group;
 const { TabPane } = Tabs;
 const query = graphql`
-    query Applicant_MeetingRoomListQuery{
+    query Applicant_MeetingRoomListQuery(
+      $beginTime: DateTime
+      $endTime: DateTime
+      ){
         meetingRoomList{
         edges{
             id,
             name
         }
         }
+        preordainAboutMeMeetingList(
+          beginTime: $beginTime,
+          endTime: $endTime
+          ){
+            edges{
+              applyUserId,
+              beginTime,
+              endTime,
+              meetingName,
+              meetingRoomId
+          }
+          }
     }`
 
 class AddMeeting extends Component {
@@ -30,11 +45,12 @@ class AddMeeting extends Component {
       return { 'resourceId': edge.id, 'resourceTitle': edge.name }
     }),
     loading: false,
+    meetingList:[]
   };
   render() {
     return (
       <div style={{ height: 500 }}>
-        <Calendar resourceMap={this.state.resourceMap} />
+        <Calendar resourceMap={this.state.resourceMap} events={this.state.meetingList} />
       </div>
     )
   }
@@ -96,8 +112,11 @@ function Lists(props) {
       <div className={'divclear'}></div>
       <QueryRenderer
         environment={environment}
-        query={query
-        }
+        query={query}
+        variables={{
+          beginTime:new Date(new Date().toLocaleDateString()).toISOString(),
+          endTime:new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1).toISOString()
+        }}
         render={({ error, props, retry }) => {
           if (error) {
             return (
@@ -107,7 +126,7 @@ function Lists(props) {
           } else if (props) {
             if (props.meetingRoomList) {
               return (
-                <AddMeeting environment={environment} meetingRoomList={props.meetingRoomList} />
+                <AddMeeting environment={environment} meetingRoomList={props.meetingRoomList} meetingList={props.preordainAboutMeMeetingList} />
 
               )
             }

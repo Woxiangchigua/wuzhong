@@ -98,9 +98,9 @@ function AddMeeting(props) {
   //添加负责人返回
   let modalAddAttendeesCallback = (a, d) => {
     setModalAddAttendeesVisible(false);
-    console.log(a,d)
+    console.log(a, d)
   }
-  
+
   function getChildrenMsg(result, msg) {
     console.log(msg)
     // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
@@ -127,7 +127,9 @@ function AddMeeting(props) {
           values.organizer,
           'configuration',
           values.intro,
-          [],
+          ["user-5",
+            "user-6"
+          ],
           (response, errors) => {
             if (errors) {
               console.log(errors)
@@ -142,7 +144,7 @@ function AddMeeting(props) {
                   history.goBack()
                 },
               });
-              
+
             }
           },
           (response, errors) => {
@@ -157,7 +159,7 @@ function AddMeeting(props) {
     });
   };
 
-  function goBack(){
+  function goBack() {
     history.goBack()
   }
 
@@ -227,7 +229,7 @@ function AddMeeting(props) {
         <Divider />
         <Card title="参会人员" style={{ margin: '0px 0 20px 0' }}>
           <Table columns={columns} dataSource={data} pagination={false} />
-          <Button icon="plus" onClick={()=>{ setModalAddAttendeesVisible(true) }}  style={{ margin: '5px 0 20px 0', width: '100%' }}>
+          <Button icon="plus" onClick={() => { setModalAddAttendeesVisible(true) }} style={{ margin: '5px 0 20px 0', width: '100%' }}>
             添加负责人
           </Button>
         </Card>
@@ -246,7 +248,7 @@ function AddMeeting(props) {
         </Col>
       </Form>
 
-      <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible}  callback={modalAddAttendeesCallback.bind(this)} />
+      <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible} callback={modalAddAttendeesCallback.bind(this)} />
     </>
 
   )

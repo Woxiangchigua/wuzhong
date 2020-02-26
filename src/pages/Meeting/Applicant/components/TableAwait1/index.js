@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider, Popconfirm, Modal, Button } from 'antd';
+import { Table, Divider, Badge, Modal, Button } from 'antd';
 import dateFormat from '../../../../../ utils/dateFormat'
-import { Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+import CommitCheckMeeting from '../../../Mutations/CommitCheckMeeting'
+import AbrogateMeeting from '../../../Mutations/AbrogateMeeting'
 
 function Lists(props) {
+    let history = useHistory();
     const { confirm } = Modal;
     const query = graphql`
     query TableAwait1_MeetingListQuery(
@@ -62,10 +65,11 @@ function Lists(props) {
             key: 'status',
             className: 'tabcolums',
             render: (text, record) => (
-                <span>
-                    {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
-                </span>
+                <Badge
+                    status={record.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
+                    text={record.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : record.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : record.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
             ),
+
         },
         {
             title: '会议室',
@@ -117,10 +121,31 @@ function Lists(props) {
             key: 'delete',
             render: (text, record) => (
                 <span>
+                    <Button style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
+                        onClick={() => { showConfirm(record.id) }}
+                        type="link">
+                        提交审核
+                    </Button>
+                    <Divider style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }} type="vertical" />
                     <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
                     <Divider type="vertical" />
-                    <Button onClick={() => { showDeleteConfirm(record.id) }} type="link">
+                    <Link
+                        style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
+                        to={"/Meeting/Updatemeeting/" + record.id}>
+                        编辑
+                    </Link>
+                    <Divider style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }} type="vertical" />
+                    <Button
+                        style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
+                        onClick={() => { showDeleteConfirm(record.id) }}
+                        type="link">
                         删除
+                    </Button>
+                    <Button
+                        style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'none' : 'block' }}
+                        onClick={() => { showAbrogateConfirm(record.id) }}
+                        type="link">
+                        取消
                     </Button>
                 </span>
             ),
@@ -157,6 +182,77 @@ function Lists(props) {
             },
         });
     }
+
+    function showAbrogateConfirm(id) {
+        confirm({
+            title: '你确定要取消这条会议申请吗？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk() {
+                AbrogateMeeting.commit(
+                    props.environment,
+                    id,
+                    (response, errors) => {
+                        if (errors) {
+                            console.log(errors)
+                        } else {
+                            console.log(response);
+                        }
+                    },
+                    (response, errors) => {
+                        if (errors) {
+                            console.log(errors)
+                        } else {
+                            console.log(response);
+                        }
+                    }
+                );
+            },
+            onCancel() {
+                console.log('取消删除');
+            },
+        });
+    }
+
+    function showConfirm(id) {
+        confirm({
+            title: '你真的要提交这个会议吗?',
+            content: '',
+            onOk() {
+                console.log('确认');
+                CommitCheckMeeting.commit(
+                    props.environment,
+                    id,
+                    (response, errors) => {
+                        if (errors) {
+                            // console.log(errors)
+                            Modal.error({
+                                title: errors[0].message,
+                            });
+                        } else {
+                            // console.log(response);
+                            Modal.success({
+                                content: '提交成功',
+                                onOk() {
+                                    history.goBack()
+                                },
+                            });
+                        }
+                    },
+                    (response, errors) => {
+                        if (errors) {
+                            console.log(errors)
+                        } else {
+                            console.log(response);
+                        }
+                    }
+                );
+            },
+            onCancel() {
+                console.log('取消');
+            },
+        });
+    }
     class TableAwait extends Component {
         state = {
             environment: this.props.environment,
@@ -183,10 +279,10 @@ function Lists(props) {
                 environment={environment}
                 query={query
                 }
-				variables={{
-				    order:'',
-				    meetingName:props.searchKey
-				}}
+                variables={{
+                    order: '',
+                    meetingName: props.searchKey
+                }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (

@@ -42,7 +42,7 @@ class Resource extends React.Component {
             <>
                 <Calendar
                     
-                    events={this.state.events}
+                    events={this.props.events}
                     localizer={localizer}
                     defaultView={Views.DAY}
                     views={['day', 'work_week']}

@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateMeeting from '../Mutations/CreateMeeting'
+import CommitCheckMeeting from '../Mutations/CommitCheckMeeting'
 import AuditMeeting from '../Mutations/AuditMeeting'
 import {
   Breadcrumb,
@@ -94,17 +94,9 @@ function MeetingDetail(props) {
       content: '',
       onOk() {
         console.log('确认');
-        CreateMeeting.commit(
+        CommitCheckMeeting.commit(
           props.environment,
-          Detail.beginTime,
-          Detail.meetingRoomId,
-          Detail.number,
-          Detail.endTime,
-          Detail.meetingName,
-          Detail.organizer,
-          Detail.configuration,
-          Detail.intro,
-          [],
+          Detail.id,
           (response, errors) => {
             if (errors) {
               // console.log(errors)
@@ -291,7 +283,7 @@ function List(props) {
           </div>)
       } else if (props) {
         if (props.meeting) {
-          return <MeetingDetail environment={environment} meetingRoomDetail={props.meeting} />
+          return <MeetingDetail environment={environment} meetingRoomDetail={props.meeting} id={props.id} />
         }
       }
       return <div>Loading</div>;
