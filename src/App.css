@@ -83,3 +83,12 @@ th.tabcolums{
   width: 100% !important;
   zoom: 1;
 }
+.divline{
+  display: block;
+  background-color: #e8e8e8;
+  clear: both;
+  width: 100%;
+  min-width: 100%;
+  height: 1px;
+  /* margin: 24px 0; */
+}
