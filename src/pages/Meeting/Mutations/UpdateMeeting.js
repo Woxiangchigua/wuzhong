@@ -6,6 +6,7 @@ import {
 const mutation = graphql`
   mutation UpdateMeetingMutation(
     $id: ID!
+    $userIds: [ID]!
     $endTime: DateTime!
     $meetingRoomId: ID!
     $organizer: String!
@@ -15,7 +16,7 @@ const mutation = graphql`
     $meetingName: String!
     $number: Int!) {
     updateMeeting(id: $id,beginTime: $beginTime,meetingRoomId: $meetingRoomId,number: $number,
-      endTime: $endTime,meetingName: $meetingName,organizer: $organizer,configuration: $configuration,intro: $intro,) {
+      endTime: $endTime,userIds:$userIds,meetingName: $meetingName,organizer: $organizer,configuration: $configuration,intro: $intro,) {
       id
     }
   }
@@ -32,6 +33,7 @@ function commit(
     organizer,
     configuration,
     intro,
+    userIds,
     onCompleted,
     error
 ) {
@@ -47,6 +49,7 @@ function commit(
             organizer: organizer,
             configuration: configuration,
             intro: intro,
+            userIds:userIds
         },
         onCompleted: onCompleted,
         onError: error,
