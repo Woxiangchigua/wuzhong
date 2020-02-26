@@ -4,6 +4,7 @@ import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Button, Breadcrumb, Card, Table, Divider } from 'antd';
 import './index.css';
 import dateFormat from '../../../ utils/dateFormat'
+import { Link } from "react-router-dom";
 
 const ButtonGroup = Button.Group;
 const query = graphql`
@@ -128,7 +129,9 @@ function Lists(props) {
           <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
         </Breadcrumb>
         <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
-          <Button>会议申请</Button>
+          <Link to={"/Meeting/Creatmeeting"}>
+            <Button>会议申请</Button>
+          </Link>
           <Button>会议纪要</Button>
         </ButtonGroup>
       </Card>
