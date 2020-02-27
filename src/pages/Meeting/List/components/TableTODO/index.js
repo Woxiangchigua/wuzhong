@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider } from 'antd';
+import { Table, Divider,Badge } from 'antd';
 import dateFormat from '../../../../../ utils/dateFormat'
 import { Link } from "react-router-dom";
 
@@ -58,9 +58,7 @@ const query = graphql`
         key: 'status',
         className: 'tabcolums',
         render: (text, record) => (
-            <span>
-              {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
-            </span>
+          <Badge status="success" text="待开" />
           ),
       },
       {

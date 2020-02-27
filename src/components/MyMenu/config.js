@@ -10,6 +10,25 @@ const menulist = [{
 		key: 'calllist',
 		link: '/Home',
 		role: ['employee']
+	}]
+}, {
+	name: '会议管理',
+	icon: 'mail',
+	key: 'meeting',
+	role: ['employee'],
+	items: [{
+		name: '管理人员会议主页',
+		icon: '',
+		key: 'meetinglist',
+		link: '/Meeting/List',
+		role: ['employee']
+	},
+	{
+		name: '申请人会议主页',
+		icon: '',
+		key: 'applicant',
+		link: '/Meeting/Applicant',
+		role: ['employee']
 	}, {
 		name: '普通用户会议页面',
 		icon: '',
@@ -22,38 +41,19 @@ const menulist = [{
 		key: 'leaderlist',
 		link: '/Meeting/Leaderlist',
 		role: ['employee']
-	}]
-}, {
-	name: '会议管理',
-	icon: 'mail',
-	key: 'meeting',
-	role: ['employee'],
-	items: [{
-		name: '会议室管理',
+	},
+	{
+		name: '会议室申请',
 		icon: '',
-		key: 'meetinglist',
-		link: '/Meeting/List',
+		key: 'creatmetting',
+		link: '/Meeting/Creatmeeting',
 		role: ['employee']
 	},
-	// {
-	// 	name: '会议室申请',
-	// 	icon: '',
-	// 	key: 'creatmetting',
-	// 	link: '/Meeting/Creatmeeting',
-	// 	role: ['employee']
-	// }, 
 	{
 		name: '会议纪要',
 		icon: '',
 		key: 'mettingminutes',
 		link: '/Meeting/Meetingminutes',
-		role: ['employee']
-	},
-	{
-		name: '申请人会议主页',
-		icon: '',
-		key: 'applicant',
-		link: '/Meeting/Applicant',
 		role: ['employee']
 	}]
 }];

@@ -16,13 +16,28 @@ const { TextArea } = Input;
 const ButtonGroup = Button.Group;
 const { TabPane } = Tabs;
 const query = graphql`
-    query List_MeetingRoomListQuery{
+    query List_MeetingRoomListQuery(
+      $beginTime: DateTime
+      $endTime: DateTime
+      ){
         meetingRoomList{
         edges{
             id,
             name
         }
         }
+        preordainMeetingList(
+          beginTime: $beginTime,
+          endTime: $endTime
+          ){
+            edges{
+              applyUserId,
+              beginTime,
+              endTime,
+              meetingName,
+              meetingRoomId
+          }
+          }
     }`
 
 class AddMeeting extends Component {
@@ -32,11 +47,20 @@ class AddMeeting extends Component {
       return { 'resourceId': edge.id, 'resourceTitle': edge.name }
     }),
     loading: false,
+    meetingList:this.props.meetingList.edges.map(function (edge, index) {
+      return { 
+        title: edge.meetingName,
+        start: edge.beginTime,
+        end: edge.endTime,
+        resourceId: edge.meetingRoomId,
+       }
+    }),
+    
   };
   render() {
     return (
       <div style={{ height: 500 }}>
-        <Calendar resourceMap={this.state.resourceMap} />
+        <Calendar resourceMap={this.state.resourceMap} events={this.state.meetingList} />
       </div>
     )
   }
@@ -89,7 +113,6 @@ function Lists(props) {
   return (
     
     <div>
-      <TextArea rows={4} />
       <Card bordered={false} >
         <Breadcrumb style={{ margin: '15px 0px', float: 'left' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
@@ -105,8 +128,11 @@ function Lists(props) {
       <div className={'divclear'}></div>
       <QueryRenderer
         environment={environment}
-        query={query
-        }
+        query={query}
+        variables={{
+          beginTime:new Date(new Date().toLocaleDateString()).toISOString(),
+          endTime:new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1).toISOString()
+        }}
         render={({ error, props, retry }) => {
           if (error) {
             return (
@@ -116,7 +142,7 @@ function Lists(props) {
           } else if (props) {
             if (props.meetingRoomList) {
               return (
-                <AddMeeting environment={environment} meetingRoomList={props.meetingRoomList} />
+                <AddMeeting environment={environment} meetingRoomList={props.meetingRoomList} meetingList={props.preordainMeetingList} />
 
               )
             }
