@@ -1,16 +1,16 @@
 import React from 'react';
 import CommitCheckMeeting from '../Mutations/CommitCheckMeeting'
 import AuditMeeting from '../Mutations/AuditMeeting'
+import AbrogateMeeting from '../Mutations/AbrogateMeeting'
+import CancelMeeting from '../Mutations/CancelMeeting'
 import {
   Breadcrumb,
-  Form,
   Input,
   Steps,
   Badge,
   Descriptions,
   Card,
   Col,
-  PageHeader,
   Table,
   Button,
   Modal,
@@ -21,6 +21,7 @@ import dateFormat from '../../../ utils/dateFormat'
 import {
   useHistory, Link
 } from "react-router-dom";
+import "./index.css"
 
 const query = graphql`
 query Querymeeting_MeetingDetailQuery($id:ID!){
@@ -58,7 +59,8 @@ function MeetingDetail(props) {
   const { Step } = Steps;
   const ButtonGroup = Button.Group;
   const { confirm } = Modal;
-  const { TextArea } = Input; const columns = [
+  const { TextArea } = Input;
+  const columns = [
     {
       title: '负责人姓名',
       dataIndex: 'name',
@@ -127,7 +129,7 @@ function MeetingDetail(props) {
       },
     });
   }
-  function showDeleteConfirm() {
+  function showAuditConfirm() {
     confirm({
       title: '你需要审核这个会议',
       content: '',
@@ -138,7 +140,7 @@ function MeetingDetail(props) {
         AuditMeeting.commit(
           props.environment,
           Detail.id,
-          'MEETING_PASS',
+          props.review === 'MEETING_CHECK_PENDING_MANAGE'?'MEETING_CHECK_PENDING_ADMIN':'MEETING_PASS',
           (response, errors) => {
             if (errors) {
               // console.log(errors)
@@ -197,6 +199,86 @@ function MeetingDetail(props) {
       },
     });
   }
+  function showAbrogateConfirm() {
+    confirm({
+      title: '你真的要取消这个会议吗?',
+      content: '',
+      okType: 'danger',
+      onOk() {
+        console.log('确认');
+        AbrogateMeeting.commit(
+          props.environment,
+          Detail.id,
+          (response, errors) => {
+            if (errors) {
+              // console.log(errors)
+              Modal.error({
+                title: errors[0].message,
+              });
+            } else {
+              // console.log(response);
+              Modal.success({
+                content: '取消成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
+            }
+          },
+          (response, errors) => {
+            if (errors) {
+              console.log(errors)
+            } else {
+              console.log(response);
+            }
+          }
+        );
+      },
+      onCancel() {
+        console.log('取消');
+      },
+    });
+  }
+  function showDeleteConfirm() {
+    confirm({
+      title: '你真的要删除这个会议吗?',
+      content: '',
+      okType: 'danger',
+      onOk() {
+        console.log('确认');
+        CancelMeeting.commit(
+          props.environment,
+          Detail.id,
+          (response, errors) => {
+            if (errors) {
+              // console.log(errors)
+              Modal.error({
+                title: errors[0].message,
+              });
+            } else {
+              // console.log(response);
+              Modal.success({
+                content: '删除成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
+            }
+          },
+          (response, errors) => {
+            if (errors) {
+              console.log(errors)
+            } else {
+              console.log(response);
+            }
+          }
+        );
+      },
+      onCancel() {
+        console.log('取消');
+      },
+    });
+  }
   function goBack() {
     history.goBack()
   }
@@ -207,20 +289,40 @@ function MeetingDetail(props) {
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
           <Breadcrumb.Item>查看会议详情</Breadcrumb.Item>
         </Breadcrumb>
-        </Card>
+      </Card>
       <Divider />
       <Card title="" bordered={false} >
         <Col span={24}>
-          <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室和会议时间</p>
-          <ButtonGroup style={{ marginLeft: "75%" }}>
-            <Link to={"/Meeting/Updatemeeting/" + Detail.id}>
-              <Button>编辑</Button>
-            </Link>
-            <Button onClick={showConfirm}>提交审核</Button>
-          </ButtonGroup>
-          <Button type="primary" style={{ marginLeft: "10px" }} onClick={showDeleteConfirm}>
-            审核
-            </Button>
+          <div className="top">
+            <div>
+              <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室和会议时间</p>
+            </div>
+            <div style={{ marginLeft: 0 }}>
+              <Link
+               style={{ display: props.review === 'MEETING_EDIT_OR_FAIL' ? 'inline-block' : 'none' }} 
+               to={"/Meeting/Updatemeeting/" + Detail.id}>
+                <Button>编辑</Button>
+              </Link>
+              <Button
+               style={{ display: props.review === 'MEETING_EDIT_OR_FAIL' ? 'inline-block' : 'none', marginLeft: 10 }} 
+               onClick={showConfirm}>提交审核</Button>
+              <Button
+               style={{ display: props.review === 'MEETING_CHECK_PENDING_MANAGE'|| props.review === 'MEETING_CHECK_PENDING_ADMIN'? 'inline-block' : 'none', marginLeft: 10 }} type="primary" 
+               onClick={showAuditConfirm}>
+                审核
+              </Button>
+              <Button
+               style={{ display: props.review !== 'MEETING_EDIT_OR_FAIL' ? 'inline-block' : 'none', marginLeft: 10 }} type="danger" 
+               onClick={showAbrogateConfirm}>
+                取消
+              </Button>
+              <Button
+               style={{ display: props.review === 'MEETING_EDIT_OR_FAIL' ? 'inline-block' : 'none', marginLeft: 10 }} type="danger" 
+               onClick={showDeleteConfirm}>
+                删除
+              </Button>
+            </div>
+          </div>
         </Col>
         <Divider />
         <Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
@@ -232,10 +334,15 @@ function MeetingDetail(props) {
           <Descriptions.Item label="申请人">{Detail.applyUserId}</Descriptions.Item>
           <Descriptions.Item label="申请日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
           <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM", new Date(Detail.endTime))}</Descriptions.Item>
-          <Descriptions.Item label="会议状态">
+          <Descriptions.Item label="会议状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'block' : 'none' }}>
             <Badge
               status={Detail.status === 'MEETING_END' ? 'default' : Detail.status === 'MEETING_CANCEL' ? 'error' : Detail.status === 'MEETING_AWAIT' ? 'success' : ''}
               text={Detail.status === 'MEETING_END' ? '会议结束' : Detail.status === 'MEETING_CANCEL' ? '已取消' : Detail.status === 'MEETING_AWAIT' ? '未开始' : ''} />
+          </Descriptions.Item>
+          <Descriptions.Item label="审核状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'none' : 'block' }}>
+            <Badge
+              status={Detail.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
+              text={Detail.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : Detail.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : Detail.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
           </Descriptions.Item>
         </Descriptions>
         <Card title="参会人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>
@@ -266,11 +373,13 @@ function MeetingDetail(props) {
 
 function List(props) {
   console.log(props)
+  const {id,review}=JSON.parse(props.id)
   const environment = props.environment;
   return (<QueryRenderer
     environment={environment}
     query={query}
-    variables={{ id: props.id }}
+    // variables={{ id: props.id }}
+    variables={{ id: id }}
     render={({ error, props, retry }) => {
       if (error) {
         return (
@@ -279,7 +388,7 @@ function List(props) {
           </div>)
       } else if (props) {
         if (props.meeting) {
-          return <MeetingDetail environment={environment} meetingRoomDetail={props.meeting} id={props.id} />
+          return <MeetingDetail environment={environment} meetingRoomDetail={props.meeting} id={props.id} review={review} />
         }
       }
       return <div>Loading</div>;

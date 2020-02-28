@@ -31,7 +31,7 @@ class Resource extends React.Component {
         super(props)
 
         this.state = {
-            events,
+            events:props.events,
             selected: false
         }
   
