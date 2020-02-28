@@ -269,7 +269,7 @@ function Home(props) {
       <Card title="" bordered={false} >
         <Breadcrumb style={{ margin: '0px 0px 15px 0px' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
-          <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
+          <Breadcrumb.Item>会议室申请</Breadcrumb.Item>
         </Breadcrumb>
         <PageHeader
           title="会议室预定表"

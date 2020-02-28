@@ -205,12 +205,8 @@ function MeetingDetail(props) {
       <Card title="" bordered={false} >
         <Breadcrumb style={{ margin: '15px 0px' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
-          <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
+          <Breadcrumb.Item>查看会议详情</Breadcrumb.Item>
         </Breadcrumb>
-        <PageHeader
-          title="会议室预定表"
-          subTitle="用于内部各个会议室的预定功能"
-        />,
         </Card>
       <Divider />
       <Card title="" bordered={false} >

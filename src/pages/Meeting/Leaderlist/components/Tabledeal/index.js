@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import DeleteMeeting from '../../../Mutations/DeleteMeeting'
+import LeaderCheckMeeting from '../../../Mutations/LeaderCheckMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Table, Divider,Badge,Modal,Button,Input  } from 'antd';
 import { Link } from "react-router-dom";
@@ -136,7 +136,7 @@ function showModal(id){
       okText: '同意',
       cancelText: '不同意',
       onOk() {
-        DeleteMeeting.commit(
+        LeaderCheckMeeting.commit(
             props.environment,
             id,
             (response, errors) => {
