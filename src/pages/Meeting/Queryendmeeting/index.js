@@ -23,29 +23,28 @@ import {
 } from "react-router-dom";
 const { Dragger } = Upload;
 const query = graphql`
-query Queryendmeeting_MeetingDetailQuery{
-  meetingList(first:1000,skip:0){
-    edges{
-      applyUserId,
-      beginTime,
-      configuration,
-      createdAt,
-      deletedAt,
-      endTime,
+query Queryendmeeting_MeetingDetailQuery($id:ID!){
+  meeting(id:$id){
+    applyUserId,
+    beginTime,
+    configuration,
+    createdAt,
+    deletedAt,
+    endTime,
+    id,
+    intro,
+    meetingName,
+    meetingRoom{
       id,
-      intro,
-      meetingName,
-      meetingRoom{
-        id,
-        name
-      },
-      number,
-      organizer,
-      review,
-      reviewUserId,
-      status,
-      updatedAt
-    }
+      name
+    },
+    meetingRoomId,
+    number,
+    organizer,
+    review,
+    reviewUserId,
+    status,
+    updatedAt
   }
   }`
 
@@ -367,7 +366,7 @@ function MeetingDetail(props) {
       <Card title="" bordered={false} >
         <Breadcrumb style={{ margin: '15px 0px' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
-          <Breadcrumb.Item>会议纪要</Breadcrumb.Item>
+          <Breadcrumb.Item>查看会议纪要详情</Breadcrumb.Item>
         </Breadcrumb>
       </Card>
       <div className='divline'></div>
@@ -375,17 +374,19 @@ function MeetingDetail(props) {
         <Card title="会议纪要及信息" bordered={false} >
         <div className='divline'></div>
         <Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
-            <Descriptions.Item label="主办单位">治安大队</Descriptions.Item>
-            <Descriptions.Item label="会议名称">2020年治安大队会议</Descriptions.Item>
-            <Descriptions.Item label="会议室">1502</Descriptions.Item>
-            <Descriptions.Item label="会议开始时间">12:30</Descriptions.Item>
-            <Descriptions.Item label="参会人数">38</Descriptions.Item>
-            <Descriptions.Item label="申请人">曲丽丽</Descriptions.Item>
-            <Descriptions.Item label="申请日期">2020-03-18</Descriptions.Item>
-            <Descriptions.Item label="会议结束时间">12:30</Descriptions.Item>
-            <Descriptions.Item label="会议状态">
-              <Badge status={'success'} text={'已完成'} />
-            </Descriptions.Item>
+        <Descriptions.Item label="主办单位">{Detail.organizer}</Descriptions.Item>
+          <Descriptions.Item label="会议名称">{Detail.meetingName}</Descriptions.Item>
+          <Descriptions.Item label="会议室">{Detail.meetingRoom.name}</Descriptions.Item>
+          <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM", new Date(Detail.beginTime))}</Descriptions.Item>
+          <Descriptions.Item label="参会人数">{Detail.number}</Descriptions.Item>
+          <Descriptions.Item label="申请人">{Detail.applyUserId}</Descriptions.Item>
+          <Descriptions.Item label="申请日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
+          <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM", new Date(Detail.endTime))}</Descriptions.Item>
+          <Descriptions.Item label="会议状态">
+            <Badge
+              status={Detail.status === 'MEETING_END' ? 'default' : Detail.status === 'MEETING_CANCEL' ? 'error' : Detail.status === 'MEETING_AWAIT' ? 'success' : ''}
+              text={Detail.status === 'MEETING_END' ? '会议结束' : Detail.status === 'MEETING_CANCEL' ? '已取消' : Detail.status === 'MEETING_AWAIT' ? '未开始' : ''} />
+          </Descriptions.Item>
           </Descriptions>
         </Card>
         <Card title="参会人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>
@@ -419,7 +420,7 @@ function List(props) {
   return (<QueryRenderer
     environment={environment}
     query={query}
-    // variables={{ id: props.id }}
+    variables={{ id: props.id }}
     render={({ error, props, retry }) => {
       if (error) {
         return (
@@ -427,8 +428,8 @@ function List(props) {
             <h1>Error!</h1><br />{error.message}
           </div>)
       } else if (props) {
-        if (props.meetingList) {
-          return <MeetingDetail environment={environment} meetingRoomDetail={props.meetingList} />
+        if (props.meeting) {
+          return <MeetingDetail environment={environment} meetingRoomDetail={props.meeting} />
         }
       }
       return <div>Loading</div>;

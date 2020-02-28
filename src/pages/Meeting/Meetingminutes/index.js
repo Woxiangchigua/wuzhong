@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Calendar from '../../../components/Calendar/index'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Button, Breadcrumb, Card, Table, Divider } from 'antd';
+import { Button, Breadcrumb, Card, Table, Divider,Icon } from 'antd';
 import './index.css';
 import dateFormat from '../../../ utils/dateFormat'
 import { Link } from "react-router-dom";
@@ -55,7 +55,11 @@ const columns = [
         title: '会议纪要',
         dataIndex: 'meetingminutes',
         key: 'meetingminutes',
-        className: 'tabcolums'
+        className: 'tabcolums',
+        render: (text, record) => (
+            <Icon type="profile" style={{marginLeft:'8%',fontSize:'26px'}}/>
+            // <Badge status={'warning'}/>
+        ),
     },
     {
         title: '申请人',
@@ -85,8 +89,10 @@ const columns = [
         key: 'action',
         render: (text, record) => (
             <span>
-                <a>详情</a>
-                <Divider type="vertical" />
+                <Link to={"/Meeting/Queryendmeeting/" + record.id}>
+                    <Button type="link">详情</Button>
+                </Link>
+                {/* <Divider type="vertical" /> */}
             </span>
         ),
     },
@@ -126,7 +132,7 @@ function Lists(props) {
       <Card bordered={false} >
         <Breadcrumb style={{ margin: '15px 0px', float: 'left' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
-          <Breadcrumb.Item>会议室预定表</Breadcrumb.Item>
+          <Breadcrumb.Item>会议纪要</Breadcrumb.Item>
         </Breadcrumb>
         <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
           <Link to={"/Meeting/Creatmeeting"}>
@@ -142,6 +148,12 @@ function Lists(props) {
                 environment={environment}
                 query={query
                 }
+                variables={{
+                    order:'',
+                    status:'MEETING_END',
+                    review:'MEETING_PASS',
+                    meetingName:props.searchKey
+                }}
                 render={({ error, props, retry }) => {
                     if (error) {
                         return (
