@@ -127,11 +127,11 @@ function Lists(props) {
             key: 'delete',
             render: (text, record) => (
                 <span>
-                    <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
-                    <Divider type="vertical" />
-                    <Button onClick={() => { showDeleteConfirm(record.id) }} type="link">
+                    <Link to={"/Meeting/Querymeeting/" + JSON.stringify({id:record.id,review:record.review})}>详情</Link>
+                    {/* <Divider type="vertical" />
+                    <Button onClick={() => { showDeleteConfirm(JSON.stringify({id:record.id,review:record.review})) }} type="link">
                         删除
-                    </Button>
+                    </Button> */}
                 </span>
             ),
         },

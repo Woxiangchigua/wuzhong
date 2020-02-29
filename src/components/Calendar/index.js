@@ -24,14 +24,17 @@ class Resource extends React.Component {
 
         this.state = {
             events,
-            selected: false
+            selected: false,
+            formats : {
+                selectRangeFormat:"8:00am — 2:00pm"
+            }
         }
         this.moveEvent = this.moveEvent.bind(this)
         this.newEvent = this.newEvent.bind(this)
     }
 
     handleSelect = ({ props, start, end, resourceId }) => {
-        const title = window.prompt('请输入会议名称')
+        // const title = window.prompt('请输入会议名称')
         // console.log(new Date(start).toISOString(), new Date(end).toISOString(), title)
         let list = this.state.events
         if (this.state.selected) {
@@ -41,7 +44,7 @@ class Resource extends React.Component {
             })
         }
 
-        if (title) {
+        // if (title) {
             let occupy = false
             for (const item of list) {
                 if (
@@ -64,7 +67,7 @@ class Resource extends React.Component {
                         {
                             start,
                             end,
-                            title,
+                            // title,
                             resourceId
                         },
                     ],
@@ -74,11 +77,11 @@ class Resource extends React.Component {
                 this.props.parent(this, {
                     start,
                     end,
-                    title,
+                    // title,
                     resourceId
                 })
             }
-        }
+        // }
     }
 
     moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
@@ -132,6 +135,10 @@ class Resource extends React.Component {
         //alert(`${event.title} was resized to ${start}-${end}`)
     }
 
+    navigate(val){
+        console.log("时间改变："+val)
+    }
+
     newEvent(event) {
         // let idList = this.state.events.map(a => a.id)
         // let newId = Math.max(...idList) + 1
@@ -154,19 +161,21 @@ class Resource extends React.Component {
                     events={this.state.events}
                     localizer={localizer}
                     defaultView={Views.DAY}
-                    views={['day', 'work_week']}
+                    views={['day']}
                     step={30}
                     defaultDate={new Date()}
                     resources={this.props.resourceMap}
                     resourceIdAccessor="resourceId"
                     resourceTitleAccessor="resourceTitle"
-                    onSelectEvent={event => alert(event.title)}
+                    // onSelectEvent={event => alert(event.title)}
                     onSelectSlot={this.handleSelect}
                     resizable
                     allDayAccessor="false"
                     onEventDrop={this.moveEvent}
                     onEventResize={this.resizeEvent}
                     onDragStart={console.log}
+                    onNavigate={this.navigate}
+                    // formats={this.state.formats}
                     eventPropGetter={
                         (event, start, end, isSelected) => {
                             // console.log(event, start, end, isSelected)

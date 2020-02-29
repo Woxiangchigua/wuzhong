@@ -105,9 +105,9 @@ const query = graphql`
           key: 'action',
           render: (text, record) => (
             <span>
-              <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
-              <Divider type="vertical" />
-              <a>删除</a>
+              <Link to={"/Meeting/Querymeeting/" + JSON.stringify({id:record.id,review:record.review})}>详情</Link>
+              {/* <Divider type="vertical" />
+              <a>删除</a> */}
             </span>
           ),
         },

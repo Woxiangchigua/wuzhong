@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Table, Divider, Badge, Modal, Button } from 'antd';
@@ -8,6 +8,7 @@ import CommitCheckMeeting from '../../../Mutations/CommitCheckMeeting'
 import AbrogateMeeting from '../../../Mutations/AbrogateMeeting'
 
 function Lists(props) {
+    const [meetingList, setmeetingList] = useState([]);
     let history = useHistory();
     const { confirm } = Modal;
     const query = graphql`
@@ -121,14 +122,14 @@ function Lists(props) {
             key: 'delete',
             render: (text, record) => (
                 <span>
-                    <Button style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
+                    {/* <Button style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
                         onClick={() => { showConfirm(record.id) }}
                         type="link">
                         提交审核
                     </Button>
-                    <Divider style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }} type="vertical" />
-                    <Link to={"/Meeting/Querymeeting/" + record.id}>详情</Link>
-                    <Divider type="vertical" />
+                    <Divider style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }} type="vertical" /> */}
+                    <Link to={"/Meeting/Querymeeting/" + JSON.stringify({id:record.id,review:record.review})}>详情</Link>
+                    {/* <Divider type="vertical" />
                     <Link
                         style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
                         to={"/Meeting/Updatemeeting/" + record.id}>
@@ -146,7 +147,7 @@ function Lists(props) {
                         onClick={() => { showAbrogateConfirm(record.id) }}
                         type="link">
                         取消
-                    </Button>
+                    </Button> */}
                 </span>
             ),
         },
@@ -214,6 +215,19 @@ function Lists(props) {
         });
     }
 
+    function getList() {
+        fetchQuery(props.environment, query, {
+            order: '',
+            meetingName: props.searchKey
+        }).then(data => {
+            if (data) {
+                if (data.applyPendingMeetingList) {
+                    setmeetingList(data.applyPendingMeetingList)
+                }
+            }
+        });
+    }
+
     function showConfirm(id) {
         confirm({
             title: '你真的要提交这个会议吗?',
@@ -234,7 +248,8 @@ function Lists(props) {
                             Modal.success({
                                 content: '提交成功',
                                 onOk() {
-                                    history.goBack()
+                                    // history.goBack()
+                                    getList()
                                 },
                             });
                         }

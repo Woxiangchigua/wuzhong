@@ -58,19 +58,7 @@ const data = [
     name: '张三',
     age: "0001",
     address: '治安大队',
-  },
-  {
-    key: '2',
-    name: '李四',
-    age: "0002",
-    address: '交警大队',
-  },
-  {
-    key: '3',
-    name: '王五',
-    age: "0003",
-    address: '刑侦大队',
-  },
+  }
 ];
 
 const query = graphql`
@@ -123,7 +111,7 @@ function AddMeeting(props) {
           obj.resourceId,
           values.number,
           new Date(obj.end).toISOString(),
-          obj.title,
+          values.meetingName,
           values.organizer,
           'configuration',
           values.intro,

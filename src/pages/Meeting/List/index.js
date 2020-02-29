@@ -50,8 +50,8 @@ class AddMeeting extends Component {
     meetingList:this.props.meetingList.edges.map(function (edge, index) {
       return { 
         title: edge.meetingName,
-        start: edge.beginTime,
-        end: edge.endTime,
+        start: new Date(edge.beginTime),
+        end: new Date(edge.endTime),
         resourceId: edge.meetingRoomId,
        }
     }),

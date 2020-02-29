@@ -18,20 +18,7 @@ const events = [
         start: new Date('2020-02-19T13:00:00.000Z'),
         end: new Date('2020-02-19T14:30:00.000Z'),
         resourceId: 'meetingRoom-1',
-    },
-    {
-        id: 1,
-        title: 'hello world',
-        start: new Date('2020-02-19T10:00:00.000Z'),
-        end: new Date('2020-02-19T11:30:00.000Z'),
-        resourceId: 'meetingRoom-2',
-    }, {
-        id: 2,
-        title: 'hello world2',
-        start: new Date('2020-02-18T10:00:00.000Z'),
-        end: new Date('2020-02-18T11:30:00.000Z'),
-        resourceId: 'meetingRoom-2',
-    },
+    }
 ]
 
 
@@ -51,7 +38,7 @@ class Resource extends React.Component {
     }
 
     handleSelect = ({ start, end, resourceId }) => {
-        const title = window.prompt('请输入会议名称')
+        // const title = window.prompt('请输入会议名称')
         // console.log(new Date(start).toISOString(), new Date(end).toISOString(), title)
         let list = this.state.events
         // if (this.state.selected) {
@@ -61,7 +48,7 @@ class Resource extends React.Component {
         //     })
         // }
 
-        if (title) {
+        // if (title) {
             let occupy = false
             for (const item of list) {
                 if (
@@ -89,7 +76,7 @@ class Resource extends React.Component {
                         {
                             start,
                             end,
-                            title,
+                            // title,
                             resourceId
                         },
                     ],
@@ -100,10 +87,10 @@ class Resource extends React.Component {
             this.props.parent(this, {
                 start,
                 end,
-                title,
+                // title,
                 resourceId
             })
-        }
+        // }
     }
 
     moveEvent({ event, start, end, isAllDay: droppedOnAllDaySlot }) {
@@ -183,7 +170,7 @@ class Resource extends React.Component {
                     resources={this.props.resourceMap}
                     resourceIdAccessor="resourceId"
                     resourceTitleAccessor="resourceTitle"
-                    onSelectEvent={event => alert(event.title)}
+                    // onSelectEvent={event => alert(event.title)}
                     onSelectSlot={this.handleSelect}
                     resizable
                     allDayAccessor="false"
