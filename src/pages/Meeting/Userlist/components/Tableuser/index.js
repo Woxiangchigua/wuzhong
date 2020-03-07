@@ -44,7 +44,7 @@ function Lists(props) {
 
   const columns = [
     {
-      title: '申请编号',
+      title: 'ID',
       dataIndex: 'snumber',
       key: 'snumber',
       className: 'tabcolums'
@@ -55,12 +55,7 @@ function Lists(props) {
       key: 'meetingName',
       className: 'tabcolums'
     },
-    {
-      title: '预定状态',
-      dataIndex: 'status',
-      key: 'status',
-      className: 'tabcolums'
-    },
+    
     {
       title: '会议室',
       dataIndex: 'meetingRoomname',
@@ -83,6 +78,12 @@ function Lists(props) {
       title: '结束时间',
       dataIndex: 'endTime',
       key: 'endTime',
+      className: 'tabcolums'
+    },
+    {
+      title: '会议状态',
+      dataIndex: 'status',
+      key: 'status',
       className: 'tabcolums'
     },
     {
@@ -139,7 +140,7 @@ function Lists(props) {
     render() {
       return (
         <div>
-          <Table columns={columns} dataSource={this.state.resourceMap} pagination={false} />
+          <Table bordered size="middle" columns={columns} dataSource={this.state.resourceMap} pagination={false} />
         </div>
       )
     }

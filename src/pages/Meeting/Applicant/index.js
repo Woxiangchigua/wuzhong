@@ -7,7 +7,7 @@ import TableAwait from './components/TableAwait1/index'
 import TableTODO from './components/TableTODO1/index'
 import TableTODOAll from './components/TableTODOAll1/index'
 import {
-  useHistory,Link
+  useHistory, Link
 } from "react-router-dom";
 const { Search } = Input;
 
@@ -45,13 +45,13 @@ class AddMeeting extends Component {
       return { 'resourceId': edge.id, 'resourceTitle': edge.name }
     }),
     loading: false,
-    meetingList:this.props.meetingList.edges.map(function (edge, index) {
-      return { 
+    meetingList: this.props.meetingList.edges.map(function (edge, index) {
+      return {
         title: edge.meetingName,
         start: new Date(edge.beginTime),
         end: new Date(edge.endTime),
         resourceId: edge.meetingRoomId,
-       }
+      }
     }),
   };
   render() {
@@ -81,11 +81,11 @@ function Lists(props) {
   />;
   let defaultActiveKey = "1"
   function callback(key) {
-  
+
     defaultActiveKey = key
     console.log(defaultActiveKey);
   }
-  
+
   function search(value) {
     switch (defaultActiveKey) {
       case "1":
@@ -100,58 +100,31 @@ function Lists(props) {
       default:
         break;
     }
-  
+
   }
   return (
-    <div>
-      <Card bordered={false} >
-        <Breadcrumb style={{ margin: '15px 0px', float: 'left' }}>
+    <div style={{ backgroundColor: '#f0f2f5' }}>
+      <Card title="" bordered={false} >
+        <Breadcrumb style={{ margin: '0px 0px 0px 0px' }}>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
-          <Breadcrumb.Item>申请人会议页面</Breadcrumb.Item>
+          <Breadcrumb.Item>会议室申请</Breadcrumb.Item>
         </Breadcrumb>
-        <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
-        <Link to={"/Meeting/Creatmeeting"}>
-          <Button>会议申请</Button>
-          </Link>
-          <Button>会议纪要</Button>
-        </ButtonGroup>
       </Card>
-      <div className={'divclear'}></div>
-      <QueryRenderer
-        environment={environment}
-        query={query}
-        variables={{
-          beginTime:new Date(new Date().toLocaleDateString()).toISOString(),
-          endTime:new Date(new Date(new Date().toLocaleDateString()).getTime()+24*60*60*1000-1).toISOString()
-        }}
-        render={({ error, props, retry }) => {
-          if (error) {
-            return (
-              <div>
-                <h1>Error!</h1><br />{error.message}
-              </div>)
-          } else if (props) {
-            if (props.meetingRoomList) {
-              return (
-                <AddMeeting environment={environment} meetingRoomList={props.meetingRoomList} meetingList={props.preordainAboutMeMeetingList} />
+      {/* <Divider /> */}
 
-              )
-            }
-          }
-          return <div>Loading</div>;
-        }}
-      />
-      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
-        <TabPane tab="待处理" key="1">
-          <TableAwait environment={environment} searchKey={searchKey}/>
-        </TabPane>
-        <TabPane tab="全部待开会议" key="2">
-          <TableTODOAll environment={environment} searchKey2={searchKey2}/>
-        </TabPane>
-        <TabPane tab="我的待开会议" key="3">
-          <TableTODO environment={environment} searchKey3={searchKey3}/>
-        </TabPane>
-      </Tabs>
+      <Card title="" bordered={false} style={{marginTop:10}}>
+        <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
+          <TabPane tab="待处理" key="1">
+            <TableAwait environment={environment} searchKey={searchKey} />
+          </TabPane>
+          <TabPane tab="全部待开会议" key="2">
+            <TableTODOAll environment={environment} searchKey2={searchKey2} />
+          </TabPane>
+          <TabPane tab="我的待开会议" key="3">
+            <TableTODO environment={environment} searchKey3={searchKey3} />
+          </TabPane>
+        </Tabs>
+      </Card>
     </div>
   )
   // }

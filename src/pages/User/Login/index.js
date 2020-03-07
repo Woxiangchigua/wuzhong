@@ -69,8 +69,8 @@ function Login(props) {
   };
 
   const { getFieldDecorator } = props.form;
-  const loginTitle = 'FunService管理平台';
-  const loginTitleDetil = '管理平台';
+  const loginTitle = '吴中分局';
+  const loginTitleDetil = '苏州公安局吴中分局一体化平台系统';
   return (
     <div style={{
       margin: "120px 90px 80px 80px",

@@ -35,7 +35,7 @@ const query = graphql`
     }`
 const columns = [
     {
-        title: '申请编号',
+        title: 'ID',
         dataIndex: 'id',
         key: 'id',
         className: 'tabcolums'
@@ -107,7 +107,7 @@ class TableAwait extends Component {
     render() {
         return (
             <div>
-                <Table columns={columns} dataSource={this.state.resourceMap} />
+                <Table bordered size="middle" columns={columns} dataSource={this.state.resourceMap} />
             </div>
         )
     }
@@ -128,22 +128,21 @@ class TableAwait extends Component {
 function Lists(props) {
   const environment = props.environment;
   return (
-    <div>
+    <div  style={{ backgroundColor: '#f0f2f5' }}>
       <Card bordered={false} >
-        <Breadcrumb style={{ margin: '15px 0px', float: 'left' }}>
+        <Breadcrumb>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
           <Breadcrumb.Item>会议纪要</Breadcrumb.Item>
         </Breadcrumb>
-        <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
+        {/* <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
           <Link to={"/Meeting/Creatmeeting"}>
             <Button>会议申请</Button>
           </Link>
           <Button>会议纪要</Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
       </Card>
-      <div className={'divclear'}></div>
       
-      <Card title="" bordered={false} style={{ margin: '0px 0 10px 0' }}>
+      <Card title="" bordered={false} style={{ margin: '10px 0 10px 0' }}>
       <QueryRenderer
                 environment={environment}
                 query={query

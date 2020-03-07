@@ -58,46 +58,26 @@ function Lists(props) {
   }
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#f0f2f5' }}>
       <Card bordered={false} >
-        <Breadcrumb style={{ margin: '15px 0px', float: 'left' }}>
+        <Breadcrumb>
           <Breadcrumb.Item>会议室管理</Breadcrumb.Item>
           <Breadcrumb.Item>普通用户会议页面</Breadcrumb.Item>
         </Breadcrumb>
-        <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
+        {/* <ButtonGroup style={{ margin: '10px 0px', marginLeft: '75%' }}>
         <Link to={"/Meeting/Creatmeeting"}>
             <Button>会议申请</Button>
           </Link>
           <Button>会议纪要</Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
       </Card>
-      <div className={'divclear'}></div>
-      <QueryRenderer
-        environment={environment}
-        query={query
-        }
-        render={({ error, props, retry }) => {
-          if (error) {
-            return (
-              <div>
-                <h1>Error!</h1><br />{error.message}
-              </div>)
-          } else if (props) {
-            if (props.meetingRoomList) {
-              return (
-                <AddMeeting environment={environment} meetingRoomList={props.meetingRoomList} />
-
-              )
-            }
-          }
-          return <div>Loading</div>;
-        }}
-      />
+      <Card bordered={false} style={{marginTop:10}}>
       <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
         <TabPane tab="我的待开会议" key="1">
           <Tableuser environment={environment} searchKey={searchKey}/>
         </TabPane>
       </Tabs>
+      </Card>
     </div>
   )
   // }

@@ -295,7 +295,7 @@ function MeetingDetail(props) {
         <Col span={24}>
           <div className="top">
             <div>
-              <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室和会议时间</p>
+              <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室现有状态预览图</p>
             </div>
             <div style={{ marginLeft: 0 }}>
               <Link
@@ -346,7 +346,7 @@ function MeetingDetail(props) {
           </Descriptions.Item>
         </Descriptions>
         <Card title="参会人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>
-          <Table columns={columns} dataSource={data} pagination={false} />,
+          <Table bordered size="middle" columns={columns} dataSource={data} pagination={false} />,
         </Card>
         <Card title="会场需求" bordered={false} style={{ margin: '0px 0 20px 0' }}>
           <p style={{

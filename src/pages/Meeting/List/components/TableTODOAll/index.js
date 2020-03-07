@@ -45,7 +45,7 @@ const query = graphql`
 
     const columns = [
       {
-        title: '申请编号',
+        title: 'ID',
         dataIndex: 'id',
         key: 'id',
         className: 'tabcolums'
@@ -56,15 +56,7 @@ const query = graphql`
         key: 'meetingName',
         className: 'tabcolums'
       },
-      {
-        title: '预定状态',
-        dataIndex: 'status',
-        key: 'status',
-        className: 'tabcolums',
-        render: (text, record) => (
-          <Badge status="success" text="待开" />
-          ),
-      },
+      
       {
         title: '会议室',
         dataIndex: 'meetmeetingRoomnamename',
@@ -109,6 +101,15 @@ const query = graphql`
             </span>
           ),
       },
+      {
+        title: '会议状态',
+        dataIndex: 'status',
+        key: 'status',
+        className: 'tabcolums',
+        render: (text, record) => (
+          <Badge status="success" text="待开" />
+          ),
+      },
         {
           title: '操作',
           key: 'action',
@@ -131,7 +132,7 @@ class TableTODOAll extends Component {
     render() {
         return (
             <div>
-                <Table columns={columns} dataSource={this.state.resourceMap} pagination={false} />
+                <Table bordered size="middle" columns={columns} dataSource={this.state.resourceMap} pagination={false} />
             </div>
         )
     }
