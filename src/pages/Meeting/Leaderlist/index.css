@@ -9,6 +9,10 @@
 .divclear{
     clear: both;
   }
+
+  .ant-layout-content {
+    padding: 0!important;
+  }
   /* @import 'react-big-calendar/lib/sass/styles'; */
 .rbc-btn {
   color: inherit;

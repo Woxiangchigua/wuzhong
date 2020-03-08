@@ -44,7 +44,7 @@ function Lists(props) {
 
   const columns = [
     {
-      title: '申请编号',
+      title: 'ID',
       dataIndex: 'id',
       key: 'id',
       className: 'tabcolums'
@@ -61,17 +61,7 @@ function Lists(props) {
       key: 'applyUserId',
       className: 'tabcolums'
     },
-    {
-      title: '预定状态',
-      dataIndex: 'status',
-      key: 'status',
-      className: 'tabcolums',
-      render: (text, record) => (
-        <span>
-          {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
-        </span>
-      ),
-    },
+    
     {
       title: '会议室',
       dataIndex: 'meetingRoomname',
@@ -113,6 +103,17 @@ function Lists(props) {
       render: (text, record) => (
         <span>
           {dateFormat("HH:MM", new Date(record.endTime))}
+        </span>
+      ),
+    },
+    {
+      title: '会议状态',
+      dataIndex: 'status',
+      key: 'status',
+      className: 'tabcolums',
+      render: (text, record) => (
+        <span>
+          {record.status === 'MEETING_END' ? '会议结束' : record.status === 'MEETING_CANCEL' ? '已取消' : record.status === 'MEETING_AWAIT' ? '未开始' : ''}
         </span>
       ),
     },
@@ -170,7 +171,7 @@ function Lists(props) {
     render() {
       return (
         <div>
-          <Table columns={columns} dataSource={this.state.resourceMap} pagination={false} />
+          <Table bordered size="middle" columns={columns} dataSource={this.state.resourceMap} pagination={false} />
         </div>
       )
     }

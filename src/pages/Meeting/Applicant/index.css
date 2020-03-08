@@ -6,6 +6,10 @@
     margin-bottom: 30px
 }
 
+.ant-layout-content {
+	padding: 0!important;
+}
+
 .divclear{
     clear: both;
   }

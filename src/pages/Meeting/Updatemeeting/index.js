@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UpdateMeeting from '../Mutations/UpdateMeeting'
 import Calendar from '../../../components/CalendarUpdate/index'
 import { useHistory } from "react-router-dom";
+import dateFormat from '../../../ utils/dateFormat'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
+import Meeting from '../../../components/MeetingUpdate'
 import './index.css';
 import {
   Breadcrumb,
@@ -14,10 +16,16 @@ import {
   Table,
   Button,
   Divider,
-  Modal
+  Modal,
+  InputNumber,
+  DatePicker,
+  Select
 } from 'antd';
+import moment from 'moment';
 
+const dateFormat2 = 'YYYY-MM-DD';
 
+const { Option } = Select;
 const { TextArea } = Input;
 const columns = [
   {
@@ -93,13 +101,14 @@ const query = graphql`
 var childrenMsg = {}
 function AddMeeting(props) {
   let history = useHistory();
+  
   const environment = props.environment
   const meetingId = props.meetingId
   const resourceMap = props.meetingRoomList.edges.map(function (edge, index) {
-    return { 'resourceId': edge.id, 'resourceTitle': edge.name }
+    return <Option value={edge.id} key={edge.id}>{edge.name}</Option>
   })
   const meetingDetail = props.meetingDetail
-  const loading = false
+  console.log(meetingDetail)
   const events = []
   events.push({
     title: meetingDetail.meetingName,
@@ -107,8 +116,6 @@ function AddMeeting(props) {
     end: new Date(meetingDetail.endTime),
     resourceId: meetingDetail.meetingRoomId,
   })
-
-  console.log(meetingId)
 
   function getChildrenMsg(result, msg) {
     console.log(msg)
@@ -118,26 +125,90 @@ function AddMeeting(props) {
     console.log(childrenMsg)
   }
 
+  let begin = [
+    { lable: "09:00", val: "T01:00:00Z" },
+    { lable: "09:30", val: "T01:30:00Z" },
+    { lable: "10:00", val: "T02:00:00Z" },
+    { lable: "10:30", val: "T02:30:00Z" },
+    { lable: "11:00", val: "T03:00:00Z" },
+    { lable: "11:30", val: "T03:30:00Z" },
+    { lable: "12:00", val: "T04:00:00Z" },
+    { lable: "12:30", val: "T04:30:00Z" },
+    { lable: "13:00", val: "T05:00:00Z" },
+    { lable: "13:30", val: "T05:30:00Z" },
+    { lable: "14:00", val: "T06:00:00Z" },
+    { lable: "14:30", val: "T06:30:00Z" },
+    { lable: "15:00", val: "T07:00:00Z" },
+    { lable: "15:30", val: "T07:30:00Z" },
+    { lable: "16:00", val: "T08:00:00Z" },
+    { lable: "16:30", val: "T08:30:00Z" },
+    { lable: "17:00", val: "T09:00:00Z" },
+    { lable: "17:30", val: "T09:30:00Z" },
+    { lable: "18:00", val: "T10:00:00Z" },
+    { lable: "18:30", val: "T10:30:00Z" },
+    { lable: "19:00", val: "T11:00:00Z" },
+    { lable: "19:30", val: "T11:30:00Z" },
+    { lable: "20:00", val: "T12:00:00Z" },
+    { lable: "20:30", val: "T12:30:00Z" },
+  ]
+
+  let begin3 = JSON.parse(JSON.stringify(begin))
+  begin3.splice(0, 1)
+  begin3.push({ lable: "21:00", val: "T13:00:00Z" })
+  const [end, setEnd] = useState(begin3);
+
+  let beginIndex
+  for (let i = 0; i < begin.length; i++) {
+    if ("T" + meetingDetail.beginTime.split("T")[1] === begin[i].val) {
+      beginIndex = i
+    }
+  }
+
+
+  let beginList = begin.map((item, index) => {
+    return (
+      <Option value={index} key={item.val}>{item.lable}</Option>
+    )
+  })
+
+  
+
+  function handleSelectChange(val) {
+    props.form.setFieldsValue({
+      endTime: ``,
+    });
+    let begin2 = JSON.parse(JSON.stringify(begin))
+    begin2.splice(0, val + 1)
+    begin2.push({ lable: "21:00", val: "T13:00:00Z" })
+    setEnd(begin2)
+  }
+
+  let endList = end.map((item) => {
+    return (
+      <Option value={item.val} key={item.val}>{item.lable}</Option>
+    )
+  })
+
   function handleSubmit(e) {
-    let obj = childrenMsg
-    // console.log(obj)
-    // return false
+    // let obj = childrenMsg
+
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        let date=values['date'].format('YYYY-MM-DD')
         UpdateMeeting.commit(
           props.environment,
           meetingId,
-          new Date(obj.start).toISOString(),
-          obj.resourceId,
+          new Date(date+begin[values.beginTime].val).toISOString(),
+          values.roomId,
           values.number,
-          new Date(obj.end).toISOString(),
+          new Date(date+values.endTime).toISOString(),
           values.meetingName,
           values.organizer,
           'configuration',
           values.intro,
-          [],
+          ["user-5",
+          "user-6"],
           (response, errors) => {
             if (errors) {
               console.log(errors)
@@ -165,18 +236,18 @@ function AddMeeting(props) {
       }
     });
   };
-  function goBack(){
+  function goBack() {
     history.goBack()
   }
 
   const { getFieldDecorator } = props.form;
   return (
     <>
-      <Card title="会议室和会议时间" bordered={false} >
-        <div style={{ height: 500 }}>
+      <Card title="会议室现有状态预览图" bordered={false} >
+        {/* <div style={{ height: 500 }}>
           <Calendar resourceMap={resourceMap} item={events} parent={getChildrenMsg} />
-        </div>
-
+        </div> */}
+        <Meeting environment={props.environment} date={dateFormat("YYYY-mm-dd", new Date(meetingDetail.beginTime))} />
       </Card>
       <Divider />
 
@@ -214,14 +285,62 @@ function AddMeeting(props) {
                 initialValue: meetingDetail.number,
                 rules: [{ required: true, message: '请输入参会人数!' }],
               })(
-                <Input
-                  placeholder="请输入参会人数"
-                />,
+                <InputNumber style={{width:"100%"}} min={0} />,
               )}
 
             </Form.Item>
           </Col>
-          <Col span={12} className="meeting_requirements">
+          <Col span={8}>
+            <Form.Item label="参会日期" >
+              {getFieldDecorator('date', {
+                initialValue: moment(dateFormat("YYYY-mm-dd", new Date(meetingDetail.beginTime)), dateFormat2),
+                rules: [{ required: true, message: '请输入参会人数!' }],
+              })(
+                <DatePicker style={{width:"100%"}} format={dateFormat2} />
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="开始时间" >
+              {getFieldDecorator('beginTime', {
+                initialValue: beginIndex,
+                rules: [{ required: true, message: '请输入开始时间!' }],
+              })(
+                <Select placeholder="请选择开始时间" onChange={handleSelectChange}>
+                  {beginList}
+                </Select>,
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="结束时间" >
+              {getFieldDecorator('endTime', {
+                initialValue: "T" + meetingDetail.endTime.split("T")[1],
+                rules: [{ required: true, message: '请输入结束时间!' }],
+              })(
+                <Select placeholder="请选择结束时间">
+                  {endList}
+                </Select>,
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="会议室" >
+              {getFieldDecorator('roomId', {
+                initialValue:  meetingDetail.meetingRoomId,
+                rules: [{ required: true, message: '请选择会议室!' }],
+              })(
+                <Select placeholder="请选择会议室">
+                  {resourceMap}
+                </Select>,
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={16} className="meeting_requirements">
             <Form.Item label="会议要求" >
               {getFieldDecorator('intro', {
                 initialValue: meetingDetail.intro,
@@ -238,7 +357,7 @@ function AddMeeting(props) {
         <div style={{ clear: "both" }}></div>
         <Divider />
         <Card title="参会人员" style={{ margin: '0px 0 20px 0' }}>
-          <Table columns={columns} dataSource={data} pagination={false} />
+          <Table bordered size="middle" columns={columns} dataSource={data} pagination={false} />
           <Button icon="plus" style={{ margin: '5px 0 20px 0', width: '100%' }}>
             添加负责人
           </Button>
@@ -266,7 +385,7 @@ function AddMeeting(props) {
 const AddMeeting2 = Form.create({ name: 'horizontal_login' })(AddMeeting)
 
 function Home(props) {
-  const meetingId=props.id
+  const meetingId = props.id
   console.log(props.id)
   const environment = props.environment;
 

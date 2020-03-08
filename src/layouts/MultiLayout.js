@@ -16,7 +16,7 @@ function MultiLayout(props) {
         <Layout style={{ minHeight: '100vh' }}>
             <Header className="header" >
                 <Avatar className="logo-icon" src={Logo} shape="square" />
-                <span style={{ color: "#fff", fontSize: "20px" }}>FunService管理平台</span>
+                <span style={{ color: "#fff", fontSize: "16px" }}>苏州吴中公安分局会议系统</span>
 
                 <div className="right">
                     <GlobalHeader className="right" user={props.user} />
@@ -49,7 +49,7 @@ function MultiLayout(props) {
                         </Switch>
 
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>copyright©2020 FunLabs.io</Footer>
+                    <Footer style={{ textAlign: 'center' }}>copyright©2020 同蒙信息技术(苏州)有限公司</Footer>
                 </Layout>
             </Layout>
         </Layout>

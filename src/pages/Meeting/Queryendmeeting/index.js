@@ -212,7 +212,7 @@ function MeetingDetail(props) {
     </Card>
       <div className='divline'></div>
         <Card title="通知人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>
-          <Table columns={columns1} dataSource={data1} pagination={false} />,
+          <Table bordered size="middle" columns={columns1} dataSource={data1} pagination={false} />,
         </Card></div>),
       okText: '立即发送',
       cancelText: '添加通知人',
@@ -390,7 +390,7 @@ function MeetingDetail(props) {
           </Descriptions>
         </Card>
         <Card title="参会人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>
-          <Table columns={columns} dataSource={data} pagination={false} />,
+          <Table bordered size="middle" columns={columns} dataSource={data} pagination={false} />,
         </Card>
         <Card type="inner" title="备注信息" style={{ height: '400px',marginBottom:'20px' }}>
           <div style={{ marginTop: '30px',width:'40%',minHeight:'250px',float:'left'}}>
@@ -402,7 +402,7 @@ function MeetingDetail(props) {
             <p className="ant-upload-hint">支持文件扩展名：.rar .zip .doc .pdf .jpg...</p>
           </Dragger>
           </div>
-          <Table columns={columns2} dataSource={data2} pagination={false} style={{ marginTop: '30px',marginLeft:'2%', width:'58%',minHeight:'300px',float:'left'}}/>,
+          <Table bordered size="middle" columns={columns2} dataSource={data2} pagination={false} style={{ marginTop: '30px',marginLeft:'2%', width:'58%',minHeight:'300px',float:'left'}}/>,
         </Card>
         <Col span={24}>
           <Link to={"/Meeting/Meetingminutes"}>

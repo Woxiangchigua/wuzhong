@@ -43,7 +43,7 @@ function Lists(props) {
 
     const columns = [
         {
-            title: '申请编号',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id',
             className: 'tabcolums'
@@ -60,18 +60,7 @@ function Lists(props) {
             key: 'applyUserId',
             className: 'tabcolums'
         },
-        {
-            title: '预定状态',
-            dataIndex: 'status',
-            key: 'status',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <Badge
-                    status={record.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
-                    text={record.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : record.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : record.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
-            ),
-
-        },
+        
         {
             title: '会议室',
             dataIndex: 'meetingRoomname',
@@ -115,6 +104,18 @@ function Lists(props) {
                     {dateFormat("HH:MM", new Date(record.endTime))}
                 </span>
             ),
+        },
+        {
+            title: '会议状态',
+            dataIndex: 'status',
+            key: 'status',
+            className: 'tabcolums',
+            render: (text, record) => (
+                <Badge
+                    status={record.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
+                    text={record.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : record.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : record.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
+            ),
+
         },
         {
             title: '操作',
@@ -277,10 +278,11 @@ function Lists(props) {
         render() {
             return (
                 <div>
-                    <Table
+                    <Table bordered size="middle"
                         columns={columns}
                         dataSource={this.state.resourceMap}
-                        pagination={false} />
+                        pagination={false} 
+                         />
                 </div>
             )
         }

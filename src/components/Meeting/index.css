@@ -1,0 +1,59 @@
+.meeingTable {
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    height: 300px;
+}
+
+.meeingTable,
+.meeingTable td,
+.meeingTable th {
+    border: 1px solid #f2f2f2;
+    background: #e2e2e2
+}
+
+
+
+.meeingTable .name{
+    background: #4b9df8;
+    color: white
+}
+
+.meeingTable .pass{
+    background: #ec6342
+}
+
+.meeingTable .nopass{
+    background: #c7ecd3
+}
+
+.pass1{
+    background: #ec6342
+}
+
+.nopass1{
+    background: #c7ecd3
+}
+
+.free{
+    border: 1px solid #f2f2f2;
+    height: 20px;
+    width: 30px;
+    
+}
+
+.meeingTable .no_order{
+    background: white
+}
+
+.top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px
+}
+
+.status{
+    display: flex;
+    align-items: center
+}
