@@ -11,52 +11,102 @@ const menulist = [{
 		link: '/Home',
 		role: ['employee']
 	}]
-}, {
-	name: '会议管理',
+},
+{
+	name: '会议室申请',
 	icon: 'mail',
 	key: 'meeting',
 	role: ['employee'],
 	items: [{
-		name: '管理人员会议主页',
+		name: '填写会议室预订表',
 		icon: '',
-		key: 'meetinglist',
-		link: '/Meeting/List',
-		role: ['employee']
-	},
-	{
-		name: '申请人会议主页',
-		icon: '',
-		key: 'applicant',
-		link: '/Meeting/Applicant',
-		role: ['employee']
-	}, {
-		name: '普通用户会议页面',
-		icon: '',
-		key: 'userlist',
-		link: '/Meeting/Userlist',
-		role: ['employee']
-	}, {
-		name: '领导会议页面',
-		icon: '',
-		key: 'leaderlist',
-		link: '/Meeting/Leaderlist',
-		role: ['employee']
-	},
-	{
-		name: '会议室申请',
-		icon: '',
-		key: 'creatmetting',
+		key: 'Creatmeeting',
 		link: '/Meeting/Creatmeeting',
 		role: ['employee']
 	},
 	{
-		name: '会议纪要',
+		name: '会议过审及过往纪要',
 		icon: '',
-		key: 'mettingminutes',
-		link: '/Meeting/Meetingminutes',
+		key: 'Applicant',
+		link: '/Meeting/Applicant',
 		role: ['employee']
-	}]
-}];
+	},]
+},
+{
+	name: '部门领导',
+	icon: 'mail',
+	key: 'leader',
+	role: ['employee'],
+	items: [{
+		name: '待审待开会议',
+		icon: '',
+		key: 'Leaderlist',
+		link: '/Meeting/Leaderlist',
+		role: ['employee']
+	},
+	]
+},
+{
+	name: '物业',
+	icon: 'mail',
+	key: 'administrator',
+	role: ['employee'],
+	items: [{
+		name: '待审待开会议',
+		icon: '',
+		key: 'List',
+		link: '/Meeting/List',
+		role: ['employee']
+	},
+	]
+},
+// {
+// 	name: '会议管理',
+// 	icon: 'mail',
+// 	key: 'meeting',
+// 	role: ['employee'],
+// 	items: [{
+// 		name: '管理人员会议主页',
+// 		icon: '',
+// 		key: 'meetinglist',
+// 		link: '/Meeting/List',
+// 		role: ['employee']
+// 	},
+// 	{
+// 		name: '申请人会议主页',
+// 		icon: '',
+// 		key: 'applicant',
+// 		link: '/Meeting/Applicant',
+// 		role: ['employee']
+// 	}, {
+// 		name: '普通用户会议页面',
+// 		icon: '',
+// 		key: 'userlist',
+// 		link: '/Meeting/Userlist',
+// 		role: ['employee']
+// 	}, {
+// 		name: '领导会议页面',
+// 		icon: '',
+// 		key: 'leaderlist',
+// 		link: '/Meeting/Leaderlist',
+// 		role: ['employee']
+// 	},
+// 	{
+// 		name: '会议室申请',
+// 		icon: '',
+// 		key: 'creatmetting',
+// 		link: '/Meeting/Creatmeeting',
+// 		role: ['employee']
+// 	},
+// 	{
+// 		name: '会议纪要',
+// 		icon: '',
+// 		key: 'mettingminutes',
+// 		link: '/Meeting/Meetingminutes',
+// 		role: ['employee']
+// 	}]
+// }
+];
 
 const getMyMenuList = (lype) => {
 	let defaultOpenKeys = [];

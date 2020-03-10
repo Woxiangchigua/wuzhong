@@ -36,7 +36,7 @@ export default function Meeting(props) {
         let [date, setDate] = useState(dateFormat("YYYY-mm-dd", new Date()));
         // var date = dateFormat("YYYY-mm-dd", new Date())
         function chooseTime(e) {
-            date=e.target.value
+            date = e.target.value
             setDate(e.target.value)
             fetchQuery(props.environment, query, {
                 beginTime: new Date(e.target.value + 'T01:00:00Z').toISOString(),
@@ -78,7 +78,7 @@ export default function Meeting(props) {
         }
         )
         let list = meetingList.edges
-        
+
         let todayTime = date + 'T01:00:00Z'
         let list1 = [], list2 = [], list3 = [], list4 = [], list5 = [], list6 = [], list7 = []
         let itenList1 = [{ meetingRoomId: "item1-1" }, { meetingRoomId: "item1-2" }, { meetingRoomId: "item1-3" }, { meetingRoomId: "item1-4" }, { meetingRoomId: "item1-5" }, { meetingRoomId: "item1-6" }, { meetingRoomId: "item1-7" }, { meetingRoomId: "item1-8" }, { meetingRoomId: "item1-9" }, { meetingRoomId: "item1-10" }, { meetingRoomId: "item1-11" }, { meetingRoomId: "item1-12" }, { meetingRoomId: "item1-13" }, { meetingRoomId: "item1-14" }, { meetingRoomId: "item1-15" }, { meetingRoomId: "item1-16" }, { meetingRoomId: "item1-17" }, { meetingRoomId: "item1-18" }, { meetingRoomId: "item1-19" }, { meetingRoomId: "item1-20" }, { meetingRoomId: "item1-21" }, { meetingRoomId: "item1-22" }, { meetingRoomId: "item1-23" }, { meetingRoomId: "item1-24" }]
@@ -309,12 +309,13 @@ export default function Meeting(props) {
                         {dateArr2}
                     </Radio.Group>
                     <div className="status">
-                        <div>已预订（未审核）</div>
                         <div className="nopass1 free"></div>
+                        <div style={{ marginLeft: 10 }}>已预订</div>
+                        <div className="pass1 free" style={{ marginLeft: 10 }}></div>
                         <div style={{ marginLeft: 10 }}>已审核</div>
-                        <div className="pass1 free"></div>
+                        <div className="free" style={{ marginLeft: 10 }}></div>
                         <div style={{ marginLeft: 10 }}>现空闲</div>
-                        <div className="free"></div>
+
                     </div>
                 </div>
                 <table className="meeingTable">
@@ -337,31 +338,31 @@ export default function Meeting(props) {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="name">1号会议室</td>
+                            <td className="name">203</td>
                             {item1}
                         </tr>
                         <tr>
-                            <td className="name">2号会议室</td>
+                            <td className="name">1204</td>
                             {item2}
                         </tr>
                         <tr>
-                            <td className="name">3号会议室</td>
+                            <td className="name">1502</td>
                             {item3}
                         </tr>
                         <tr>
-                            <td className="name">4号会议室</td>
+                            <td className="name">1504</td>
                             {item4}
                         </tr>
                         <tr>
-                            <td className="name">5号会议室</td>
+                            <td className="name">1602</td>
                             {item5}
                         </tr>
                         <tr>
-                            <td className="name">6号会议室</td>
+                            <td className="name">1604</td>
                             {item6}
                         </tr>
                         <tr>
-                            <td className="name">7号会议室</td>
+                            <td className="name">101</td>
                             {item7}
                         </tr>
                     </tbody>
@@ -373,7 +374,7 @@ export default function Meeting(props) {
 
 
 
-    const environment=props.environment
+    const environment = props.environment
 
     return (
         <div>

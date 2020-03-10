@@ -13,7 +13,7 @@ const columns = [
         key: '1',
     },
     {
-        title: '工号',
+        title: '警员编号',
         dataIndex: 'name',
         key: '2',
     },
@@ -101,9 +101,9 @@ const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
                     onOk={onCreate}
                 >
                     <Form layout="horizontal">
-                        <Form.Item label="工号" {...formItemLayout}>
+                        <Form.Item label="警员编号" {...formItemLayout}>
                             {getFieldDecorator('title', {
-                                rules: [{ required: true, message: '请输入工号!' }],
+                                rules: [{ required: true, message: '请输入警员编号!' }],
                             })(<Input />)}
                         </Form.Item>
                         <Form.Item label="姓名" {...formItemLayout}>

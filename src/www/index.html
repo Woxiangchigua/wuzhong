@@ -44,6 +44,7 @@
                     console.log('Success:', data);
                     if (data && data.data.createToken && data.data.createToken.code == 200) {
                         localStorage.setItem('token', data.data.createToken.token);
+                        localStorage.setItem("loginurl",window.location)
                         alert("登陆成功");
                         window.location = "/";
                     }

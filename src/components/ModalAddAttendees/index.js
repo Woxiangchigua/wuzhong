@@ -70,7 +70,7 @@ const tableColumns = [{
 	dataIndex: 'name',
 	key: 'name',
 }, {
-	title: '工号',
+	title: '警员编号',
 	dataIndex: 'num',
 	key: 'num',
 }, {
