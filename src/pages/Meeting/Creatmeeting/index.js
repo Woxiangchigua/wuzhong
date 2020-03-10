@@ -11,7 +11,7 @@ import {
   Input,
   Card,
   Col,
-  PageHeader,
+  Row,
   Table,
   Button,
   Divider,
@@ -27,13 +27,19 @@ const { Option } = Select;
 const { TextArea } = Input;
 const columns = [
   {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
+    className: 'tabcolums'
+  },
+  {
     title: '参会人姓名',
     dataIndex: 'name',
     key: 'name',
     className: 'tabcolums'
   },
   {
-    title: '工号',
+    title: '警员编号',
     dataIndex: 'age',
     key: 'age',
     className: 'tabcolums'
@@ -49,9 +55,7 @@ const columns = [
     className: 'tabcolums',
     key: 'action',
     render: (text, record) => (
-      <span>
-        <a>删除</a>
-      </span>
+      <Button type="danger" size="small">删除</Button>
     ),
   },
 ];
@@ -59,6 +63,7 @@ const columns = [
 const data = [
   {
     key: '1',
+    id: '001',
     name: '张三',
     age: "0001",
     address: '治安大队',
@@ -209,10 +214,20 @@ function AddMeeting(props) {
     });
   };
 
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+    },
+    getCheckboxProps: record => ({
+      disabled: record.name === 'Disabled User', // Column configuration not to be checked
+      name: record.name,
+    }),
+  };
+
   const { getFieldDecorator } = props.form;
   return (
     <>
-      <Card title="会议室现有状态预览图" bordered={false} style={{marginTop:10}}>
+      <Card title="会议室现有状态预览图" bordered={false} style={{ marginTop: 10 }}>
         {/* <div style={{ height: 500 }}>
           <Calendar resourceMap={resourceMap} parent={getChildrenMsg} />
         </div> */}
@@ -221,87 +236,95 @@ function AddMeeting(props) {
 
 
       <Form layout="inline" onSubmit={handleSubmit} style={{ margin: '0px' }}>
-        <Card title="基本信息"  style={{marginTop:10}}>
-          <Col span={8}>
-            <Form.Item label="主办单位" >
-              {getFieldDecorator('organizer', {
-                rules: [{ required: true, message: '请输入呈报单位!' }],
-              })(
-                <Input
-                  placeholder="请输入呈报单位"
-                />,
-              )}
+        <Card title="预订信息" style={{ marginTop: 10 }}>
+          <Row>
 
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="会议名称" >
-              {getFieldDecorator('meetingName', {
-                rules: [{ required: true, message: '请输入会议名称!' }],
-              })(
-                <Input
-                  placeholder="请输入会议名称"
-                />,
-              )}
+            <Col span={12}>
+              <Form.Item label="会议名称" >
+                {getFieldDecorator('meetingName', {
+                  rules: [{ required: true, message: '请输入会议名称!' }],
+                })(
+                  <Input
+                    placeholder="请输入会议名称"
+                  />,
+                )}
 
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="参会人数" >
-              {getFieldDecorator('number', {
-                rules: [{ required: true, message: '请输入参会人数!' }],
-              })(
-                <InputNumber style={{ width: "100%" }} min={0} />,
-              )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={5}>
+              <Form.Item label="会议室" >
+                {getFieldDecorator('roomId', {
+                  rules: [{ required: true, message: '请选择会议室!' }],
+                })(
+                  <Select placeholder="请选择会议室" style={{ width: 170 }}>
+                    {resourceMap}
+                  </Select>,
+                )}
 
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="参会日期" >
-              {getFieldDecorator('date', {
-                rules: [{ required: true, message: '请输入参会人数!' }],
-              })(
-                <DatePicker style={{ width: "100%" }} />
-              )}
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item label="参会人数" >
+                {getFieldDecorator('number', {
+                  rules: [{ required: true, message: '请输入参会人数!' }],
+                })(
+                  <InputNumber min={0} />,
+                )}
 
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="开始时间" >
-              {getFieldDecorator('beginTime', {
-                rules: [{ required: true, message: '请输入开始时间!' }],
-              })(
-                <Select placeholder="请选择开始时间" onChange={handleSelectChange}>
-                  {beginList}
-                </Select>,
-              )}
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item label="主办单位" >
+                {getFieldDecorator('organizer', {
+                  rules: [{ required: true, message: '请输入呈报单位!' }],
+                })(
+                  <Input
+                    placeholder="请输入呈报单位"
+                  />,
+                )}
 
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="结束时间" >
-              {getFieldDecorator('endTime', {
-                rules: [{ required: true, message: '请输入结束时间!' }],
-              })(
-                <Select placeholder="请选择结束时间">
-                  {endList}
-                </Select>,
-              )}
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={5}>
+              <Form.Item label="参会日期" >
+                {getFieldDecorator('date', {
+                  rules: [{ required: true, message: '请输入参会人数!' }],
+                })(
+                  <DatePicker />
+                )}
 
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="会议室" >
-              {getFieldDecorator('roomId', {
-                rules: [{ required: true, message: '请选择会议室!' }],
-              })(
-                <Select placeholder="请选择会议室">
-                  {resourceMap}
-                </Select>,
-              )}
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item label="开始时间" >
+                {getFieldDecorator('beginTime', {
+                  rules: [{ required: true, message: '请输入开始时间!' }],
+                })(
+                  <Select placeholder="请选择开始时间" style={{ width: 150 }} onChange={handleSelectChange}>
+                    {beginList}
+                  </Select>,
+                )}
 
-            </Form.Item>
-          </Col>
+              </Form.Item>
+            </Col>
+            <Col span={3}>
+              <Form.Item label="结束时间" >
+                {getFieldDecorator('endTime', {
+                  rules: [{ required: true, message: '请输入结束时间!' }],
+                })(
+                  <Select placeholder="请选择结束时间" style={{ width: 150 }}>
+                    {endList}
+                  </Select>,
+                )}
+
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Col span={16} className="meeting_requirements">
             <Form.Item label="会议要求" >
               {getFieldDecorator('intro', {
@@ -309,7 +332,7 @@ function AddMeeting(props) {
               })(
                 <TextArea
                   placeholder="请输入会议要求"
-                  autoSize={{ minRows: 3, maxRows: 5 }}
+                  autoSize={{ minRows: 5 }}
                 />
               )}
 
@@ -317,10 +340,15 @@ function AddMeeting(props) {
           </Col></Card>
 
         <Card title="参会人员" style={{ margin: '10px 0 20px 0' }}>
-          <Table bordered size="middle" columns={columns} dataSource={data} pagination={false} />
-          <Button icon="plus" onClick={() => { setModalAddAttendeesVisible(true) }} style={{ margin: '5px 0 20px 0', width: '100%' }}>
-            添加负责人
-          </Button>
+
+          <Col span={24}>
+            <div className="top_button">
+              <Button type="primary" icon="plus" onClick={() => { setModalAddAttendeesVisible(true) }}>
+                添加负责人
+              </Button>
+            </div>
+            <Table bordered size="middle" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
+          </Col>
         </Card>
         <Col span={24}>
           <Form.Item style={{ marginLeft: '41%' }}>

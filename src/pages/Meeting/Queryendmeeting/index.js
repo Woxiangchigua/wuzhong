@@ -67,7 +67,7 @@ function MeetingDetail(props) {
       className: 'tabcolums'
     },
     {
-      title: '工号',
+      title: '警员编号',
       dataIndex: 'age',
       key: 'age',
       className: 'tabcolums'
@@ -105,7 +105,7 @@ function MeetingDetail(props) {
       className: 'tabcolums'
     },
     {
-      title: '工号',
+      title: '警员编号',
       dataIndex: 'age',
       key: 'age',
       className: 'tabcolums'

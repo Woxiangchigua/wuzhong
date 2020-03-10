@@ -62,13 +62,19 @@ function MeetingDetail(props) {
   const { TextArea } = Input;
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      className: 'tabcolums'
+    },
+    {
       title: '负责人姓名',
       dataIndex: 'name',
       key: 'name',
       className: 'tabcolums'
     },
     {
-      title: '工号',
+      title: '警员编号',
       dataIndex: 'age',
       key: 'age',
       className: 'tabcolums'
@@ -84,6 +90,7 @@ function MeetingDetail(props) {
   const data = [
     {
       key: '1',
+      id:'001',
       name: '张三',
       age: "0001",
       address: '治安大队',
@@ -290,12 +297,11 @@ function MeetingDetail(props) {
           <Breadcrumb.Item>查看会议详情</Breadcrumb.Item>
         </Breadcrumb>
       </Card>
-      <Divider />
-      <Card title="" bordered={false} >
+      <Card title="" bordered={false}  style={{marginTop:10}}>
         <Col span={24}>
           <div className="top">
             <div>
-              <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议室现有状态预览图</p>
+              <p style={{ float: "left", lineHeight: '30px', fontSize: '18px' }}>会议预约详情</p>
             </div>
             <div style={{ marginLeft: 0 }}>
               <Link

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Breadcrumb } from 'antd';
 import Meeting from '../../components/Meeting'
 import './index.css';
+import TableTest from "../Home/components/index"
 
 const list = [
     { title: '会议1', message: '这是会议1' },
@@ -27,6 +28,7 @@ export default class Home extends Component {
                     <Breadcrumb.Item>Home</Breadcrumb.Item>
                 </Breadcrumb>
                 <Meeting  environment={this.props.environment} />
+                <TableTest />
             </div>
         )
     }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider, Popconfirm, Modal, Button } from 'antd';
+import { Table, Badge, Popconfirm, Modal, Button } from 'antd';
 import { Link } from "react-router-dom";
+import dateFormat from '../../../../../ utils/dateFormat'
 
 const { confirm } = Modal;
 
@@ -45,47 +46,67 @@ function Lists(props) {
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'snumber',
-      key: 'snumber',
+      dataIndex: 'id',
+      key: 'id',
       className: 'tabcolums'
-    },
-    {
+  },
+  {
       title: '会议名称',
       dataIndex: 'meetingName',
       key: 'meetingName',
       className: 'tabcolums'
-    },
-    
-    {
+  },
+  {
+      title: '申请人',
+      dataIndex: 'applyUserId',
+      key: 'applyUserId',
+      className: 'tabcolums'
+  },
+  
+  {
       title: '会议室',
       dataIndex: 'meetingRoomname',
       key: 'meetingRoomname',
-      className: 'tabcolums'
-    },
-    {
+      className: 'tabcolums',
+      render: (text, record) => (
+          <span>
+              {record.meetingRoom.name}
+          </span>
+      ),
+  },
+  {
       title: '日期',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      className: 'tabcolums'
-    },
-    {
+      className: 'tabcolums',
+      render: (text, record) => (
+          <span>
+              {dateFormat("YYYY-mm-dd", new Date(record.createdAt))}
+          </span>
+      ),
+  },
+  {
       title: '开始时间',
       dataIndex: 'beginTime',
       key: 'beginTime',
-      className: 'tabcolums'
-    },
-    {
+      className: 'tabcolums',
+      render: (text, record) => (
+          <span>
+              {dateFormat("HH:MM", new Date(record.beginTime))}
+          </span>
+      ),
+  },
+  {
       title: '结束时间',
       dataIndex: 'endTime',
       key: 'endTime',
-      className: 'tabcolums'
-    },
-    {
-      title: '会议状态',
-      dataIndex: 'status',
-      key: 'status',
-      className: 'tabcolums'
-    },
+      className: 'tabcolums',
+      render: (text, record) => (
+          <span>
+              {dateFormat("HH:MM", new Date(record.endTime))}
+          </span>
+      ),
+  },
     {
       title: '操作',
       key: 'action',

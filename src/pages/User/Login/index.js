@@ -23,6 +23,10 @@ import './login.css';
 import rylogo from '../../../img/rylogo.png';
 
 function Login(props) {
+  // window.location="/User/Login/"
+  if(localStorage.getItem("loginurl")){
+    window.location=localStorage.getItem("loginurl")
+  }
   const [token, setToken] = useLocalStorage('token', '');
   let history = useHistory();
   let location = useLocation();
