@@ -108,7 +108,8 @@ function MainLayout() {
             </div>)
         } else if (props) {
           if (props.viewer) {
-            return <MultiLayout environment={environment} user={props.viewer.user} />
+            // return <MultiLayout environment={environment} user={props.viewer.user} />
+            return <MultiLayout environment={environment} user={props.viewer} />
           }
         }
         return <div>Loading</div>;

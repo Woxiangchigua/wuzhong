@@ -3,46 +3,46 @@ const menulist = [{
 	name: '分局主页',
 	icon: 'compass',
 	key: 'callcenter',
-	role: ['employee'],
+	role: ['admin','管理人员','申请人','普通用户','部门领导'],
 	items: [{
 		name: '分局主页',
 		icon: '',
 		key: 'calllist',
 		link: '/Home',
-		role: ['employee']
+		role: ['admin','管理人员','申请人','普通用户','部门领导']
 	}]
 },
 {
 	name: '会议室申请',
 	icon: 'mail',
 	key: 'meeting',
-	role: ['employee'],
+	role: ['admin','申请人'],
 	items: [{
 		name: '填写会议室预订表',
 		icon: '',
 		key: 'Creatmeeting',
 		link: '/Meeting/Creatmeeting',
-		role: ['employee']
+		role: ['admin','申请人']
 	},
 	{
 		name: '会议过审及过往纪要',
 		icon: '',
 		key: 'Applicant',
 		link: '/Meeting/Applicant',
-		role: ['employee']
+		role: ['admin','申请人']
 	},]
 },
 {
 	name: '部门领导',
 	icon: 'mail',
 	key: 'leader',
-	role: ['employee'],
+	role: ['admin','部门领导'],
 	items: [{
 		name: '待审待开会议',
 		icon: '',
 		key: 'Leaderlist',
 		link: '/Meeting/Leaderlist',
-		role: ['employee']
+		role: ['admin','部门领导']
 	},
 	]
 },
@@ -50,13 +50,27 @@ const menulist = [{
 	name: '物业',
 	icon: 'mail',
 	key: 'administrator',
-	role: ['employee'],
+	role: ['admin','管理人员'],
 	items: [{
 		name: '待审待开会议',
 		icon: '',
 		key: 'List',
 		link: '/Meeting/List',
-		role: ['employee']
+		role: ['admin','管理人员']
+	},
+	]
+},
+{
+	name: '部门职员',
+	icon: 'mail',
+	key: 'user',
+	role: ['admin','普通用户'],
+	items: [{
+		name: '待开会议',
+		icon: '',
+		key: 'Userlist',
+		link: '/Meeting/Userlist',
+		role: ['admin','普通用户']
 	},
 	]
 },
