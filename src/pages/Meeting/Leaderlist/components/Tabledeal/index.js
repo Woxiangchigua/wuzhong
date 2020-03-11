@@ -1,264 +1,125 @@
-import React, { Component,useState } from 'react'
-import AuditMeeting from '../../../Mutations/AuditMeeting'
-import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider, Badge, Modal, Button } from 'antd';
-import { Link } from "react-router-dom";
-import dateFormat from '../../../../../ utils/dateFormat'
+import React, { Component, useEffect } from 'react'
+import { Button } from 'antd';
 
-function Lists(props) {
-    const [meetingList, setmeetingList] = useState([]);
-    const { confirm } = Modal;
-    const query = graphql`
-    query Tabledeal_MeetingListQuery(
-        $order: String = ""
-        $meetingName: String = ""
-    ){
-        leaderPendingMeetingList(first:10,skip:0,meetingName:$meetingName,order:$order){
-          edges{
-            applyUserId,
-            beginTime,
-            configuration,
-            createdAt,
-            deletedAt,
-            endTime,
-            id,
-            intro,
-            meetingName,
-            meetingRoom{
-              id,
-              name
-            },
-            number,
-            organizer,
-            review,
-            reviewUserId,
-            status,
-            updatedAt
-          }
+
+export default function Table(props) {
+
+    useEffect(
+        () => {
+            
+	  var table = window.layui.table,
+	  layer = window.layui.layer,
+	  form = window.layui.form,
+	  laypage = window.layui.laypage;
+	  
+	  table.render({
+		elem: '#complainTable'
+		,url:''
+		,page: true
+		,toolbar: '#complain_toolbar'
+		,limit:10
+		, data: [
+		    {
+		        "id": 101,
+		        "batchNumber": "2020022901",
+		        "meetingName": "抓紧抓实抓细疫情防控全力护航经济社会发展",
+		        "meetingRoom": "1502",
+		        "time": "2020-02-29 10:00-10:30",
+		        "complainState": 0,
+		        "right": 77
+		    },
+			{
+			    "id": 102,
+			    "batchNumber": "2020022101",
+			    "meetingName": "警报部门坚决打赢疫情防控保卫战",
+			    "meetingRoom": "1501",
+			    "time": "2020-02-21 10:00-10:30",
+			    "complainState": 1,
+			    "right": 77
+			},
+			{
+			    "id": 103,
+			    "batchNumber": "2020021901",
+			    "meetingName": "认真学习贯彻党的十九届四中全会精神",
+			    "meetingRoom": "1501",
+			    "time": "2020-02-19 10:00-10:30",
+			    "complainState": 2,
+			    "right": 77
+			},
+		]
+		,cols: [
+    			[
+    			   {checkbox:true}//开启多选框
+			      ,{field:'id', width:100,title: 'ID',sort: true}
+			      ,{field:'batchNumber',width:180, title: '申请批号'}
+			      ,{field:'meetingName',width:350, title: '会议名称'}
+			      ,{field:'meetingRoom',width:200,title: '会议室'}
+			      ,{field:'time',width:300, title: '开会时间'}
+			      ,{field:'complainState', width:250, title: '会议状态', align:'center', templet : function(d){
+						if(d.complainState == 0){
+							return '<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">待审</span>&nbsp&nbsp<span style="display:inline-block;color: #fff;background:#009688;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">待开</span>';
+						}else if(d.complainState == 1){
+							return '<span style="display:inline-block;color: #666666;border:1px solid #c9c9c9;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">已审</span>&nbsp&nbsp<span style="display:inline-block;color: #fff;background:#009688;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">待开</span>';
+						}else if(d.complainState == 2){
+							return '<span style="display:inline-block;color: #666666;border:1px solid #c9c9c9;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">已审</span>&nbsp&nbsp<span style="display:inline-block;color: #666666;border:1px solid #c9c9c9;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">已开</span>';
+						}
+			      }}
+			      ,{fixed: 'right', title:'操作', align:'center', toolbar: '#barDemo'}
+    			]
+    	   ]
+    ,limits: [5,10,20,50]
+  });
+
+
+table.on('tool(complainList)', function(obj) {
+	let data = obj.data;
+	
+	switch(obj.event) {
+		case 'detail':
+			console.log("会议室详情");
+			let index = layer.open({
+				type: 2,
+				title: "会议室详情页面",
+				area: ['30%', '60%'],
+				fix: false,
+				maxmin: true,
+				shadeClose: true,
+				shade: 0.4,
+				skin: 'layui-layer-rim',
+				content: ["/medicaladmin/complain/complainRead", "no"],
+			});
+			break;
+		case 'del':
+			let delIndex = layer.confirm('真的删除id为' + data.id + "的信息吗?", function(delIndex) {
+				
+				layer.close(delIndex);
+			});
+			break;
+	}
+});
+  
+
         }
-    }`
 
-    const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-            className: 'tabcolums'
-        },
-        {
-            title: '会议名称',
-            dataIndex: 'meetingName',
-            key: 'meetingName',
-            className: 'tabcolums'
-        },
-        {
-            title: '申请人',
-            dataIndex: 'applyUserId',
-            key: 'applyUserId',
-            className: 'tabcolums'
-        },
-        
-        {
-            title: '会议室',
-            dataIndex: 'meetingRoomname',
-            key: 'meetingRoomname',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {record.meetingRoom.name}
-                </span>
-            ),
-        },
-        {
-            title: '日期',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {dateFormat("YYYY-mm-dd", new Date(record.createdAt))}
-                </span>
-            ),
-        },
-        {
-            title: '开始时间',
-            dataIndex: 'beginTime',
-            key: 'beginTime',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {dateFormat("HH:MM", new Date(record.beginTime))}
-                </span>
-            ),
-        },
-        {
-            title: '结束时间',
-            dataIndex: 'endTime',
-            key: 'endTime',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {dateFormat("HH:MM", new Date(record.endTime))}
-                </span>
-            ),
-        },
-        {
-            title: '会议状态',
-            dataIndex: 'status',
-            key: 'status',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <Badge
-                    status={record.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
-                    text={record.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : record.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : record.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
-            ),
-        },
-        {
-            title: '操作',
-            dataIndex: 'delete',
-            key: 'delete',
-            render: (text, record) => (
-                <span>
-                    <Link to={"/Meeting/Querymeeting/" + JSON.stringify({id:record.id,review:record.review})}>详情</Link>
-                    {/* <Divider type="vertical" />
-                    <Button onClick={() => { showModal(JSON.stringify({id:record.id,review:record.review})) }} type="link">
-                        审核
-                    </Button> */}
-                </span>
-            ),
-        },
-    ];
 
-    function getList(){
-        fetchQuery(props.environment, query, {
-            order: '',
-            meetingName: props.searchKey
-        }).then(data => {
-            if (data) {
-                if (data.leaderPendingMeetingList) {
-                    setmeetingList(data.leaderPendingMeetingList)
-                }
-            }
-        });
-    }
-
-    function showModal(id) {
-        confirm({
-            title: '你需要审核这个会议',
-            content: '',
-            okText: '同意',
-            cancelText: '不同意',
-            onOk() {
-                console.log('确认');
-                AuditMeeting.commit(
-                    props.environment,
-                    id,
-                    'MEETING_PASS',
-                    (response, errors) => {
-                        if (errors) {
-                            // console.log(errors)
-                            Modal.error({
-                                title: errors[0].message,
-                            });
-                        } else {
-                            // console.log(response);
-                            Modal.success({
-                                content: '审核成功',
-                                onOk() {
-                                    // history.goBack()
-                                    getList()
-                                },
-                            });
-                        }
-                    },
-                    (response, errors) => {
-                        if (errors) {
-                            // console.log(errors)
-                        } else {
-                            // console.log(response);
-                        }
-                    }
-                );
-            },
-            onCancel() {
-                console.log('取消');
-                AuditMeeting.commit(
-                    props.environment,
-                    id,
-                    'MEETING_EDIT_OR_FAIL',
-                    (response, errors) => {
-                        if (errors) {
-                            // console.log(errors)
-                            Modal.error({
-                                title: errors[0].message,
-                            });
-                        } else {
-                            // console.log(response);
-                            Modal.success({
-                                content: '审核成功',
-                                onOk() {
-                                    // history.goBack()
-                                },
-                            });
-                        }
-                    },
-                    (response, errors) => {
-                        if (errors) {
-                            console.log(errors)
-                        } else {
-                            console.log(response);
-                        }
-                    }
-                );
-            },
-        });
-    }
-    class TableAwait extends Component {
-        state = {
-            environment: this.props.environment,
-            resourceMap: this.props.meetingList.edges,
-            loading: false,
-        };
-        render() {
-            return (
-                <div>
-                    <Table bordered size="middle" columns={columns} dataSource={this.state.resourceMap} pagination={false} />
-                </div>
-            )
-        }
-    }
-
-    const environment = props.environment;
-    return (
-        <div>
-
-            <QueryRenderer
-                environment={environment}
-                query={query}
-                variables={{
-                    order: '',
-                    meetingName: props.searchKey
-                }}
-                render={({ error, props, retry }) => {
-                    if (error) {
-                        return (
-                            <div>
-                                <h1>Error!</h1><br />{error.message}
-                            </div>)
-                    } else if (props) {
-                        if (props.leaderPendingMeetingList) {
-                            let meetingList=props.leaderPendingMeetingList
-                            return (
-                                <TableAwait environment={environment} meetingList={meetingList} />
-
-                            )
-                        }
-                    }
-                    return <div>Loading</div>;
-                }}
-            />
-        </div>
     )
-    // }
+
+    return (
+        <>
+            <div>
+                <table className="layui-hide" id="complainTable" lay-filter="complainList"></table>
+            </div>
+            <script type="text/html" id="complain_toolbar">
+				<div className="layui-btn-container">
+					<button className="layui-btn layui-btn-danger layui-btn-sm" lay-event="delBatchAll"><i className="layui-icon"></i>批量删除</button>
+				</div>
+			</script>
+			<script type="text/html" id="barDemo">
+			  <a className="layui-btn layui-btn-xs" lay-event="detail"><i className="layui-icon">&#xe6b2;</i>详情</a>
+			  <a className="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i className="layui-icon">&#xe640;</i>删除</a>
+			</script>
+        </>
+    )
+
+
 }
-export default Lists;

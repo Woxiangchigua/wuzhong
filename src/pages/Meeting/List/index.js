@@ -5,7 +5,6 @@ import { Button, Breadcrumb, Card, Input, Tabs, } from 'antd';
 import './index.css';
 import TableAwait from './components/TableAwait/index'
 import TableOccupy from './components/TableOccupy/index'
-import TableTODO from './components/TableTODO/index'
 import TableTODOAll from './components/TableTODOAll/index'
 import {
   useHistory, Link
@@ -76,7 +75,6 @@ function Lists(props) {
   const [searchKey, setSearchKey] = useState('');
   const [searchKey2, setSearchKey2] = useState('');
   const [searchKey3, setSearchKey3] = useState('');
-  const [searchKey4, setSearchKey4] = useState('');
   const environment = props.environment;
   const operations = <Search
     placeholder="输入会议名称"
@@ -101,11 +99,6 @@ function Lists(props) {
       case "3":
         setSearchKey3(value)
         break;
-      case "4":
-        setSearchKey4(value)
-        break;
-      default:
-        break;
     }
 
   }
@@ -127,17 +120,14 @@ function Lists(props) {
       </Card>
       <Card bordered={false} style={{ marginTop: 10 }}>
         <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
-          <TabPane tab="待处理" key="1">
+          <TabPane tab="全部审批" key="1">
             <TableAwait environment={environment} searchKey={searchKey} />
           </TabPane>
-          <TabPane tab="全部待开会议" key="2">
+          <TabPane tab="待批会议" key="2">
             <TableTODOAll environment={environment} searchKey2={searchKey2} />
           </TabPane>
-          <TabPane tab="占用中" key="3">
+          <TabPane tab="已批会议" key="3">
             <TableOccupy environment={environment} searchKey3={searchKey3} />
-          </TabPane>
-          <TabPane tab="我的待开会议" key="4">
-            <TableTODO environment={environment} searchKey4={searchKey4} />
           </TabPane>
         </Tabs>
       </Card>
