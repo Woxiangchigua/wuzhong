@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import CreateMeeting from '../Mutations/CreateMeeting'
 import Calendar from '../../../components/Calendar/index'
 import { useHistory } from "react-router-dom";
@@ -83,6 +83,19 @@ const query = graphql`
 var childrenMsg = {}
 function AddMeeting(props) {
   let history = useHistory();
+  var layui = window.layui
+  useEffect(
+    ()=>{
+      layui.use('form',function(){
+        var form = layui.form;
+      
+         //刷新界面 所有元素
+      
+         form.render();
+      
+      });
+    }
+  )
   //添加与会负责人
   const [modalAddAttendeesVisible, setModalAddAttendeesVisible] = useState(false);
   const [end, setEnd] = useState([]);
@@ -92,7 +105,6 @@ function AddMeeting(props) {
       <Option value={edge.id} key={edge.id}>{edge.name}</Option>
     )
   })
-  const loading = false
 
   //添加负责人返回
   let modalAddAttendeesCallback = (a, d) => {
@@ -232,142 +244,184 @@ function AddMeeting(props) {
   return (
     <>
       <Card title="会议室现有状态预览图" bordered={false} style={{ marginTop: 10 }}>
-        {/* <div style={{ height: 500 }}>
-          <Calendar resourceMap={resourceMap} parent={getChildrenMsg} />
-        </div> */}
         <Meeting environment={props.environment} />
       </Card>
 
 
-      <Form layout="inline" onSubmit={handleSubmit} style={{ margin: '0px' }}>
-        <Card title="预订信息" style={{ marginTop: 10 }}>
-          <Row>
+      <Card title="填写会议室预订表" style={{ marginTop: 10 }}>
+        <form className="layui-form" action="">
+          <div className="layui-form-item">
+            <label className="layui-form-label">输入框</label>
+            <div className="layui-input-block">
+              <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autoComplete="off" className="layui-input" />
+            </div>
+          </div>
 
-            <Col span={12}>
-              <Form.Item label="会议名称" >
-                {getFieldDecorator('meetingName', {
-                  rules: [{ required: true, message: '请输入会议名称!' }],
-                })(
-                  <Input
-                    placeholder="请输入会议名称"
-                  />,
-                )}
+          <div className="layui-form-item">
+            <label className="layui-form-label">选择框</label>
+            <div className="layui-input-block">
+              <select name="city" lay-verify="required">
+                <option value=""></option>
+                {/* <option value="0">北京</option>
+                <option value="1">上海</option>
+                <option value="2">广州</option>
+                <option value="3">深圳</option>
+                <option value="4">杭州</option> */}
+                {beginList}
+              </select>
+            </div>
+          </div>
 
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={5}>
-              <Form.Item label="会议室" >
-                {getFieldDecorator('roomId', {
-                  rules: [{ required: true, message: '请选择会议室!' }],
-                })(
-                  <Select placeholder="请选择会议室" style={{ width: 170 }}>
-                    {resourceMap}
-                  </Select>,
-                )}
 
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="参会人数" >
-                {getFieldDecorator('number', {
-                  rules: [{ required: true, message: '请输入参会人数!' }],
-                })(
-                  <InputNumber min={0} />,
-                )}
+          <div className="layui-form-item">
+            <label className="layui-form-label">单选框</label>
+            <div className="layui-input-block">
+              <input type="radio" name="sex" value="男" title="男" />
+              <input type="radio" name="sex" value="女" title="女"  />
+            </div>
+          </div>
+          <div className="layui-form-item layui-form-text">
+            <label className="layui-form-label">文本域</label>
+            <div className="layui-input-block">
+              <textarea name="desc" placeholder="请输入内容" className="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-input-block">
+              <button className="layui-btn" lay-submit="true" lay-filter="formDemo">立即提交</button>
+              <button type="reset" className="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
+        </form>
+        {/* <Row>
 
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="主办单位" >
-                {getFieldDecorator('organizer', {
-                  rules: [{ required: true, message: '请输入呈报单位!' }],
-                })(
-                  <Input
-                    placeholder="请输入呈报单位"
-                  />,
-                )}
-
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={5}>
-              <Form.Item label="参会日期" >
-                {getFieldDecorator('date', {
-                  rules: [{ required: true, message: '请输入参会人数!' }],
-                })(
-                  <DatePicker />
-                )}
-
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="开始时间" >
-                {getFieldDecorator('beginTime', {
-                  rules: [{ required: true, message: '请输入开始时间!' }],
-                })(
-                  <Select placeholder="请选择开始时间" style={{ width: 150 }} onChange={handleSelectChange}>
-                    {beginList}
-                  </Select>,
-                )}
-
-              </Form.Item>
-            </Col>
-            <Col span={3}>
-              <Form.Item label="结束时间" >
-                {getFieldDecorator('endTime', {
-                  rules: [{ required: true, message: '请输入结束时间!' }],
-                })(
-                  <Select placeholder="请选择结束时间" style={{ width: 150 }}>
-                    {endList}
-                  </Select>,
-                )}
-
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Col span={16} className="meeting_requirements">
-            <Form.Item label="会议要求" >
-              {getFieldDecorator('intro', {
-                rules: [{ required: true, message: '请输入会议要求!' }],
+          <Col span={12}>
+            <Form.Item label="会议名称" >
+              {getFieldDecorator('meetingName', {
+                rules: [{ required: true, message: '请输入会议名称!' }],
               })(
-                <TextArea
-                  placeholder="请输入会议要求"
-                  autoSize={{ minRows: 5 }}
-                />
+                <Input
+                  placeholder="请输入会议名称"
+                />,
               )}
 
             </Form.Item>
-          </Col></Card>
-
-        <Card title="参会人员" style={{ margin: '10px 0 20px 0' }}>
-
-          <Col span={24}>
-            <div className="top_button">
-              <Button type="primary" icon="plus" onClick={() => { setModalAddAttendeesVisible(true) }}>
-                添加负责人
-              </Button>
-            </div>
-            <Table bordered size="middle" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
           </Col>
-        </Card>
+        </Row>
+        <Row>
+          <Col span={5}>
+            <Form.Item label="会议室" >
+              {getFieldDecorator('roomId', {
+                rules: [{ required: true, message: '请选择会议室!' }],
+              })(
+                <Select placeholder="请选择会议室" style={{ width: 170 }}>
+                  {resourceMap}
+                </Select>,
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item label="参会人数" >
+              {getFieldDecorator('number', {
+                rules: [{ required: true, message: '请输入参会人数!' }],
+              })(
+                <InputNumber min={0} />,
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item label="主办单位" >
+              {getFieldDecorator('organizer', {
+                rules: [{ required: true, message: '请输入呈报单位!' }],
+              })(
+                <Input
+                  placeholder="请输入呈报单位"
+                />,
+              )}
+
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={5}>
+            <Form.Item label="参会日期" >
+              {getFieldDecorator('date', {
+                rules: [{ required: true, message: '请输入参会人数!' }],
+              })(
+                <DatePicker />
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item label="开始时间" >
+              {getFieldDecorator('beginTime', {
+                rules: [{ required: true, message: '请输入开始时间!' }],
+              })(
+                <Select placeholder="请选择开始时间" style={{ width: 150 }} onChange={handleSelectChange}>
+                  {beginList}
+                </Select>,
+              )}
+
+            </Form.Item>
+          </Col>
+          <Col span={3}>
+            <Form.Item label="结束时间" >
+              {getFieldDecorator('endTime', {
+                rules: [{ required: true, message: '请输入结束时间!' }],
+              })(
+                <Select placeholder="请选择结束时间" style={{ width: 150 }}>
+                  {endList}
+                </Select>,
+              )}
+
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Col span={16} className="meeting_requirements">
+          <Form.Item label="会议要求" >
+            {getFieldDecorator('intro', {
+              rules: [{ required: true, message: '请输入会议要求!' }],
+            })(
+              <TextArea
+                placeholder="请输入会议要求"
+                autoSize={{ minRows: 5 }}
+              />
+            )}
+
+          </Form.Item>
+        </Col> */}
+
+      </Card>
+
+      <Card title="参会人员" style={{ margin: '10px 0 20px 0' }}>
+
         <Col span={24}>
-          <Form.Item style={{ marginLeft: '41%' }}>
-            <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
-              确认
+          <div className="top_button">
+            <Button type="primary" icon="plus" onClick={() => { setModalAddAttendeesVisible(true) }}>
+              添加负责人
               </Button>
-            {/* <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
+          </div>
+          <Table bordered size="middle" rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
+        </Col>
+      </Card>
+      <Col span={24}>
+        <Form.Item style={{ marginLeft: '41%' }}>
+          <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
+            确认
+              </Button>
+          {/* <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
               暂存
               </Button> */}
-            <Button onClick={goBack}>
-              取消
+          <Button onClick={goBack}>
+            取消
               </Button>
-          </Form.Item>
-        </Col>
-      </Form>
+        </Form.Item>
+      </Col>
+
 
       <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible} callback={modalAddAttendeesCallback.bind(this)} />
     </>
