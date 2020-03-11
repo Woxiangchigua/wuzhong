@@ -6,7 +6,7 @@ import { Popover, Radio } from 'antd';
 
 
 const query = graphql`
-    query Meeting_MeetingListQuery(
+    query MeetingUpdate_MeetingListQuery(
         $beginTime: DateTime
         $endTime: DateTime
     ){

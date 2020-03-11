@@ -185,6 +185,10 @@ function AddMeeting(props) {
           ["user-5",
             "user-6"
           ],
+          "false,false,false,false,false",
+          "reportUnit",
+          "attendLeader",
+          "MEETING_COMMON",
           (response, errors) => {
             if (errors) {
               console.log(errors)
