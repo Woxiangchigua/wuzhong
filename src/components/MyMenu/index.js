@@ -6,7 +6,8 @@ import { Menu, Icon } from 'antd';
 import MenuConfig from './config';
 
 const MyMenu = (props) => {
-	const loginType = props.user.id.split('-')[0];
+	// const loginType = props.user.id.split('-')[0];
+	const loginType = props.user.username;
 	const myMenu = MenuConfig.getMyMenuList(loginType);
 	
 	return (
