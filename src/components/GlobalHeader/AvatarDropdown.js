@@ -40,11 +40,11 @@ export default function AvatarDropdown(props) {
         </Menu>
     );
 
-    return props.user && props.user.name ? (
+    return props.user.user && props.user.user.name ? (
         <HeaderDropdown overlay={menuHeaderDropdown}>
             <span >                
                 <Avatar className="user-icon" shape="square" src={man} />
-                <span  className="user-name" style={{color: '#fff'}}>{props.user.name}，你好</span>
+                <span  className="user-name" style={{color: '#fff'}}>{props.user.user.name}，你好</span>
             </span>
         </HeaderDropdown >
     ) : (
