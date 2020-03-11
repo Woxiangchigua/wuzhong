@@ -120,6 +120,31 @@ const menulist = [{
 // 		role: ['employee']
 // 	}]
 // }
+{
+	name: '公文管理',
+	icon: 'compass',
+	key: 'bulletin',
+	role: ['employee'],
+	items: [{
+		name: '新增公文',
+		icon: '',
+		key: 'createbulletin',
+		link: '/Bulletin/Createbulletin',
+		role: ['employee']
+	},{
+		name: '公文列表',
+		icon: '',
+		key: 'bulletinlist',
+		link: '/Bulletin/List',
+		role: ['employee']
+	},{
+		name: '公文分发列表',
+		icon: '',
+		key: 'bulldist',
+		link: '/Bulletin/Bulldist',
+		role: ['employee']
+	}]
+}
 ];
 
 const getMyMenuList = (lype) => {

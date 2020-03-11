@@ -1,19 +1,5 @@
+/* @import 'react-big-calendar/lib/sass/styles'; */
 @charset "UTF-8";
-.list-title{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px
-}
-
-.divclear{
-    clear: both;
-  }
-
-  .ant-layout-content {
-    padding: 0!important;
-  }
-  /* @import 'react-big-calendar/lib/sass/styles'; */
 .rbc-btn {
   color: inherit;
   font: inherit;
@@ -527,6 +513,42 @@ button.rbc-input::-moz-focus-inner {
   background-color: #74ad31;
   pointer-events: none; }
 
-.layui-table-tool{
-	background: none;
+.ant-page-header-heading-title {
+	float: none;
+	margin-bottom: 10px;
+}
+
+.ant-page-header-heading-sub-title {
+	float: none;
+}
+
+.ant-page-header {
+	padding: 0;
+}
+
+.ant-layout-content {
+	padding: 0!important;
+}
+
+.ant-divider-horizontal {
+	height: 0;
+}
+
+.ant-form-item-label {
+	display: block!important;
+	text-align: left;
+	line-height: 30px;
+}
+
+.ant-form-inline .ant-form-item {
+    margin-bottom: 5px;
+		width: 80%;
+}
+
+.ant-form-item-control-wrapper {
+    width: 100%;
+}
+
+.meeting_requirements {
+	width: 70%;
 }
