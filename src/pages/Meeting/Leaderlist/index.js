@@ -5,6 +5,7 @@ import { Button, Breadcrumb, Card, Table, Tabs, Divider,Input } from 'antd';
 import './index.css';
 import Tabledeal from './components/Tabledeal/index'
 import Tableme from './components/Tableme/index'
+import Tablewait from './components/Tablewait/index'
 import { Link } from "react-router-dom";
 
 const { Search } = Input;
@@ -41,6 +42,7 @@ class AddMeeting extends Component {
 function Lists(props) {
   const [searchKey, setSearchKey] = useState('');
   const [searchKey2, setSearchKey2] = useState('');
+	const [searchKey3, setSearchKey3] = useState('');
   const environment = props.environment;
   const operations = <Search
     placeholder="输入会议名称"
@@ -62,6 +64,9 @@ function Lists(props) {
       case "2":
         setSearchKey2(value)
         break;
+			case "3":
+				setSearchKey3(value)
+				break;
       default:
         break;
     }
@@ -83,12 +88,15 @@ function Lists(props) {
       </Card>
       <Card bordered={false} style={{marginTop:10}}>
       <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
-        <TabPane tab="待处理" key="1">
+        <TabPane tab="全部会议" key="1">
           <Tabledeal environment={environment}  searchKey={searchKey}/>
         </TabPane>
-        <TabPane tab="我的待开会议" key="2">
+        <TabPane tab="待审会议" key="2">
           <Tableme environment={environment}  searchKey2={searchKey2}/>
         </TabPane>
+				 <TabPane tab="待开会议" key="3">
+				  <Tablewait environment={environment}  searchKey3={searchKey3}/>
+				</TabPane>
       </Tabs>
       </Card>
     </div>
