@@ -41,11 +41,11 @@ class AddMeeting extends Component {
 function Lists(props) {
   const [searchKey, setSearchKey] = useState('');
   const environment = props.environment;
-  const operations = <Search
-    placeholder="输入会议名称"
-    onSearch={search}
-    style={{ width: 200 }}
-  />;
+  // const operations = <Search
+  //   placeholder="输入会议名称"
+  //   onSearch={search}
+  //   style={{ width: 200 }}
+  // />;
   let defaultActiveKey = "1"
   function callback(key) {
 
@@ -72,9 +72,11 @@ function Lists(props) {
         </ButtonGroup> */}
       </Card>
       <Card bordered={false} style={{marginTop:10}}>
-      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
+      {/* <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}> */}
+      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} >
         <TabPane tab="我的待开会议" key="1">
-          <Tableuser environment={environment} searchKey={searchKey}/>
+          <Tableuser environment={environment} />
+          {/* <Tableuser environment={environment} searchKey={searchKey}/> */}
         </TabPane>
       </Tabs>
       </Card>
