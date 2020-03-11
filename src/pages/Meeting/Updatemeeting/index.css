@@ -553,8 +553,11 @@ button.rbc-input::-moz-focus-inner {
 	width: 70%;
 } */
 
+
+
 .top_button{
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px
+  justify-content: space-between;
+  /* margin-bottom: 10px; */
+  align-items: center
 }

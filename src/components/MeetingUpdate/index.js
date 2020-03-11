@@ -310,7 +310,7 @@ export default function Meeting(props) {
         return (
             <div>
                 <div className="top">
-                    <Radio.Group defaultValue={propsDate} size="large" onChange={chooseTime}>
+                    <Radio.Group defaultValue={propsDate} onChange={chooseTime}>
                         {dateArr2}
                     </Radio.Group>
                     <div className="status">
