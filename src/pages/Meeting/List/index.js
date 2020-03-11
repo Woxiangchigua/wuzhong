@@ -4,8 +4,9 @@ import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Button, Breadcrumb, Card, Input, Tabs, } from 'antd';
 import './index.css';
 import TableAwait from './components/TableAwait/index'
-import TableOccupy from './components/TableOccupy/index'
 import TableTODOAll from './components/TableTODOAll/index'
+import TableTODO from './components/TableTODO/index'
+import TableOccupy from './components/TableOccupy/index'
 import {
   useHistory, Link
 } from "react-router-dom";
@@ -74,13 +75,10 @@ class AddMeeting extends Component {
 function Lists(props) {
   const [searchKey, setSearchKey] = useState('');
   const [searchKey2, setSearchKey2] = useState('');
-  const [searchKey3, setSearchKey3] = useState('');
+	const [searchKey3, setSearchKey3] = useState('');
+	const [searchKey4, setSearchKey4] = useState('');
   const environment = props.environment;
-  const operations = <Search
-    placeholder="输入会议名称"
-    onSearch={search}
-    style={{ width: 200 }}
-  />;
+
   let defaultActiveKey = "1"
   function callback(key) {
 
@@ -96,9 +94,12 @@ function Lists(props) {
       case "2":
         setSearchKey2(value)
         break;
-      case "3":
-        setSearchKey3(value)
-        break;
+			case "3":
+				setSearchKey3(value)
+				break;
+			case "4":
+				setSearchKey4(value)
+				break;
     }
 
   }
@@ -119,16 +120,19 @@ function Lists(props) {
         </ButtonGroup> */}
       </Card>
       <Card bordered={false} style={{ marginTop: 10 }}>
-        <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
-          <TabPane tab="全部审批" key="1">
+        <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }}>
+          <TabPane tab="全部待开会议" key="1">
             <TableAwait environment={environment} searchKey={searchKey} />
           </TabPane>
-          <TabPane tab="待批会议" key="2">
+          <TabPane tab="今日待开会议" key="2">
             <TableTODOAll environment={environment} searchKey2={searchKey2} />
           </TabPane>
-          <TabPane tab="已批会议" key="3">
-            <TableOccupy environment={environment} searchKey3={searchKey3} />
-          </TabPane>
+					<TabPane tab="待处理" key="3">
+					  <TableOccupy environment={environment} searchKey={searchKey3} />
+					</TabPane>
+					<TabPane tab="全部已开会议" key="4">
+					  <TableTODO environment={environment} searchKey2={searchKey4} />
+					</TabPane>
         </Tabs>
       </Card>
     </div>

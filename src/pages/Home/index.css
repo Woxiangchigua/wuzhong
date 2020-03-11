@@ -11,3 +11,22 @@
 .gutter-row300{
     /* width: 300px; */
 }
+
+.ant-layout-content {
+    padding: 0!important;
+  }
+
+
+.bot_line{
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+}
+
+.head2{
+	height: 376px;
+	margin-right: 10px;
+}
+.head3{
+	width: calc(25% - 20px);
+	height: 376px;
+}
