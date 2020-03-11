@@ -1,5 +1,7 @@
 import React, { Component, useEffect, useState } from 'react'
+import DeleteMeeting from '../../../Mutations/DeleteMeeting'
 import { Button } from 'antd';
+import { useHistory, Link } from "react-router-dom";
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import dateFormat from '../../../../../ utils/dateFormat'
 import "./index.css"
@@ -35,6 +37,7 @@ const query = graphql`
     }`
 export default function Table(props) {
     const [meetingList, setmeetingList] = useState([]);
+    let history = useHistory();
     var table = window.layui.table;
     let searchKey = ""
     useEffect(
@@ -42,13 +45,36 @@ export default function Table(props) {
             getList(searchKey)
             /* global layer */
             table.on('tool(test)', function (obj) {
-                console.log(obj)
+                console.log(obj.event)
                 let data = obj.data;
+                if(obj.event==="go"){
+                    history.push('/Meeting/Querymeeting/' + JSON.stringify({id:data.id,review:data.review}))
+                }else if(obj.event==="del"){
                 let delIndex = layer.confirm('真的删除id为' + data.id + "的信息吗?", function (delIndex) {
-                    console.log(delIndex)
+                    DeleteMeeting.commit(
+                        props.environment,
+                        data.id,
+                        (response, errors) => {
+                            if (errors) {
+                                console.log(errors)
+                                layer.msg(errors[0].message);
+                            } else {
+                                console.log(response);
+                                layer.msg("删除成功");
+                                getList(searchKey)
+                            }
+                        },
+                        (response, errors) => {
+                            if (errors) {
+                                console.log(errors)
+                            } else {
+                                console.log(response);
+                            }
+                        }
+                    );
                     layer.close(delIndex);
                 });
-
+            }
             })
 
 
@@ -168,7 +194,7 @@ export default function Table(props) {
     return (
         <>
             <div>
-                <div className="top">
+                <div className="TableAllTop">
                     <div style={{ marginRight: 20 }}>会议名称</div>
                     <input onChange={(e) => inputChange(e)} type="text" style={{ width: 200, height: 30 }} placeholder="请输入关键词" className="layui-input layui-input-sm" />
                     <button onClick={search} style={{ marginLeft: 20 }} type="button" className="layui-btn layui-btn-sm">
@@ -190,7 +216,7 @@ export default function Table(props) {
                 <table id="demo" lay-filter="test"></table>
             </div>
             <script type="text/html" id="bar">
-                <button type='button' className='layui-btn layui-btn-normal layui-btn-xs'>
+                <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
                     <i className="layui-icon">&#xe6b2;</i>详情
                 </button>
                 <button type='button' lay-event="del" className='layui-btn layui-btn-danger layui-btn-xs'>

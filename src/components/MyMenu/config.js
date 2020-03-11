@@ -1,11 +1,11 @@
 
 const menulist = [{
-	name: '分局主页',
+	name: '会议导览平台',
 	icon: 'compass',
 	key: 'callcenter',
 	role: ['admin','管理人员','申请人','普通用户','部门领导'],
 	items: [{
-		name: '分局主页',
+		name: '会议导览平台',
 		icon: '',
 		key: 'calllist',
 		link: '/Home',
@@ -14,7 +14,7 @@ const menulist = [{
 },
 {
 	name: '会议室申请',
-	icon: 'mail',
+	icon: 'form',
 	key: 'meeting',
 	role: ['admin','申请人'],
 	items: [{
@@ -34,7 +34,7 @@ const menulist = [{
 },
 {
 	name: '部门领导',
-	icon: 'mail',
+	icon: 'codepen',
 	key: 'leader',
 	role: ['admin','部门领导'],
 	items: [{
@@ -47,8 +47,8 @@ const menulist = [{
 	]
 },
 {
-	name: '物业',
-	icon: 'mail',
+	name: '管理员',
+	icon: 'hdd',
 	key: 'administrator',
 	role: ['admin','管理人员'],
 	items: [{
@@ -62,7 +62,7 @@ const menulist = [{
 },
 {
 	name: '部门职员',
-	icon: 'mail',
+	icon: 'user',
 	key: 'user',
 	role: ['admin','普通用户'],
 	items: [{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UpdateMeeting from '../Mutations/UpdateMeeting'
 import Calendar from '../../../components/CalendarUpdate/index'
 import { useHistory } from "react-router-dom";
@@ -9,70 +9,19 @@ import './index.css';
 import {
   Breadcrumb,
   Form,
-  Input,
+
   Card,
-  Col,
-  Row,
-  Table,
-  Button,
-  Divider,
+
   Modal,
-  InputNumber,
-  DatePicker,
-  Select,
+
 } from 'antd';
 import moment from 'moment';
 import ModalAddAttendees from '@/components/ModalAddAttendees';
 
-const dateFormat2 = 'YYYY-MM-DD';
 
-const { Option } = Select;
-const { TextArea } = Input;
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id',
-    className: 'tabcolums'
-  },
-  {
-    title: '参会人姓名',
-    dataIndex: 'name',
-    key: 'name',
-    className: 'tabcolums'
-  },
-  {
-    title: '警员编号',
-    dataIndex: 'age',
-    key: 'age',
-    className: 'tabcolums'
-  },
-  {
-    title: '所属部门',
-    dataIndex: 'address',
-    key: 'address',
-    className: 'tabcolums'
-  },
-  {
-    title: '操作',
-    className: 'tabcolums',
-    key: 'action',
-    render: (text, record) => (
-      <span>
-        <a>删除</a>
-      </span>
-    ),
-  },
-];
 
 const data = [
-  {
-    key: '1',
-    id:'001',
-    name: '张三',
-    age: "0001",
-    address: '治安大队',
-  }
+
 ];
 
 const query = graphql`
@@ -103,7 +52,11 @@ const query = graphql`
           review,
           reviewUserId,
           status,
-          updatedAt
+          updatedAt,
+          attendLeader,
+          meetingType,
+          reportUnit,
+          requirement
         }
     }`
 var childrenMsg = {}
@@ -112,27 +65,12 @@ function AddMeeting(props) {
   const [modalAddAttendeesVisible, setModalAddAttendeesVisible] = useState(false);
   const environment = props.environment
   const meetingId = props.meetingId
-  const resourceMap = props.meetingRoomList.edges.map(function (edge, index) {
-    return <Option value={edge.id} key={edge.id}>{edge.name}</Option>
-  })
+  var layui = window.layui
+  var form = layui.form;
+  var laydate = layui.laydate;
+  var table = window.layui.table;
+  let meetingroom = props.meetingRoomList.edges
   const meetingDetail = props.meetingDetail
-  console.log(meetingDetail)
-  const events = []
-  events.push({
-    title: meetingDetail.meetingName,
-    start: new Date(meetingDetail.beginTime),
-    end: new Date(meetingDetail.endTime),
-    resourceId: meetingDetail.meetingRoomId,
-  })
-
-  function getChildrenMsg(result, msg) {
-    console.log(msg)
-    // 很奇怪这里的result就是子组件那bind的第一个参数this，msg是第二个参数
-
-    childrenMsg = msg
-    console.log(childrenMsg)
-  }
-
   let begin = [
     { lable: "09:00", val: "T01:00:00Z" },
     { lable: "09:30", val: "T01:30:00Z" },
@@ -159,90 +97,226 @@ function AddMeeting(props) {
     { lable: "20:00", val: "T12:00:00Z" },
     { lable: "20:30", val: "T12:30:00Z" },
   ]
+  let end = [
+
+    { lable: "09:30", val: "T01:30:00Z" },
+    { lable: "10:00", val: "T02:00:00Z" },
+    { lable: "10:30", val: "T02:30:00Z" },
+    { lable: "11:00", val: "T03:00:00Z" },
+    { lable: "11:30", val: "T03:30:00Z" },
+    { lable: "12:00", val: "T04:00:00Z" },
+    { lable: "12:30", val: "T04:30:00Z" },
+    { lable: "13:00", val: "T05:00:00Z" },
+    { lable: "13:30", val: "T05:30:00Z" },
+    { lable: "14:00", val: "T06:00:00Z" },
+    { lable: "14:30", val: "T06:30:00Z" },
+    { lable: "15:00", val: "T07:00:00Z" },
+    { lable: "15:30", val: "T07:30:00Z" },
+    { lable: "16:00", val: "T08:00:00Z" },
+    { lable: "16:30", val: "T08:30:00Z" },
+    { lable: "17:00", val: "T09:00:00Z" },
+    { lable: "17:30", val: "T09:30:00Z" },
+    { lable: "18:00", val: "T10:00:00Z" },
+    { lable: "18:30", val: "T10:30:00Z" },
+    { lable: "19:00", val: "T11:00:00Z" },
+    { lable: "19:30", val: "T11:30:00Z" },
+    { lable: "20:00", val: "T12:00:00Z" },
+    { lable: "20:30", val: "T12:30:00Z" },
+    { lable: "21:00", val: "T13:00:00Z" },
+  ]
+  const $ = window.$
+
+  for (let i = 0; i < 8; i++) {
+    data.push({
+      'id': `00${i}`,
+      'name': `张三${i}`,
+      'age': `000${i}`,
+      'address': `治安大队`,
+    })
+  }
+
+  useEffect(
+    () => {
+      init(data)
+      /* global layer */
+      layui.use(['form', 'laydate'], function () {
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#begindate',
+        });
+
+        $("#meetingroom").empty();
+        $('#meetingroom').append(`<option value=""></option>`)
+        for (let i = 0; i < meetingroom.length; i++) {
+          $('#meetingroom').append(`<option value=${meetingroom[i].id}>${meetingroom[i].name}</option>`);
+        }
+        $("#end").empty();
+        $('#end').append(`<option value="">请选择结束时间</option>`)
+        for (let i = 0; i < end.length; i++) {
+          $('#end').append(`<option value=${end[i].val}>${end[i].lable}</option>`);
+        }
+        $("#begin").empty();
+        $('#begin').append(`<option value="">请选择开始时间</option>`)
+        for (let i = 0; i < begin.length; i++) {
+          $('#begin').append(`<option value=${i}>${begin[i].lable}</option>`);
+        }
+        form.render();
+      });
+
+      form.on('select(begin)', function (data) {
+        let begin2 = JSON.parse(JSON.stringify(begin))
+        begin2.splice(0, data.value * 1 + 1)
+        begin2.push({ lable: "21:00", val: "T13:00:00Z" })
+        $("#end").empty();
+        $('#end').append(`<option value="">请选择结束时间</option>`)
+        for (let i = 0; i < begin2.length; i++) {
+          $('#end').append(`<option value=${begin2[i].val}>${begin2[i].lable}</option>`);
+        }
+        form.render();
+      });
+
+      form.on('submit(formDemo)', function (data) {
+        console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        let field = data.field
+        let str = ["false", "false", "false", "false", "false"]
+        if (field.checkbox0) {
+          str[0] = "true"
+        }  if (field.checkbox1) {
+          str[1] = "true"
+        }  if (field.checkbox2) {
+          str[2] = "true"
+        }
+         if (field.checkbox3) {
+          str[3] = "true"
+        }
+         if (field.checkbox4) {
+          str[4] = "true"
+        }
+        field.requirement = str.join()
+        Submit(field)
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+      });
+
+      let detail = JSON.parse(JSON.stringify(meetingDetail))
+      detail.date = dateFormat("YYYY-mm-dd", new Date(meetingDetail.beginTime))
+      detail.roomId = meetingDetail.meetingRoomId
+      detail.endTime = "T" + meetingDetail.endTime.split("T")[1]
+      for (let i = 0; i < begin.length; i++) {
+        if ("T" + meetingDetail.beginTime.split("T")[1] === begin[i].val) {
+          detail.beginTime = i
+        }
+      }
+      let requirementList = meetingDetail.requirement.split(",")
+      console.log(requirementList)
+      for (let i = 0; i < requirementList.length; i++) {
+        if (requirementList[i] === 'true') {
+          detail[`checkbox${i}`] = "on"
+        }
+      }
+      console.log(detail)
+      // $('#reportUnit').attr('value',detail.reportUnit)
+
+      form.val("formDemo", detail);
+
+    }
+  )
+
+
+  console.log(meetingDetail)
+
+
+  function init(data) {
+    /* global layer */
+    //第一个实例
+    table.render({
+      id: 'idTest',
+      elem: '#demo',
+      size: "",
+      // url: '', //数据接口
+      data: data
+      , page: { count: 100 } //开启分页
+      , cols: [[ //表头 
+        { checkbox: true }
+        , { field: 'id', title: 'ID', sort: true }
+        , { field: 'name', title: '参会人姓名' }
+        , { field: 'age', title: '警员编号' }
+        , { field: 'address', title: '所属部门' }
+        , { field: '', title: "操作", align: "center", toolbar: "#bar" }
+      ]]
+    });
+  }
 
   let begin3 = JSON.parse(JSON.stringify(begin))
   begin3.splice(0, 1)
   begin3.push({ lable: "21:00", val: "T13:00:00Z" })
-  const [end, setEnd] = useState(begin3);
+  // const [end, setEnd] = useState(begin3);
 
-  let beginIndex
-  for (let i = 0; i < begin.length; i++) {
-    if ("T" + meetingDetail.beginTime.split("T")[1] === begin[i].val) {
-      beginIndex = i
+
+
+
+  function open() {
+    var checkStatus = table.checkStatus('idTest');
+    console.log(checkStatus)
+    if (checkStatus.data.length === 0) {
+      let delIndex = layer.confirm(`请先选择要删除的数据`, function (delIndex) {
+        console.log(delIndex)
+        layer.close(delIndex);
+      });
+    } else {
+      let delIndex = layer.confirm(`确认删除选中的${checkStatus.data.length}条数据？`, function (delIndex) {
+        console.log(delIndex)
+        layer.close(delIndex);
+      });
     }
+
   }
 
 
-  let beginList = begin.map((item, index) => {
-    return (
-      <Option value={index} key={item.val}>{item.lable}</Option>
-    )
-  })
+  function Submit(values) {
 
-
-
-  function handleSelectChange(val) {
-    props.form.setFieldsValue({
-      endTime: ``,
-    });
-    let begin2 = JSON.parse(JSON.stringify(begin))
-    begin2.splice(0, val + 1)
-    begin2.push({ lable: "21:00", val: "T13:00:00Z" })
-    setEnd(begin2)
-  }
-
-  let endList = end.map((item) => {
-    return (
-      <Option value={item.val} key={item.val}>{item.lable}</Option>
-    )
-  })
-
-  function handleSubmit(e) {
-    // let obj = childrenMsg
-
-    e.preventDefault();
-    props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        let date = values['date'].format('YYYY-MM-DD')
-        UpdateMeeting.commit(
-          props.environment,
-          meetingId,
-          new Date(date + begin[values.beginTime].val).toISOString(),
-          values.roomId,
-          values.number,
-          new Date(date + values.endTime).toISOString(),
-          values.meetingName,
-          values.organizer,
-          'configuration',
-          values.intro,
-          ["user-5",
-            "user-6"],
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              console.log(response);
-              Modal.success({
-                content: '提交成功',
-                onOk() {
-                  history.push('/Meeting/List')
-                },
-              });
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-            } else {
-              console.log(response);
-            }
-          }
-        );
+    let date = values.date
+    UpdateMeeting.commit(
+      props.environment,
+      meetingId,
+      new Date(date + begin[values.beginTime].val).toISOString(),
+      values.roomId,
+      values.number,
+      new Date(date + values.endTime).toISOString(),
+      values.meetingName,
+      values.organizer,
+      'configuration',
+      values.intro,
+      ["user-5",
+        "user-6"],
+      values.requirement,
+      values.reportUnit,
+      values.attendLeader,
+      values.meetingType,
+      (response, errors) => {
+        if (errors) {
+          console.log(errors)
+          Modal.error({
+            title: errors[0].message,
+          });
+        } else {
+          console.log(response);
+          Modal.success({
+            content: '提交成功',
+            onOk() {
+              history.push('/Meeting/Applicant')
+            },
+          });
+        }
+      },
+      (response, errors) => {
+        if (errors) {
+          console.log(errors)
+        } else {
+          console.log(response);
+        }
       }
-    });
+    );
+
   };
   function goBack() {
     history.goBack()
@@ -252,159 +326,126 @@ function AddMeeting(props) {
     setModalAddAttendeesVisible(false);
     console.log(a, d)
   }
-  const rowSelection = {
-    onChange: (selectedRowKeys, selectedRows) => {
-      console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-    getCheckboxProps: record => ({
-      disabled: record.name === 'Disabled User', // Column configuration not to be checked
-      name: record.name,
-    }),
-  };
+
 
   const { getFieldDecorator } = props.form;
   return (
     <>
       <Card title="会议室现有状态预览图" bordered={false} style={{ marginTop: 10 }}>
-        {/* <div style={{ height: 500 }}>
-          <Calendar resourceMap={resourceMap} item={events} parent={getChildrenMsg} />
-        </div> */}
         <Meeting environment={props.environment} date={dateFormat("YYYY-mm-dd", new Date(meetingDetail.beginTime))} />
       </Card>
 
-      <Form layout="inline" onSubmit={handleSubmit} style={{ margin: '0px' }}>
-        <Card title="基本信息" style={{ marginTop: 10 }} >
-          <Row>
-            <Col span={12}>
-              <Form.Item label="会议名称" >
-                {getFieldDecorator('meetingName', {
-                  initialValue: meetingDetail.meetingName,
-                  rules: [{ required: true, message: '请输入会议名称!' }],
-                })(
-                  <Input
-                    placeholder="请输入会议名称"
-                  />,
-                )}
-
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={5}>
-              <Form.Item label="会议室" >
-                {getFieldDecorator('roomId', {
-                  initialValue: meetingDetail.meetingRoomId,
-                  rules: [{ required: true, message: '请选择会议室!' }],
-                })(
-                  <Select placeholder="请选择会议室">
-                    {resourceMap}
-                  </Select>,
-                )}
-
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="参会人数" >
-                {getFieldDecorator('number', {
-                  initialValue: meetingDetail.number,
-                  rules: [{ required: true, message: '请输入参会人数!' }],
-                })(
-                  <InputNumber style={{ width: "100%" }} min={0} />,
-                )}
-
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="主办单位" >
-                {getFieldDecorator('organizer', {
-                  initialValue: meetingDetail.organizer,
-                  rules: [{ required: true, message: '请输入呈报单位!' }],
-                })(
-                  <Input
-                    placeholder="请输入呈报单位"
-                  />,
-                )}
-
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={5}>
-              <Form.Item label="参会日期" >
-                {getFieldDecorator('date', {
-                  initialValue: moment(dateFormat("YYYY-mm-dd", new Date(meetingDetail.beginTime)), dateFormat2),
-                  rules: [{ required: true, message: '请输入参会人数!' }],
-                })(
-                  <DatePicker style={{ width: "100%" }} format={dateFormat2} />
-                )}
-
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item label="开始时间" >
-                {getFieldDecorator('beginTime', {
-                  initialValue: beginIndex,
-                  rules: [{ required: true, message: '请输入开始时间!' }],
-                })(
-                  <Select placeholder="请选择开始时间" onChange={handleSelectChange}>
-                    {beginList}
-                  </Select>,
-                )}
-
-              </Form.Item>
-            </Col>
-            <Col span={3}>
-              <Form.Item label="结束时间" >
-                {getFieldDecorator('endTime', {
-                  initialValue: "T" + meetingDetail.endTime.split("T")[1],
-                  rules: [{ required: true, message: '请输入结束时间!' }],
-                })(
-                  <Select placeholder="请选择结束时间">
-                    {endList}
-                  </Select>,
-                )}
-
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Col span={16} className="meeting_requirements">
-            <Form.Item label="会议要求" >
-              {getFieldDecorator('intro', {
-                initialValue: meetingDetail.intro,
-                rules: [{ required: true, message: '请输入会议要求!' }],
-              })(
-                <TextArea
-                  placeholder="请输入会议要求"
-                  autoSize={{ minRows: 5 }}
-                />
-              )}
-
-            </Form.Item>
-          </Col></Card>
-
-        <Card title="参会人员" style={{ margin: '10px 0 0px 0' }}>
-          <div className="top_button">
-            <Button type="primary" icon="plus" onClick={() => { setModalAddAttendeesVisible(true) }}>
-              添加负责人
-            </Button>
+      <Card title="填写会议室预订表" style={{ marginTop: 10 }}>
+        <form className="layui-form" lay-filter="formDemo" action="">
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>呈报单位</label>
+              <div className="layui-input-block">
+                <input type="text" name="reportUnit" id='reportUnit' required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
+            </div>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>会议名称</label>
+              <div className="layui-input-block">
+                <input type="text" name="meetingName" required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
+            </div>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>会议类型</label>
+              <div className="layui-input-block">
+                <input type="radio" name="meetingType" value="MEETING_COMMON" title="普通会议" defaultChecked />
+                <input type="radio" name="meetingType" value="MEETING_VIDEO" title="视频会议" />
+              </div>
+            </div>
           </div>
-          <Table bordered size="middle"  rowSelection={rowSelection} columns={columns} dataSource={data} pagination={false} />
-        </Card>
-        <Col span={24}>
-          <Form.Item style={{ marginLeft: '41%' }}>
-            <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
-              确认
-              </Button>
-            {/* <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
-              暂存
-              </Button> */}
-            <Button onClick={goBack}>
-              取消
-              </Button>
-          </Form.Item>
-        </Col>
-      </Form>
+
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>参会领导</label>
+              <div className="layui-input-block">
+                <input type="text" name="attendLeader" required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
+            </div>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>参会人数</label>
+              <div className="layui-input-block">
+                <input type="text" name="number" required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
+            </div>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>主办单位</label>
+              <div className="layui-input-block">
+                <input type="text" name="organizer" required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
+            </div>
+          </div>
+
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>会议时间</label>
+              <div className="layui-input-inline" >
+                <input type="text" name="date" className="layui-input" id="begindate" />
+              </div>
+              <div className="layui-form-mid">-</div>
+              <div className="layui-input-inline" >
+                <select name="beginTime" id="begin" lay-filter="begin" lay-verify="required">
+                </select>
+              </div>
+              <div className="layui-form-mid">-</div>
+              <div className="layui-input-inline" >
+                <select name="endTime" id="end" lay-verify="required">
+                </select>
+              </div>
+            </div>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>会议地点</label>
+              <div className="layui-input-block">
+                <select name="roomId" id="meetingroom" lay-verify="required">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="top_button">
+              <div>参会人员</div>
+              <div>
+                <button type="button" onClick={open} lay-event="delAll" className="layui-btn layui-btn-sm">删除</button>
+                <button type="button" onClick={() => { setModalAddAttendeesVisible(true) }} className="layui-btn layui-btn-sm">添加</button>
+              </div>
+            </div>
+            <table id="demo" lay-filter="test"></table>
+          </div>
+          <div className="layui-form-item">
+            <label className="layui-form-label">复选框</label>
+            <div className="layui-input-block">
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="话筒" />
+              <input type="checkbox" name="checkbox1" lay-skin="primary" title="电子屏或投影仪" />
+              <input type="checkbox" name="checkbox2" lay-skin="primary" title="茶水" />
+              <input type="checkbox" name="checkbox3" lay-skin="primary" title="科信保障" />
+              <input type="checkbox" name="checkbox4" lay-skin="primary" title="物业服务员(涉密会议原则上不安排服务员)" />
+            </div>
+            <div className="layui-input-block">
+              其他需求
+              <textarea name="intro" placeholder="请输入内容" className="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-input-block">
+              <button className="layui-btn" lay-submit="true" lay-filter="formDemo">立即提交</button>
+              <button type="reset" className="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
+        </form>
+
+        <script type="text/html" id="bar">
+          <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
+            <i className="layui-icon">&#xe6b2;</i>编辑
+                </button>
+          <button type='button' lay-event="del" className='layui-btn layui-btn-danger layui-btn-xs'>
+            <i className="layui-icon">&#xe640;</i>删除
+                </button>
+        </script>
+      </Card>
       <ModalAddAttendees environment={environment} Visible={modalAddAttendeesVisible} callback={modalAddAttendeesCallback.bind(this)} />
     </>
 
