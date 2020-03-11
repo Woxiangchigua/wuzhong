@@ -20,29 +20,53 @@ export default function Table(props) {
                 , data: [
                     {
                         "id": 10002,
-                        "username": "user-2",
-                        "sex": "女",
-                        "city": "城市-2",
-                        "sign": "签名-2",
-                        "experience": 650,
-                        "logins": 77,
-                        "wealth": "222",
-                        "classify": "酱油",
-                        "score": 31
+                        "meetingName": "user-2",
+                        "meetingRoom": "1502",
+                        "meetingTime": "2020.02.29 10:00-10:30",
+                        "status": 0
                     },
+					{
+					    "id": 10002,
+					    "meetingName": "user-2",
+					    "meetingRoom": "1502",
+					    "meetingTime": "2020.02.29 10:00-10:30",
+					    "status": 0
+					},
+					{
+					    "id": 10002,
+					    "meetingName": "user-2",
+					    "meetingRoom": "1502",
+					    "meetingTime": "2020.02.29 10:00-10:30",
+					    "status": 1
+					},
+					{
+					    "id": 10002,
+					    "meetingName": "user-2",
+					    "meetingRoom": "1502",
+					    "meetingTime": "2020.02.29 10:00-10:30",
+					    "status": 1
+					},
+					{
+					    "id": 10002,
+					    "meetingName": "user-2",
+					    "meetingRoom": "1502",
+					    "meetingTime": "2020.02.29 10:00-10:30",
+					    "status": 1
+					},
                 ]
                 , page: { count: 100 } //开启分页
                 , cols: [[ //表头
                     { field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left' }
-                    , { field: 'username', title: '用户名', width: 80 }
-                    , { field: 'sex', title: '性别', width: 80, sort: true }
-                    , { field: 'city', title: '城市', width: 80 }
-                    , { field: 'sign', title: '签名', width: 177 }
-                    , { field: 'experience', title: '积分', width: 80, sort: true }
-                    , { field: 'score', title: '评分', width: 80, sort: true }
-                    , { field: 'classify', title: '职业', width: 80 }
-                    , { field: 'wealth', title: '财富', sort: true }
-                    , { field: '', title: "操作", toolbar: "#bar" }
+                    , { field: 'meetingName', title: '会议名称', width: 240 }
+                    , { field: 'meetingRoom', title: '会议室', width: 100 }
+                    , { field: 'meetingTime', title: '开会时间', width: 200 }
+                    , { field: 'status', title: '会议状态', width: 100 , templet : function(d){
+							if(d.status == 0){
+								return '<span style="color:#ffb800">进行中</span>';
+							}else if(d.status == 1){
+								return '<span style="color:#ff5722">未完成</span>';
+							}
+					  }}
                 ]]
             });
 
