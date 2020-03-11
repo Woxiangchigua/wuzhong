@@ -313,8 +313,38 @@ const columns = [
     this.rowKeys = selectedRowKeys
     this.setState({ selectedRowKeys });
   };
-  searchlist = () => {
-    console.log("???")
+  searchlist = (name,source) => {
+    fetchQuery(this.state.environment, query, {
+      first: 10,
+      skip: 0,
+      name: name || "",
+      source: source || "",
+      order:'',
+      status: ["BULLETIN_DISTRIBUTION_ARCHIVED","BULLETIN_DISTRIBUTION_UNASSIGNED","BULLETIN_DISTRIBUTION_NOT_ARCHIVED","BULLETIN_DISTRIBUTION_DEP_ARCHIVED"],
+      isReview: ["BULLETIN_DISTRIBUTION_IS_REVIEW_NO","BULLETIN_DISTRIBUTION_IS_REVIEW_YES"],
+      needReview: ["BULLETIN_DISTRIBUTION_NEED_REVIEW_NO","BULLETIN_DISTRIBUTION_NEED_REVIEW_YES"],
+    }).then(data => {
+      this.setState({
+        loading: false,
+        pagination: {
+            total: data.bulletinDistributionList.totalCount
+        },
+        data: data.bulletinDistributionList.edges? data.bulletinDistributionList.edges.map(function (edge) {
+          return {
+            "key": edge.id,
+            "bulletinId": edge.bulletinId,
+            "bulletinname": edge.bulletin.name,
+            "bulletinsource": edge.bulletin.source,
+            "depId": edge.depId,
+            "depReviewId": edge.depReviewId,
+            "depClerkId": edge.depClerkId,
+            "needReview": edge.needReview,
+            "isReview": edge.isReview,
+            "status": edge.status,
+          }
+        }):[]
+      });
+    });
   };
   render() {
     const { NeedAuditvisible, Auditvisible, DepArchivevisible, Archivedistvisible, confirmLoading, loading, selectedRowKeys, NeedAuditText, AuditText, DepArchiveText, ArchivedistText } = this.state;
@@ -393,7 +423,7 @@ const columns = [
         <Search
           placeholder="input search text"
           onSearch={this.searchlist}
-          // onSearch={() => {this.searchlist()}}
+          // onSearch={() => {searchlist()}}
           style={{ width: 200 }}
         />
               <Table rowSelection={rowSelection} columns={columns} dataSource={data} rowKey={this.state.resourceMap.id} />
@@ -403,7 +433,7 @@ const columns = [
   }
 
   // function searchlist(value){
-  //   console.log(this)
+  //   console.log("???",value)
   // }
 function Lists(props) {
   const environment = props.environment;

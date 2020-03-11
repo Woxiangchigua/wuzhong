@@ -13,9 +13,14 @@ const mutation = graphql`
     $endTime: DateTime!
     $meetingName: String!
     $userIds: [ID]!
-    $organizer: String!) {
+    $organizer: String!
+    $requirement: String
+    $meetingType: enumMeetingType!
+    $attendLeader: String!
+    $reportUnit: String!) {
     createMeeting(beginTime: $beginTime,meetingRoomId: $meetingRoomId,number: $number,
-      endTime: $endTime,meetingName: $meetingName,userIds:$userIds,organizer: $organizer,configuration: $configuration,intro: $intro,) {
+      endTime: $endTime,meetingName: $meetingName,userIds:$userIds,organizer: $organizer,configuration: $configuration,intro: $intro,
+      requirement: $requirement,meetingType: $meetingType,attendLeader: $attendLeader,reportUnit: $reportUnit,) {
       id
     }
   }
@@ -32,6 +37,10 @@ function commit(
   configuration,
   intro,
   userIds,
+  requirement,
+  meetingType,
+  attendLeader,
+  reportUnit,
   onCompleted,
   error
 ) {
@@ -46,7 +55,11 @@ function commit(
       organizer: organizer,
       configuration: configuration,
       intro: intro,
-      userIds:userIds
+      userIds:userIds,
+      requirement:requirement,
+      meetingType:meetingType,
+      attendLeader:attendLeader,
+      reportUnit:reportUnit,
     },
     onCompleted: onCompleted,
     onError: error,
