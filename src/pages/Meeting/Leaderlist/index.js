@@ -44,11 +44,11 @@ function Lists(props) {
   const [searchKey2, setSearchKey2] = useState('');
 	const [searchKey3, setSearchKey3] = useState('');
   const environment = props.environment;
-  const operations = <Search
-    placeholder="输入会议名称"
-    onSearch={search}
-    style={{ width: 200 }}
-  />;
+  // const operations = <Search
+  //   placeholder="输入会议名称"
+  //   onSearch={search}
+  //   style={{ width: 200 }}
+  // />;
   let defaultActiveKey = "1"
   function callback(key) {
 
@@ -56,22 +56,22 @@ function Lists(props) {
     console.log(defaultActiveKey);
   }
 
-  function search(value) {
-    switch (defaultActiveKey) {
-      case "1":
-        setSearchKey(value)
-        break;
-      case "2":
-        setSearchKey2(value)
-        break;
-			case "3":
-				setSearchKey3(value)
-				break;
-      default:
-        break;
-    }
+  // function search(value) {
+  //   switch (defaultActiveKey) {
+  //     case "1":
+  //       setSearchKey(value)
+  //       break;
+  //     case "2":
+  //       setSearchKey2(value)
+  //       break;
+	// 		case "3":
+	// 			setSearchKey3(value)
+	// 			break;
+  //     default:
+  //       break;
+  //   }
 
-  }
+  // }
   return (
     <div style={{ backgroundColor: '#f0f2f5' }}>
       <Card bordered={false} >
@@ -87,15 +87,19 @@ function Lists(props) {
         </ButtonGroup> */}
       </Card>
       <Card bordered={false} style={{marginTop:10}}>
-      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}>
+      <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} >
+      {/* <Tabs defaultActiveKey="1" onChange={callback} style={{ marginTop: '20px' }} tabBarExtraContent={operations}> */}
         <TabPane tab="全部会议" key="1">
-          <Tabledeal environment={environment}  searchKey={searchKey}/>
+          <Tabledeal environment={environment} />
+          {/* <Tabledeal environment={environment}  searchKey={searchKey}/> */}
         </TabPane>
         <TabPane tab="待审会议" key="2">
-          <Tableme environment={environment}  searchKey2={searchKey2}/>
+          <Tableme environment={environment} />
+          {/* <Tableme environment={environment}  searchKey2={searchKey2}/> */}
         </TabPane>
 				 <TabPane tab="待开会议" key="3">
-				  <Tablewait environment={environment}  searchKey3={searchKey3}/>
+				  <Tablewait environment={environment}  />
+				  {/* <Tablewait environment={environment}  searchKey3={searchKey3}/> */}
 				</TabPane>
       </Tabs>
       </Card>
