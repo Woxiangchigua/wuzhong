@@ -88,20 +88,21 @@ export default function Table(props) {
 				elem: '#complainTable4'
 				,url:''
 				,page: true
-				,toolbar: '#complain_toolbar4'
+				// ,toolbar: '#complain_toolbar4'
 				,limit:10
 				, data: data
 				,cols: [
 		  			[
-					  {field:'id', width:100,title: 'ID',sort: true}
+						{checkbox:true}//开启多选框
+					  ,{field:'id', width:100,title: 'ID',sort: true}
 					  ,{field:'batchNumber',width:180, title: '申请批号'}
-					  ,{field:'meetingName',width:350, title: '会议名称'}
+					  ,{field:'meetingName',title: '会议名称'}
 					  ,{field:'meetingRoom',width:200,title: '会议室',
 						templet: function (d) {
 						    return `<div>${d.meetingRoom.name}</div>`
 						}
 					  }
-					  ,{field:'meetingTime',width:300, title: '开会时间',
+					  ,{field:'meetingTime',title: '开会时间',
 						templet: function (d) {
 						    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.beginTime))} ${dateFormat("HH:MM", new Date(d.beginTime))}-${dateFormat("HH:MM", new Date(d.endTime))}</div>`
 						}
@@ -154,11 +155,17 @@ export default function Table(props) {
     return (
         <>
             <div>
+				<div className="topBtn">
+					<div>
+						<button type="button" onClick={open} lay-event="delAll" className="layui-btn layui-btn-sm">删除</button>
+					</div>
+				</div>
                 <table className="layui-hide" id="complainTable4" lay-filter="complainList"></table>
             </div>
             
-			<script type="text/html" id="barDemo4">
-			  <a className="layui-btn layui-btn-xs" lay-event="go">详情</a>
+			<script type="text/html" id="barDemo">
+			  <a className="layui-btn layui-btn-xs" lay-event="go"><i className="layui-icon">&#xe6b2;</i>详情</a>
+			  <a className="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i className="layui-icon">&#xe640;</i>删除</a>
 			</script>
         </>
     )
