@@ -337,7 +337,11 @@ function MeetingDetail(props) {
           <Descriptions.Item label="会议室">{Detail.meetingRoom.name}</Descriptions.Item>
           <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM", new Date(Detail.beginTime))}</Descriptions.Item>
           <Descriptions.Item label="参会人数">{Detail.number}</Descriptions.Item>
-          <Descriptions.Item label="申请人">{Detail.applyUserId}</Descriptions.Item>
+          <Descriptions.Item label="申请人">
+          <span>
+              {Detail.applyUserId === 'user-1' ? '王建国' :  ''}
+            </span>
+          </Descriptions.Item>
           <Descriptions.Item label="申请日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
           <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM", new Date(Detail.endTime))}</Descriptions.Item>
           <Descriptions.Item label="会议状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'block' : 'none' }}>
@@ -347,8 +351,8 @@ function MeetingDetail(props) {
           </Descriptions.Item>
           <Descriptions.Item label="审核状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'none' : 'block' }}>
             <Badge
-              status={Detail.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
-              text={Detail.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : Detail.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : Detail.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
+              status={Detail.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : Detail.review === 'MEETING_PASS' ? 'success' : 'error'}
+              text={Detail.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : Detail.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : Detail.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : Detail.review === 'MEETING_PASS' ? '审核通过' :''} />
           </Descriptions.Item>
         </Descriptions>
         <Card title="参会人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>

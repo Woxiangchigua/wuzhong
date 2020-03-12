@@ -94,7 +94,7 @@ export default function Table(props) {
 				,cols: [
 		  			[
 					  {field:'id', width:100,title: 'ID',sort: true}
-					  ,{field:'batchNumber',width:180, title: '申请批号'}
+					  //   ,{field:'batchNumber',width:180, title: '申请批号'}
 					  ,{field:'meetingName',width:350, title: '会议名称'}
 					  ,{field:'meetingRoom',width:200,title: '会议室',
 						templet: function (d) {
