@@ -95,7 +95,7 @@ export default function Table(props) {
 		  			[
 						{checkbox:true}//开启多选框
 					  ,{field:'id', width:100,title: 'ID',sort: true}
-					  ,{field:'batchNumber',width:180, title: '申请批号'}
+					//   ,{field:'batchNumber',width:180, title: '申请批号'}
 					  ,{field:'meetingName',title: '会议名称'}
 					  ,{field:'meetingRoom',width:200,title: '会议室',
 						templet: function (d) {

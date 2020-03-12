@@ -99,21 +99,27 @@ export default function Table(props) {
                 , { field: 'id', title: 'ID', width: 100, sort: true }
                 , { field: 'meetingName', title: '会议名称' }
                 , {
-                    field: 'meetingRoom', title: '会议室', width: 80,
+                    field: 'meetingRoom', title: '会议室', align: "center", width: 150,
                     templet: function (d) {
                         return `<div>${d.meetingRoom.name}</div>`
                     }
                 }
-                , { field: 'applyUserId', title: '申请人', width: 80 }
+                , { field: 'applyUserId', title: '申请人', align: "center", width: 120,
+                    templet: function (d) {
+                        if (d.applyUserId === 'user-1') {
+                            return "<span>王建国</span>"
+                        }
+                    }
+                }
                 , {
-                    field: 'meetingTime', title: '开会时间', width: 177,
+                    field: 'meetingTime', title: '开会时间', width: 200,
                     templet: function (d) {
                         return `<div>${dateFormat("YYYY-mm-dd", new Date(d.beginTime))} ${dateFormat("HH:MM", new Date(d.beginTime))}-${dateFormat("HH:MM", new Date(d.endTime))}</div>`
                     }
                 }
-                , { field: 'organizer', title: '主办部门', width: 80 }
+                , { field: 'organizer', title: '主办部门', align: "center", width: 120 }
                 , {
-                    field: 'status', title: '会议状态', align: "center", width: 80,
+                    field: 'status', title: '会议状态', align: "center", width: 120,
                     templet: function (d) {
                         if (d.review === 'MEETING_CHECK_PENDING_ADMIN' || d.review === 'MEETING_CHECK_PENDING_MANAGE') {
                             return "<span class='layui-badge'>待审核</span>"
