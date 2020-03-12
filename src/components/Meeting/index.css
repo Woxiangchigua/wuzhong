@@ -8,10 +8,13 @@
 .meeingTable,
 .meeingTable td,
 .meeingTable th {
-    border: 1px solid #81d4fa;
+    border: 1px solid #f2f2f2;
     background: #e2e2e2
 }
 
+.meeingTable thead tr{
+	height: 38px;
+}
 
 
 .meeingTable .name{
@@ -20,19 +23,19 @@
 }
 
 .meeingTable .pass{
-    background: #f1948a
+    background: #faad14
 }
 
 .meeingTable .nopass{
-    background: #26c6da
+    background: #52c41a
 }
 
 .pass1{
-    background: #f1948a
+    background: #faad14
 }
 
 .nopass1{
-    background: #26c6da
+    background: #52c41a
 }
 
 .free{
