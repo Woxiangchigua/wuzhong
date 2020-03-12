@@ -70,8 +70,14 @@ export default function Table(props) {
             , { field: 'id', title: '公文id', width: 120, sort: true }
             , { field: 'name', title: '公文名称', }
             , { field: 'source', title: '公文来源', width: 300, }
-            , { field: 'sponsorUserId', title: '公文发起人', width: 150, }
-            , { field: 'status', title: '归档状态', align: "center", width: 200,
+            , { field: 'sponsorUserId', title: '公文发起人', align: "center", width: 150,
+                templet: function (d) {
+                  if (d.sponsorUserId === 'user-1') {
+                      return "<span>王建国</span>"
+                  }
+                }
+              }
+            , { field: 'status', title: '归档状态', align: "center", width: 200, sort: true,
               templet: function (d) {
                 if (d.status === 'BULLETIN_ARCHIVED') {
                   return "<span class='layui-badge'>已归档</span>"
@@ -82,7 +88,7 @@ export default function Table(props) {
                 }
               }
             }
-            , { field: 'priority', title: '优先级', width: 80 }
+            , { field: 'priority', title: '优先级', width: 80, align: "center", sort: true, }
             , { field: '', title: "操作", align: "center", width: 160, toolbar: "#bar" }
         ]]
     });

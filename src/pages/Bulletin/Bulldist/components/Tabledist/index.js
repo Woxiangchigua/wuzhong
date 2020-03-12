@@ -76,37 +76,63 @@ export default function Table(props) {
                     return `<div>${d.bulletin.source}</div>`
                 }  
               }
-            , { field: 'depId', title: '部门id', width: 100, }
-            , { field: 'depReviewId', title: '部门主管id', width: 100, }
-            , { field: 'depClerkId', title: '部门文员id', width: 100, }
-            , { field: 'needReview', title: '是否需要签字审核', align: "center", width: 150,
+            , { field: 'depId', title: '部门', align: "center", width: 100, 
+                templet: function (d) {
+                  if (d.depId === 'dep-1') {
+                    return "<span>rootOrg</span>"
+                  } else if(d.depId === 'dep-2') {
+                    return "<span>治安大队</span>"
+                  } else if(d.depId === 'dep-3') {
+                    return "<span>交警大队</span>"
+                  } else if(d.depId === 'dep-4') {
+                    return "<span>刑侦大队</span>"
+                  } else if(d.depId === 'dep-5') {
+                    return "<span>督察大队</span>"
+                  }
+                }
+              }
+            , { field: 'depReviewId', title: '主管', align: "center", width: 100,
+                  templet: function (d) {
+                    if (d.depReviewId === 'user-0') {
+                        return "<span>张队</span>"
+                    }
+                }
+              }
+            , { field: 'depClerkId', title: '文员', align: "center", width: 100,
+                  templet: function (d) {
+                    if (d.depClerkId === 'user-0') {
+                        return "<span>李警官</span>"
+                    }
+                }
+              }
+            , { field: 'needReview', title: '签字审核', align: "center", width: 150, sort: true,
               templet: function (d) {
                 if (d.needReview === 'BULLETIN_DISTRIBUTION_NEED_REVIEW_NO') {
-                  return "<span class='layui-badge layui-bg-gray'>不需要签字审核</span>"
+                  return "<span class='layui-badge layui-bg-gray'>无需</span>"
                 } else if(d.needReview === 'BULLETIN_DISTRIBUTION_NEED_REVIEW_YES') {
-                  return "<span class='layui-badge'>需要签字审核</span>"
+                  return "<span class='layui-badge'>需要</span>"
                 }
               }
             }
-            , { field: 'isReview', title: '领导签字审核', align: "center", width: 120,
+            , { field: 'isReview', title: '领导审核', align: "center", width: 120, sort: true,
               templet: function (d) {
                 if (d.isReview === 'BULLETIN_DISTRIBUTION_IS_REVIEW_NO') {
-                  return "<span class='layui-badge'>未签字审核</span>"
+                  return "<span class='layui-badge'>未审</span>"
                 } else if(d.isReview === 'BULLETIN_DISTRIBUTION_IS_REVIEW_YES') {
-                  return "<span class='layui-badge layui-bg-green'>已签字审核</span>"
+                  return "<span class='layui-badge layui-bg-green'>已审</span>"
                 }
               }
             }
-            , { field: 'needReview', title: '归档状态', align: "center", width: 140,
+            , { field: 'needReview', title: '归档状态', align: "center", width: 140, sort: true,
               templet: function (d) {
                 if (d.status === 'BULLETIN_DISTRIBUTION_UNASSIGNED') {
                   return "<span class='layui-badge'>未处理</span>"
                 } else if(d.status === 'BULLETIN_DISTRIBUTION_NOT_ARCHIVED') {
                   return "<span class='layui-badge layui-bg-orange'>未归档（处理中）</span>"
                 }else if(d.status === 'BULLETIN_DISTRIBUTION_DEP_ARCHIVED'){
-                  return "<span class='layui-badge layui-bg-blue'>部门已归档</span>"
+                  return "<span class='layui-badge layui-bg-blue'>待归档</span>"
                 }else if(d.status === 'BULLETIN_DISTRIBUTION_ARCHIVED'){
-                  return "<span class='layui-badge layui-bg-green'>办公室确认归档</span>"
+                  return "<span class='layui-badge layui-bg-green'>已归档</span>"
                 }
               }
             }
@@ -308,10 +334,10 @@ export default function Table(props) {
         <div className={'divclear'}></div>
         <div className="topBtn">
           <div>
-            <button type="button" onClick={needopen} lay-event="need" className="layui-btn layui-btn-sm" style={{float:"left"}}>需要签字审核</button>
-            <button type="button" onClick={auditopen} lay-event="audit" className="layui-btn layui-btn-sm" style={{float:"left"}}>签字审核</button>
-            <button type="button" onClick={distopen} lay-event="deparchive" className="layui-btn layui-btn-sm" style={{float:"left"}}>部门公文归档</button>
-            <button type="button" onClick={archiveopen} lay-event="archive" className="layui-btn layui-btn-sm" style={{float:"left"}}>办公文员归档</button>
+            <button type="button" onClick={needopen} lay-event="need" className="layui-btn layui-btn-sm" style={{float:"left"}}>签字审核更改</button>
+            <button type="button" onClick={auditopen} lay-event="audit" className="layui-btn layui-btn-sm" style={{float:"left"}}>审核</button>
+            <button type="button" onClick={distopen} lay-event="deparchive" className="layui-btn layui-btn-sm" style={{float:"left"}}>部门归档</button>
+            <button type="button" onClick={archiveopen} lay-event="archive" className="layui-btn layui-btn-sm" style={{float:"left"}}>办公室归档</button>
           </div>
         </div>
         <div style={{clear:"both"}}></div>

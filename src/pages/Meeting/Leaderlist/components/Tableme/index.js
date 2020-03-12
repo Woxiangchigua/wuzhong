@@ -90,24 +90,24 @@ export default function Table(props) {
 				[
 				{checkbox:true}//开启多选框
 				,{field:'id', width:100,title: 'ID',sort: true}
-				,{field:'batchNumber',width:180, title: '申请批号'}
-				,{field:'meetingName',width:350, title: '会议名称'}
-				,{field:'meetingRoom',width:200,title: '会议室',
+				//   ,{field:'batchNumber',width:180, title: '申请批号'}
+				,{field:'meetingName', title: '会议名称'}
+				,{field:'meetingRoom',width:200,title: '会议室', align:'center',
                 templet: function (d) {
                   return `<div>${d.meetingRoom.name}</div>`
               }}
 				,{
-				  field: 'meetingTime', title: '开会时间', width: 177,
+				  field: 'meetingTime', title: '开会时间', width: 200, align:'center',
 				  templet: function (d) {
 					return `<div>${dateFormat("YYYY-mm-dd", new Date(d.beginTime))} ${dateFormat("HH:MM", new Date(d.beginTime))}-${dateFormat("HH:MM", new Date(d.endTime))}</div>`
 				  }
 				}
-				,{field:'status', width:250, title: '会议状态', align:'center', templet : function(d){
+				,{field:'status', width:150, title: '会议状态', align:'center', templet : function(d){
 						if(d.status == "MEETING_CHECK_PENDING_MANAGE"){
 							return '<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">待审</span>&nbsp&nbsp<span style="display:inline-block;color: #fff;background:#009688;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">待开</span>';
 						}
 				}}
-				,{fixed: 'right', title:'操作', align:'center', toolbar: '#barDemo2'}
+				,{fixed: 'right', title:'操作', width:150, align:'center', toolbar: '#barDemo2'}
 				]
 			]
 			,limits: [5,10,20,50]
