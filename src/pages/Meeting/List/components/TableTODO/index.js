@@ -163,7 +163,7 @@ export default function Table(props) {
                 <table className="layui-hide" id="complainTable4" lay-filter="complainList"></table>
             </div>
             
-			<script type="text/html" id="barDemo">
+			<script type="text/html" id="barDemo4">
 			  <a className="layui-btn layui-btn-xs" lay-event="go"><i className="layui-icon">&#xe6b2;</i>详情</a>
 			  <a className="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i className="layui-icon">&#xe640;</i>删除</a>
 			</script>
