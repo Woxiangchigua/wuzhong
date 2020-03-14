@@ -552,3 +552,25 @@ button.rbc-input::-moz-focus-inner {
 .meeting_requirements {
 	width: 70%;
 }
+/* .ant-breadcrumb {
+  font-size: 24px !important;
+}
+.ant-card-head {
+  font-size: 26px !important;
+}
+.ant-card {
+  font-size: 20px !important;
+}
+.layui-input, .layui-select, .layui-textarea {
+  height: 60px !important;
+}
+.layui-textarea {
+  min-height: 120px !important;
+}
+.layui-btn {
+  height: 60px;
+  width: 140px;
+  line-height: 60px;
+  border-radius: 5px !important;
+  font-size: 20px;
+} */
