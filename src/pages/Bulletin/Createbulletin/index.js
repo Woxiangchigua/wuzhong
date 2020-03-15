@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import CreateBulletin from '../Mutations/CreateBulletin'
 import Calendar from '../../../components/Calendar/index'
 import { useHistory } from "react-router-dom";
@@ -16,6 +16,15 @@ import {
   Modal
 } from 'antd';
 
+const query = graphql`
+query Createbulletin_OrgListListQuery{
+  orgList(first:100000,skip:0){
+    edges{
+      id,
+      name,
+    }
+  }
+}`
 //上传
 const { Dragger } = Upload;
 const uploadfile = {
@@ -38,46 +47,68 @@ const uploadfile = {
 var childrenMsg = {}
 function AddMeeting(props) {
   let history = useHistory();
+  var layui = window.layui
+  var form = layui.form;
   const environment = props.environment
+  const deplist = props.orgList.edges
   const loading = false
-  //提交
-  function handleSubmit(e) {
-    let obj = childrenMsg
-    e.preventDefault();
-    props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        CreateBulletin.commit(
-          props.environment,
-          values.name,
-          values.source,
-          [],
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              console.log(response);
-              Modal.success({
-                content: '提交成功',
-                onOk() {
-                  history.goBack()
-                },
-              });
+  const $ = window.$
+  useEffect(
+    () => {
+      /* global layer */
+       layui.use('form', function () {
+         //执行一个laydate实例
+       $("#dep").empty();
+          $('#dep').append(`<option value="">sds</option>`)
+          console.log($('#dep'))
+         for (let i = 0; i <deplist.length; i++) {
+            console.log(deplist[i])
+           $('#dep').append(`<option value=${deplist[i].id}>${deplist[i].name}</option>`);
+         }
+         form.render();
+       });
 
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-            } else {
-              console.log(response);
-            }
-          }
-        );
+      form.on('submit(formDemo)', function(data){
+        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        Submit(field)
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+      });
+    }
+  )
+  //提交
+  function Submit(values) {
+    CreateBulletin.commit(
+      props.environment,
+      values.name,
+      values.source,
+      [],
+      (response, errors) => {
+        if (errors) {
+          console.log(errors)
+          Modal.error({
+            title: errors[0].message,
+          });
+        } else {
+          console.log(response);
+          Modal.success({
+            content: '提交成功',
+            onOk() {
+              history.goBack()
+            },
+          });
+
+        }
+      },
+      (response, errors) => {
+        if (errors) {
+          console.log(errors)
+        } else {
+          console.log(response);
+        }
       }
-    });
+    );
   };
 
   function goBack() {
@@ -87,55 +118,55 @@ function AddMeeting(props) {
   const { getFieldDecorator } = props.form;
   return (
     <>
-      <Form layout="inline" onSubmit={handleSubmit} style={{ margin: '0px' }}>
-        <Card title="基本信息" >
-          <Col span={12}>
-            <Form.Item label="公文名称" >
-              {getFieldDecorator('name', {
-                rules: [{ required: true, message: '请输入公文名称!' }],
-              })(
-                <Input
-                  placeholder="请输入公文名称"
-                />,
-              )}
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="公文来源" >
-              {getFieldDecorator('source', {
-                rules: [{ required: true, message: '请输入公文来源!' }],
-              })(
-                <Input
-                  placeholder="请输入公文来源"
-                />,
-              )}
-            </Form.Item>
-          </Col>
-          <Col span={12} style={{ marginLeft: '25%' }}>
-            <Form.Item label="公文上传" >
-                <Dragger {...uploadfile} style={{ minHeight:'250px',}}>
-                    <p className="ant-upload-drag-icon" style={{ marginTop: '50px'}}>
-                    <Icon type="upload" />
-                    </p>
-                    <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
-                    <p className="ant-upload-hint">支持文件扩展名：.rar .zip .doc .pdf .jpg...</p>
-                </Dragger>
-            </Form.Item>
-          </Col>
-        </Card>
-        <div style={{ clear: "both" }}></div>
-        <Divider />
-        <Col span={24}>
-          <Form.Item style={{ marginLeft: '45%' }}>
-            <Button type="primary" htmlType="submit" style={{ marginRight: '50px' }}>
-              确认
-              </Button>
-            <Button onClick={goBack}>
-              取消
-              </Button>
-          </Form.Item>
-        </Col>
-      </Form>
+      <Card title="基本信息" style={{ marginTop: 10 }}>
+        <form className="layui-form"  action="">
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>公文名称</label>
+              <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
+                <input type="text" name="name" placeholder="请输入公文名称" required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>工作要求</label>
+              <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
+              <textarea name="intro" placeholder="请输入内容" className="layui-textarea"></textarea>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>公文来源</label>
+              <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
+              <select name="source" id="dep" lay-verify="required">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>附件上传</label>
+              <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
+                <Dragger {...uploadfile} style={{ minHeight:'250px',marginTop:'40px' }}>
+                  <p className="ant-upload-drag-icon" style={{ marginTop: '50px' }}>
+                    <Icon type="upload" />
+                  </p>
+                  <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
+                  <p className="ant-upload-hint">支持文件扩展名：.rar .zip .doc .pdf .jpg...</p>
+                </Dragger>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-input-block" style={{ marginLeft:'30px' }}>
+              <button className="layui-btn"  lay-submit="true" lay-filter="formDemo">确定</button>
+              <button type="reset" className="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
+        </form>
+      </Card>
     </>
 
   )
@@ -158,6 +189,7 @@ function Home(props) {
 
       <QueryRenderer
         environment={environment}
+        query={query}
         render={({ error, props, retry }) => {
           if (error) {
             return (
@@ -165,11 +197,11 @@ function Home(props) {
                 <h1>Error!</h1><br />{error.message}
               </div>)
           } else if (props) {
-            if (props) {
+            if (props.orgList) {
 
               return (
                 <>
-                  <AddMeeting2 environment={environment} ref="children" />
+                  <AddMeeting2 environment={environment}  orgList={props.orgList} ref="children" />
                 </>
               )
             }

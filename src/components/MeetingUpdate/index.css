@@ -12,7 +12,9 @@
     background: #e2e2e2
 }
 
-
+.meeingTable thead tr{
+	height: 38px;
+}
 
 .meeingTable .name{
     background: #4b9df8;
@@ -20,19 +22,19 @@
 }
 
 .meeingTable .pass{
-    background: #ec6342
+    background: #ff5733
 }
 
 .meeingTable .nopass{
-    background: #c7ecd3
+    background: #bdeed1
 }
 
 .pass1{
-    background: #ec6342
+    background: #ff5733
 }
 
 .nopass1{
-    background: #c7ecd3
+    background: #bdeed1
 }
 
 .free{

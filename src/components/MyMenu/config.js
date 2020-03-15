@@ -124,25 +124,25 @@ const menulist = [{
 	name: '公文管理',
 	icon: 'compass',
 	key: 'bulletin',
-	role: ['employee'],
+	role: ['admin','管理人员','部门领导'],
 	items: [{
 		name: '新增公文',
 		icon: '',
 		key: 'createbulletin',
 		link: '/Bulletin/Createbulletin',
-		role: ['employee']
+		role: ['admin','管理人员','部门领导']
 	},{
 		name: '公文列表',
 		icon: '',
 		key: 'bulletinlist',
 		link: '/Bulletin/List',
-		role: ['employee']
+		role: ['admin','管理人员','部门领导']
 	},{
 		name: '公文分发列表',
 		icon: '',
 		key: 'bulldist',
 		link: '/Bulletin/Bulldist',
-		role: ['employee']
+		role: ['admin','管理人员','部门领导']
 	}]
 }
 ];

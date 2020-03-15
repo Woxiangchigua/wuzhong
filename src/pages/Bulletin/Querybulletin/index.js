@@ -57,7 +57,11 @@ function BulletinDetail(props) {
         <Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
           <Descriptions.Item label="公文名称">{Detail.name}</Descriptions.Item>
           <Descriptions.Item label="公文来源">{Detail.source}</Descriptions.Item>
-          <Descriptions.Item label="公文发起人">{Detail.sponsorUserId}</Descriptions.Item>
+          <Descriptions.Item label="公文发起人">
+            <span>
+              {Detail.sponsorUserId === 'user-1' ? '王建国' :  ''}
+            </span>
+          </Descriptions.Item>
           <Descriptions.Item label="归档状态">
             <Badge
                 status={Detail.status === 'BULLETIN_ARCHIVED' ? 'success' : Detail.status === 'BULLETIN_UNASSIGNED' ? 'error' : Detail.status === 'BULLETIN_NOT_ARCHIVED' ? 'warning' : ''}

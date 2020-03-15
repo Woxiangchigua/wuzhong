@@ -92,3 +92,6 @@ th.tabcolums{
   height: 1px;
   /* margin: 24px 0; */
 }
+.layui-table-page select{
+  height: 26px !important;
+}

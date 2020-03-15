@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Breadcrumb, Card } from 'antd';
 import Meeting from '../../components/Meeting'
 import './index.css';
-import TableTest from "../Home/components/index"
+import Tabletoday from '../Home/components/Tabletoday/index'
+import Tabletowait from "../Home/components/Tabletowait/index"
 
 const list = [
     { title: '会议1', message: '这是会议1' },
@@ -32,29 +33,26 @@ export default class Home extends Component {
 		    </Breadcrumb>
 		  </Card>
 		  <div className="layui-row">
-			  <Card bordered={false} className="head2 layui-col-md4" style={{ marginTop: 10 }}>
-				<p className="bot_line">今日会议</p>
-				
+			  <Card title="今日会议" bordered={false} className="head2 layui-col-md4" style={{ marginTop: 10 }}>
+				<Tabletoday environment={this.props.environment}/>
 			  </Card>
-			  <Card bordered={false} className="head2 layui-col-md5" style={{ marginTop: 10 }}>
-				<p className="bot_line">待办事项</p>
-				<TableTest />
+			  <Card title="待办事项" bordered={false} className="head2 layui-col-md5" style={{ marginTop: 10 }}>
+				<Tabletowait environment={this.props.environment}/>
 			  </Card>
-			  <Card bordered={false} className="head3 layui-col-md3" style={{ marginTop: 10 }}>
-				<p className="bot_line">通知</p>
-				<div>
-					<h4>管理员</h4>
+			  <Card title="通知" bordered={false} className="head3 layui-col-md3" style={{ marginTop: 10 }}>
+				<div className="text1">
+					<h4><i className="layui-icon user" style={{ marginRight: 5 }}>&#xe770;</i>管理员</h4>
 					<p>有一份关于《苏州市公安局关于依法严厉打击新型冠状病毒感染的肺炎疫情防控期间违法犯罪活动的通告》的相关资料请相关与会人员认真阅读,与会积极探讨.</p>
 					<span>2月25日 17:00</span>
 				</div>
-				<div>
-					<h4>范久宁</h4>
-					<p>为了认真落实</p>
-					<span>2月25日 17:00</span>
+				<div className="text1">
+					<h4><i className="layui-icon user" style={{ marginRight: 5 }}>&#xe770;</i>范久宁</h4>
+					<p>为了认真贯彻落实上级公安机关的相关会议精神,确保国庆期间辖区社会治安大局稳定,9月30日上午,召开专门会议,对国庆期间的安保维稳工作进行详细安排部署.</p>
+					<span>9月30日 10:00</span>
 				</div>
 			  </Card>
 		  </div>
-		  <Card bordered={false} style={{ marginTop: 10 }}>
+		  <Card title="会议室现有状态预览图" bordered={false} style={{ marginTop: 10 }}>
 		    <Meeting  environment={this.props.environment} />
 		  </Card>
 		</div>
