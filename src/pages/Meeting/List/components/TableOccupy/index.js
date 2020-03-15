@@ -106,7 +106,7 @@ export default function Table(props) {
 						  }
 					  }
 					  ,{field:'status', width:250, title: '会议状态', align:'center', templet : function(d){
-							if(d.review === 'MEETING_CHECK_PENDING_ADMIN' && d.status === 'MEETING_AWAIT'){
+							if(d.review === 'MEETING_CHECK_PENDING' && d.status === 'MEETING_AWAIT'){
 								return '<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">待审</span>&nbsp&nbsp<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">待开</span>';
 							}else if(d.review === 'MEETING_PASS' && d.status === 'MEETING_AWAIT'){
 								return '<span style="display:inline-block;color: #666666;border:1px solid #c9c9c9;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">已审</span>&nbsp&nbsp<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">待开</span>';
@@ -124,7 +124,7 @@ export default function Table(props) {
 	        order: '',
 	        meetingName: searchKey,
 			status: 'MEETING_AWAIT',
-			review: 'MEETING_CHECK_PENDING_ADMIN'
+			review: 'MEETING_CHECK_PENDING'
 	    }).then(data => {
 	        if (data) {
 	            if (data.adminPendingMeetingList) {

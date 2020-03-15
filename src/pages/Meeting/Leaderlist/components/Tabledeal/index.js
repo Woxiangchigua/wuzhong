@@ -128,7 +128,7 @@ function getList(searchKey) {
 		order: '',
 		meetingName: searchKey,
 		status: "MEETING_AWAIT",
-		review: "MEETING_CHECK_PENDING_MANAGE",
+		review: "MEETING_CHECK_PENDING",
 	}).then(data => {
 		if (data) {
 			if (data.adminPendingMeetingList) {

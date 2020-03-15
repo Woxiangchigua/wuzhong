@@ -36,6 +36,7 @@ const query = graphql`
         }
     }`
 export default function Table(props) {
+	console.log(111)
   const [meetingList, setmeetingList] = useState([]);
   let history = useHistory();
   var table = window.layui.table;
@@ -48,7 +49,7 @@ export default function Table(props) {
         table.on('tool(complainList)', function(obj) {
           let data = obj.data;
           if(obj.event==="go"){
-            history.push('/Meeting/Querymeeting/' + JSON.stringify({id:data.id,review:data.review}))
+            history.push('/Meeting/AddPersonnel/' + JSON.stringify({id:data.id,review:data.review}))
         }else if(obj.event==="del"){
         let delIndex = layer.confirm('真的删除id为' + data.id + "的信息吗?", function (delIndex) {
             DeleteMeeting.commit(
@@ -80,6 +81,7 @@ export default function Table(props) {
     )
 
 	  function init(data){
+		  console.log(222)
       /* global layer */
       table.render({
         elem: '#complainTable'
@@ -128,8 +130,8 @@ export default function Table(props) {
 		  review: "MEETING_PASS",
       }).then(data => {
           if (data) {
-              if (data.myAwaitMeetingList) {
-                  let data2 = JSON.parse(JSON.stringify(data.myAwaitMeetingList.edges))
+              if (data.myOrgMeetingList) {
+                  let data2 = JSON.parse(JSON.stringify(data.myOrgMeetingList.edges))
                   init(data2)
               }
           }
@@ -167,7 +169,7 @@ export default function Table(props) {
 				</div>
 			</script>
 			<script type="text/html" id="barDemo">
-			  <a className="layui-btn layui-btn-xs" lay-event="go"><i className="layui-icon">&#xe6b2;</i>详情</a>
+			  <a className="layui-btn layui-btn-xs" lay-event="go"><i className="layui-icon">&#xe6b2;</i>添加人员</a>
 			</script>
         </>
     )

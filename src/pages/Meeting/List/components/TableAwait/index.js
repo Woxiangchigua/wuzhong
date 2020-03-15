@@ -107,7 +107,7 @@ export default function Table(props) {
 						}
 					  }
 					  ,{field:'status', width:250, title: '会议状态', align:'center', templet : function(d){
-							if(d.review === 'MEETING_CHECK_PENDING_ADMIN' || d.review === 'MEETING_CHECK_PENDING_MANAGE' || d.review === 'MEETING_PASS'){
+							if(d.review === 'MEETING_CHECK_PENDING'|| d.review === 'MEETING_PASS'){
 								return '<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">待开</span>';
 							}
 					  }}

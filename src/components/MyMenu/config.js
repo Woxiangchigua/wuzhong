@@ -68,7 +68,7 @@ const menulist = [{
 	items: [{
 		name: '待开会议',
 		icon: '',
-		key: 'Userlist',
+		key: 'InsideList',
 		link: '/Meeting/InsideList',
 		role: ['admin','内勤人员']
 	},
