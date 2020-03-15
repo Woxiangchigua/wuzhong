@@ -6,7 +6,7 @@ import {
 const mutation = graphql`
   mutation UpdateMeetingMutation(
     $id: ID!
-    $userIds: [ID]!
+    $orgIds: [ID]!
     $endTime: DateTime!
     $meetingRoomId: ID!
     $organizer: String!
@@ -14,13 +14,12 @@ const mutation = graphql`
     $intro: String = ""
     $beginTime: DateTime!
     $meetingName: String!
-    $number: Int!
     $requirement: String = "false,false,false,false,false",
     $reportUnit: String!
     $attendLeader: String!
     $meetingType: enumMeetingType!) {
-    updateMeeting(id: $id,beginTime: $beginTime,meetingRoomId: $meetingRoomId,number: $number,
-      endTime: $endTime,userIds:$userIds,meetingName: $meetingName,organizer: $organizer,configuration: $configuration,intro: $intro,requirement:$requirement,reportUnit:$reportUnit,attendLeader:$attendLeader,meetingType:$meetingType) {
+    updateMeeting(id: $id,beginTime: $beginTime,meetingRoomId: $meetingRoomId,
+      endTime: $endTime,orgIds:$orgIds,meetingName: $meetingName,organizer: $organizer,configuration: $configuration,intro: $intro,requirement:$requirement,reportUnit:$reportUnit,attendLeader:$attendLeader,meetingType:$meetingType) {
       id
     }
   }
@@ -31,13 +30,12 @@ function commit(
     id,
     beginTime,
     meetingRoomId,
-    number,
     endTime,
     meetingName,
     organizer,
     configuration,
     intro,
-    userIds,
+    orgIds,
     requirement,
     reportUnit,
     attendLeader,
@@ -51,13 +49,12 @@ function commit(
             id:id,
             beginTime: beginTime,
             meetingRoomId: meetingRoomId,
-            number: number,
             endTime: endTime,
             meetingName: meetingName,
             organizer: organizer,
             configuration: configuration,
             intro: intro,
-            userIds:userIds,
+            orgIds:orgIds,
             requirement:requirement,
             reportUnit:reportUnit,
             attendLeader:attendLeader,

@@ -31,7 +31,6 @@ function Lists(props) {
               id,
               name
             },
-            number,
             organizer,
             review,
             reviewUserId,
