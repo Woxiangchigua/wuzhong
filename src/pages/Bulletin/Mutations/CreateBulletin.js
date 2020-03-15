@@ -7,8 +7,10 @@ const mutation = graphql`
   mutation CreateBulletinMutation(
     $name: String!
     $source: String!
-    $annex: [bulletInFileInput]) {
-    createBulletin(name: $name,source: $source,annex: $annex) {
+    $annex: [bulletInFileInput]
+    $isNeedReceipt: enumTypeBulletinIsNeedReceipt
+    $receiptReq: String = "") {
+    createBulletin(name: $name,source: $source,annex: $annex,isNeedReceipt: $isNeedReceipt,receiptReq: $receiptReq) {
       id
     }
   }
@@ -19,6 +21,8 @@ function commit(
   name,
   source,
   annex,
+  isNeedReceipt,
+  receiptReq,
   onCompleted,
   error
 ) {
@@ -28,6 +32,8 @@ function commit(
       name: name,
       source: source,
       annex: annex,
+      isNeedReceipt: isNeedReceipt,
+      receiptReq: receiptReq,
     },
     onCompleted: onCompleted,
     onError: error,

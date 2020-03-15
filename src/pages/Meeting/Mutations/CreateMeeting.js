@@ -9,17 +9,16 @@ const mutation = graphql`
     $intro: String!
     $beginTime: DateTime!
     $meetingRoomId: ID!
-    $number: Int!
     $endTime: DateTime!
     $meetingName: String!
-    $userIds: [ID]!
+    $orgIds: [ID]!
     $organizer: String!
     $requirement: String = "false,false,false,false,false"
     $reportUnit: String!
     $attendLeader: String!
     $meetingType: enumMeetingType!) {
-    createMeeting(beginTime: $beginTime,meetingRoomId: $meetingRoomId,number: $number,
-      endTime: $endTime,meetingName: $meetingName,userIds:$userIds,organizer: $organizer,configuration: $configuration,intro: $intro,requirement:$requirement,reportUnit:$reportUnit,attendLeader:$attendLeader,meetingType:$meetingType) {
+    createMeeting(beginTime: $beginTime,meetingRoomId: $meetingRoomId,
+      endTime: $endTime,meetingName: $meetingName,orgIds:$orgIds,organizer: $organizer,configuration: $configuration,intro: $intro,requirement:$requirement,reportUnit:$reportUnit,attendLeader:$attendLeader,meetingType:$meetingType) {
       id
     }
   }
@@ -29,13 +28,12 @@ function commit(
   environment,
   beginTime,
   meetingRoomId,
-  number,
   endTime,
   meetingName,
   organizer,
   configuration,
   intro,
-  userIds,
+  orgIds,
   requirement,
   reportUnit,
   attendLeader,
@@ -48,13 +46,12 @@ function commit(
     variables: {
       beginTime: beginTime,
       meetingRoomId: meetingRoomId,
-      number: number,
       endTime: endTime,
       meetingName: meetingName,
       organizer: organizer,
       configuration: configuration,
       intro: intro,
-      userIds:userIds,
+      orgIds:orgIds,
       requirement:requirement,
       reportUnit:reportUnit,
       attendLeader:attendLeader,

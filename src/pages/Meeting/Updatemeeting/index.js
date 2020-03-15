@@ -47,7 +47,6 @@ const query = graphql`
             name
           },
           meetingRoomId,
-          number,
           organizer,
           review,
           reviewUserId,

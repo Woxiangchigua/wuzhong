@@ -22,7 +22,6 @@ const query = graphql`
             intro,
             meetingName,
             meetingRoomId,
-            number,
             organizer,
             review,
             reviewUserId,

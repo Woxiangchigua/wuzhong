@@ -1,6 +1,6 @@
 import React from 'react';
 import CreateMeeting from '../Mutations/CreateMeeting'
-import AuditMeeting from '../Mutations/AuditMeeting'
+// import AuditMeeting from '../Mutations/AuditMeeting'
 import {
   Breadcrumb,
   Form,
@@ -39,7 +39,6 @@ query Queryendmeeting_MeetingDetailQuery($id:ID!){
       name
     },
     meetingRoomId,
-    number,
     organizer,
     review,
     reviewUserId,
@@ -280,65 +279,9 @@ function MeetingDetail(props) {
       cancelText: '不同意',
       onOk() {
         console.log('确认');
-        AuditMeeting.commit(
-          props.environment,
-          Detail.id,
-          'MEETING_PASS',
-          (response, errors) => {
-            if (errors) {
-              // console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              // console.log(response);
-              Modal.success({
-                content: '审核成功',
-                onOk() {
-                  history.goBack()
-                },
-              });
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              // console.log(errors)
-            } else {
-              // console.log(response);
-            }
-          }
-        );
       },
       onCancel() {
         console.log('取消');
-        AuditMeeting.commit(
-          props.environment,
-          Detail.id,
-          'MEETING_EDIT_OR_FAIL',
-          (response, errors) => {
-            if (errors) {
-              // console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              // console.log(response);
-              Modal.success({
-                content: '审核成功',
-                onOk() {
-                  history.goBack()
-                },
-              });
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-            } else {
-              console.log(response);
-            }
-          }
-        );
       },
     });
   }
