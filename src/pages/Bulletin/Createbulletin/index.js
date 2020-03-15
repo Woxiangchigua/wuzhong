@@ -71,8 +71,8 @@ function AddMeeting(props) {
       form.on('submit(formDemo)', function(data){
         console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
         console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-        console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-        Submit(field)
+        console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+        Submit()
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
       });
     }
@@ -84,6 +84,8 @@ function AddMeeting(props) {
       values.name,
       values.source,
       [],
+      values.isNeedReceipt,
+      values.receiptReq,
       (response, errors) => {
         if (errors) {
           console.log(errors)
@@ -119,8 +121,9 @@ function AddMeeting(props) {
   return (
     <>
       <Card title="基本信息" style={{ marginTop: 10 }}>
+      <div className='divline'></div>
         <form className="layui-form"  action="">
-          <div className="layui-form-item">
+          <div className="layui-form-item" style={{ marginTop: '-20px',marginLeft: '-75px' }}>
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>公文名称</label>
               <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
@@ -128,29 +131,39 @@ function AddMeeting(props) {
               </div>
             </div>
           </div>
-          <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>工作要求</label>
-              <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
-              <textarea name="intro" placeholder="请输入内容" className="layui-textarea"></textarea>
-              </div>
-            </div>
-          </div>
-          <div className="layui-form-item">
+          <div className="layui-form-item" style={{ marginTop: '-70px',marginLeft: '-75px' }}>
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>公文来源</label>
               <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
-              <select name="source" id="dep" lay-verify="required">
-                </select>
+                <input type="text" name="name" placeholder="请输入公文来源" required lay-verify="required" autoComplete="off" className="layui-input" />
+{/*               <select name="source" id="dep" lay-verify="required">
+                </select> */}
               </div>
             </div>
           </div>
-          <div className="layui-form-item">
+          <div className="layui-form-item" style={{ marginTop: '-70px',marginLeft: '-75px' }}>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 74 }}>回执</label>
+              <div className="layui-input-block" style={{ marginLeft:'74px', marginTop:'-20px' }}>
+                <input type="radio" name="isNeedReceipt" value="BULLETIN_IS_NEED_RECEIPT_NO" title="不需要" defaultChecked/>
+                <input type="radio" name="isNeedReceipt" value="BULLETIN_IS_NEED_RECEIPT_YES" title="需要"/>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item" style={{ marginTop: '-20px',marginLeft: '-75px' }}>
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>工作要求</label>
+              <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
+              <textarea name="receiptReq" placeholder="请输入内容" className="layui-textarea"></textarea>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item" style={{ marginTop: '-70px',marginLeft: '-75px' }}>
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>附件上传</label>
               <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
-                <Dragger {...uploadfile} style={{ minHeight:'250px',marginTop:'40px' }}>
-                  <p className="ant-upload-drag-icon" style={{ marginTop: '50px' }}>
+                <Dragger {...uploadfile} style={{ minHeight:'250px' }}>
+                  <p className="ant-upload-drag-icon" style={{ marginTop: '30px' }}>
                     <Icon type="upload" />
                   </p>
                   <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
@@ -159,10 +172,10 @@ function AddMeeting(props) {
               </div>
             </div>
           </div>
-          <div className="layui-form-item">
+          <div className="layui-form-item" style={{ marginTop: '-70px',marginLeft: '-80px' }}>
             <div className="layui-input-block" style={{ marginLeft:'30px' }}>
               <button className="layui-btn"  lay-submit="true" lay-filter="formDemo">确定</button>
-              <button type="reset" className="layui-btn layui-btn-primary">重置</button>
+              <button className="layui-btn layui-btn-primary" onClick={goBack} >取消</button>
             </div>
           </div>
         </form>

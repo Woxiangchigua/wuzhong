@@ -1,6 +1,6 @@
 import React from 'react';
 import CommitCheckMeeting from '../Mutations/CommitCheckMeeting'
-import AuditMeeting from '../Mutations/AuditMeeting'
+// import AuditMeeting from '../Mutations/AuditMeeting'
 import AbrogateMeeting from '../Mutations/AbrogateMeeting'
 import CancelMeeting from '../Mutations/CancelMeeting'
 import {
@@ -40,7 +40,6 @@ query Querymeeting_MeetingDetailQuery($id:ID!){
       name
     },
     meetingRoomId,
-    number,
     organizer,
     review,
     reviewUserId,
@@ -144,65 +143,9 @@ function MeetingDetail(props) {
       cancelText: '不同意',
       onOk() {
         console.log('确认');
-        AuditMeeting.commit(
-          props.environment,
-          Detail.id,
-          props.review === 'MEETING_CHECK_PENDING_MANAGE'?'MEETING_CHECK_PENDING_ADMIN':'MEETING_PASS',
-          (response, errors) => {
-            if (errors) {
-              // console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              // console.log(response);
-              Modal.success({
-                content: '审核成功',
-                onOk() {
-                  history.goBack()
-                },
-              });
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              // console.log(errors)
-            } else {
-              // console.log(response);
-            }
-          }
-        );
       },
       onCancel() {
         console.log('取消');
-        AuditMeeting.commit(
-          props.environment,
-          Detail.id,
-          'MEETING_EDIT_OR_FAIL',
-          (response, errors) => {
-            if (errors) {
-              // console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              // console.log(response);
-              Modal.success({
-                content: '审核成功',
-                onOk() {
-                  history.goBack()
-                },
-              });
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-            } else {
-              console.log(response);
-            }
-          }
-        );
       },
     });
   }

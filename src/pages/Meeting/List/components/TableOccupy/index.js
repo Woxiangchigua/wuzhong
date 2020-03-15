@@ -27,7 +27,6 @@ const query = graphql`
               id,
               name
             },
-            number,
             organizer,
             review,
             reviewUserId,
@@ -125,7 +124,7 @@ export default function Table(props) {
 	        order: '',
 	        meetingName: searchKey,
 			status: 'MEETING_AWAIT',
-			review: 'MEETING_CHECK_PENDING_ADMIN'
+			review: 'MEETING_CHECK_PENDING'
 	    }).then(data => {
 	        if (data) {
 	            if (data.adminPendingMeetingList) {
