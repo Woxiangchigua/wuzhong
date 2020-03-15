@@ -80,7 +80,7 @@ function AddMeeting(props) {
       'address': `治安大队`,
     })
   }
-  
+
   useEffect(
     () => {
       init(data)
@@ -93,6 +93,7 @@ function AddMeeting(props) {
 
         $("#meetingroom").empty();
         $('#meetingroom').append(`<option value=""></option>`)
+        console.log($('#meetingroom'))
         for (let i = 0; i < meetingroom.length; i++) {
           $('#meetingroom').append(`<option value=${meetingroom[i].id}>${meetingroom[i].name}</option>`);
         }
@@ -118,26 +119,26 @@ function AddMeeting(props) {
         form.render();
       });
 
-      form.on('submit(formDemo)', function(data){
+      form.on('submit(formDemo)', function (data) {
         console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
         console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
         console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-        let field=data.field
-        let str=["false","false","false","false","false"]
-        if(field.checkbox0){
-          str[0]="true"
-        }else if(field.checkbox1){
-          str[1]="true"
-        }else if(field.checkbox2){
-          str[2]="true"
+        let field = data.field
+        let str = ["false", "false", "false", "false", "false"]
+        if (field.checkbox0) {
+          str[0] = "true"
+        } else if (field.checkbox1) {
+          str[1] = "true"
+        } else if (field.checkbox2) {
+          str[2] = "true"
         }
-        else if(field.checkbox3){
-          str[3]="true"
+        else if (field.checkbox3) {
+          str[3] = "true"
         }
-        else if(field.checkbox4){
-          str[4]="true"
+        else if (field.checkbox4) {
+          str[4] = "true"
         }
-        field.requirement=str.join()
+        field.requirement = str.join()
         Submit(field)
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
       });
@@ -182,52 +183,52 @@ function AddMeeting(props) {
 
 
   function Submit(values) {
-    
-  
-        let date = values.date
-        CreateMeeting.commit(
-          props.environment,
-          new Date(date + begin[values.beginTime].val).toISOString(),
-          values.roomId,
-          values.number,
-          new Date(date + values.endTime).toISOString(),
-          values.meetingName,
-          values.organizer,
-          'configuration',
-          values.intro,
-          ["user-5",
-            "user-6"
-          ],
-          values.requirement,
-          values.reportUnit,
-          values.attendLeader,
-          values.meetingType,
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-              Modal.error({
-                title: errors[0].message,
-              });
-            } else {
-              console.log(response);
-              Modal.success({
-                content: '提交成功',
-                onOk() {
-                  history.push('/Meeting/Applicant')
-                },
-              });
 
-            }
-          },
-          (response, errors) => {
-            if (errors) {
-              console.log(errors)
-            } else {
-              console.log(response);
-            }
-          }
-        );
-      
+
+    let date = values.date
+    CreateMeeting.commit(
+      props.environment,
+      new Date(date + begin[values.beginTime].val).toISOString(),
+      values.roomId,
+      values.number,
+      new Date(date + values.endTime).toISOString(),
+      values.meetingName,
+      values.organizer,
+      'configuration',
+      values.intro,
+      ["user-5",
+        "user-6"
+      ],
+      values.requirement,
+      values.reportUnit,
+      values.attendLeader,
+      values.meetingType,
+      (response, errors) => {
+        if (errors) {
+          console.log(errors)
+          Modal.error({
+            title: errors[0].message,
+          });
+        } else {
+          console.log(response);
+          Modal.success({
+            content: '提交成功',
+            onOk() {
+              history.push('/Meeting/Applicant')
+            },
+          });
+
+        }
+      },
+      (response, errors) => {
+        if (errors) {
+          console.log(errors)
+        } else {
+          console.log(response);
+        }
+      }
+    );
+
   };
 
   function open() {
@@ -266,16 +267,22 @@ function AddMeeting(props) {
 
 
       <Card title="填写会议室预订表" style={{ marginTop: 10 }}>
-        <form className="layui-form"  action="">
+        <form className="layui-form" action="">
           <div className="layui-form-item">
-            <div className="layui-inline">
+            {/* <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>呈报单位</label>
               <div className="layui-input-block">
                 <input type="text" name="reportUnit" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
+            </div> */}
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>主办单位</label>
+              <div className="layui-input-block">
+                <input type="text" name="organizer" required lay-verify="required" autoComplete="off" className="layui-input" />
+              </div>
             </div>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议名称</label>
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>会议名称</label>
               <div className="layui-input-block">
                 <input type="text" name="meetingName" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
@@ -291,28 +298,39 @@ function AddMeeting(props) {
 
           <div className="layui-form-item">
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>参会领导</label>
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>参会领导</label>
               <div className="layui-input-block">
                 <input type="text" name="attendLeader" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
             </div>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>参会人数</label>
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>参会人数</label>
               <div className="layui-input-block">
                 <input type="text" name="number" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
             </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>主办单位</label>
-              <div className="layui-input-block">
-                <input type="text" name="organizer" required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
+            
+          </div>
+          <div className="layui-form-item">
+            <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>参会部门</label>
+            <div className="layui-input-block" style={{ width: 600 }}>
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="办公室" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="政治处" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="监察室" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="指挥中心" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="巡特警大队" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="交警大队" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="东山所" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="郭巷所" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="临湖所" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="木渎所" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="横泾所" />
+              <input type="checkbox" name="checkbox0" lay-skin="primary" title="甪直所" />
             </div>
           </div>
-
           <div className="layui-form-item">
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议时间</label>
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>会议时间</label>
               <div className="layui-input-inline" >
                 <input type="text" name="date" className="layui-input" id="begindate" />
               </div>
@@ -328,14 +346,14 @@ function AddMeeting(props) {
               </div>
             </div>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议地点</label>
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{color:'red',marginRight:4}}>*</span>会议地点</label>
               <div className="layui-input-block">
                 <select name="roomId" id="meetingroom" lay-verify="required">
                 </select>
               </div>
             </div>
           </div>
-          <div className="layui-form-item">
+          {/* <div className="layui-form-item">
             <div className="top_button">
               <div>参会人员</div>
               <div>
@@ -344,9 +362,9 @@ function AddMeeting(props) {
               </div>
             </div>
             <table id="demo" lay-filter="test"></table>
-          </div>
+          </div> */}
           <div className="layui-form-item">
-            <label className="layui-form-label">复选框</label>
+            <label className="layui-form-label" style={{ width: 100 }} >会场要求</label>
             <div className="layui-input-block">
               <input type="checkbox" name="checkbox0" lay-skin="primary" title="话筒" />
               <input type="checkbox" name="checkbox1" lay-skin="primary" title="电子屏或投影仪" />
@@ -361,7 +379,7 @@ function AddMeeting(props) {
           </div>
           <div className="layui-form-item">
             <div className="layui-input-block">
-              <button className="layui-btn"  lay-submit="true" lay-filter="formDemo">立即提交</button>
+              <button className="layui-btn" lay-submit="true" lay-filter="formDemo">立即提交</button>
               <button type="reset" className="layui-btn layui-btn-primary">重置</button>
             </div>
           </div>

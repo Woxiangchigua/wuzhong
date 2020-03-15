@@ -416,7 +416,7 @@ function AddMeeting(props) {
             <table id="demo" lay-filter="test"></table>
           </div>
           <div className="layui-form-item">
-            <label className="layui-form-label">复选框</label>
+            <label className="layui-form-label" style={{ width: 100 }}>会场要求</label>
             <div className="layui-input-block">
               <input type="checkbox" name="checkbox0" lay-skin="primary" title="话筒" />
               <input type="checkbox" name="checkbox1" lay-skin="primary" title="电子屏或投影仪" />
