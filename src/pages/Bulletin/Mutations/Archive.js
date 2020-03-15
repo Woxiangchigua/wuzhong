@@ -5,25 +5,29 @@ import {
 
 const mutation = graphql`
   mutation ArchiveMutation(
-    $bulletinIds: [ID]!) {
-    bulletinArchived(bulletinIds: $bulletinIds) {
-      edges{
+		$receiptReply: String!
+		$receiptAnnex: [bulletInFileInput]
+    $id: ID!) {
+    bulletinArchived(id: $id,receiptReply: $receiptReply,receiptAnnex: $receiptAnnex) {
         id
-      }
     }
   }
 `;
 
 function commit(
   environment,
-  bulletinIds,
+  id,
+	receiptReply,
+	receiptAnnex,
   onCompleted,
   error
 ) {
   return commitMutation(environment, {
     mutation,
     variables: {
-        bulletinIds: bulletinIds,
+        id: id,
+				receiptReply: receiptReply,
+				receiptAnnex: receiptReply,
     },
     onCompleted: onCompleted,
     onError: error,

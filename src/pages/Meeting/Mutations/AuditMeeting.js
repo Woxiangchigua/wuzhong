@@ -3,34 +3,33 @@ import {
   commitMutation
 } from 'react-relay';
 
-const mutation = graphql`
-  mutation AuditMeetingMutation(
-    $id: ID!
-    $review: EnumTypeAuditMeetingType!) {
-    auditMeeting(id: $id,review: $review) {
-        applyUserId,
-        beginTime,
-        configuration,
-        createdAt,
-        deletedAt,
-        endTime,
-        id,
-        intro,
-        meetingName,
-        meetingRoom{
-          id,
-          name
-        },
-        meetingRoomId,
-        number,
-        organizer,
-        review,
-        reviewUserId,
-        status,
-        updatedAt
-    }
-  }
-`;
+// const mutation = graphql`
+//   mutation AuditMeetingMutation(
+//     $id: ID!
+//     $review: EnumTypeAuditMeetingType!) {
+//     auditMeeting(id: $id,review: $review) {
+//         applyUserId,
+//         beginTime,
+//         configuration,
+//         createdAt,
+//         deletedAt,
+//         endTime,
+//         id,
+//         intro,
+//         meetingName,
+//         meetingRoom{
+//           id,
+//           name
+//         },
+//         meetingRoomId,
+//         organizer,
+//         review,
+//         reviewUserId,
+//         status,
+//         updatedAt
+//     }
+//   }
+// `;
 
 function commit(
   environment,
@@ -40,7 +39,7 @@ function commit(
   error
 ) {
   return commitMutation(environment, {
-    mutation,
+    // mutation,
     variables: {
       id: id,
       review: review,

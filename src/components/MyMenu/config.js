@@ -61,6 +61,20 @@ const menulist = [{
 	]
 },
 {
+	name: '内勤人员',
+	icon: 'user',
+	key: 'inside',
+	role: ['admin','内勤人员'],
+	items: [{
+		name: '待开会议',
+		icon: '',
+		key: 'Userlist',
+		link: '/Meeting/InsideList',
+		role: ['admin','内勤人员']
+	},
+	]
+},
+{
 	name: '部门职员',
 	icon: 'user',
 	key: 'user',

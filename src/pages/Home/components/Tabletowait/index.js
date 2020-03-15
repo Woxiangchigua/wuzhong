@@ -23,7 +23,6 @@ const query = graphql`
               id,
               name
             },
-            number,
             organizer,
             review,
             reviewUserId,

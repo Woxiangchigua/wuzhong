@@ -39,7 +39,6 @@ query Queryendmeeting_MeetingDetailQuery($id:ID!){
       name
     },
     meetingRoomId,
-    number,
     organizer,
     review,
     reviewUserId,

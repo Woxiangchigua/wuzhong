@@ -6,10 +6,10 @@ import {
 const mutation = graphql`
   mutation DistributionMutation(
     $deadline: DateTime!
-    $depIds: [ID]!
+    $distributions: [BulletinDistributionInput]!
     $id: ID!
     $priority: Int!) {
-    splitBulletin(deadline: $deadline,depIds: $depIds,id: $id,priority: $priority) {
+    splitBulletin(deadline: $deadline,distributions: $distributions,id: $id,priority: $priority) {
       id
     }
   }
@@ -18,7 +18,7 @@ const mutation = graphql`
 function commit(
   environment,
   deadline,
-  depIds,
+  distributions,
   id,
   priority,
   onCompleted,
@@ -28,7 +28,7 @@ function commit(
     mutation,
     variables: {
       deadline: deadline,
-      depIds: depIds,
+      distributions: distributions,
       id: id,
       priority: priority,
     },

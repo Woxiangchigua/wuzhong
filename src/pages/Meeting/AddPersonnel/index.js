@@ -9,9 +9,9 @@ import './index.css';
 import {
   Breadcrumb,
   Form,
-
+	Descriptions,
   Card,
-
+	Badge,
   Modal,
 
 } from 'antd';
@@ -25,7 +25,7 @@ const data = [
 ];
 
 const query = graphql`
-    query Updatemeeting_MeetingRoomListQuery($id:ID!){
+    query AddPersonnel_MeetingRoomListQuery($id:ID!){
         meetingRoomList{
         edges{
             id,
@@ -60,6 +60,7 @@ const query = graphql`
     }`
 var childrenMsg = {}
 function AddMeeting(props) {
+	const Detail = props.meetingDetail;
   let history = useHistory();
   const [modalAddAttendeesVisible, setModalAddAttendeesVisible] = useState(false);
   const environment = props.environment
@@ -330,83 +331,41 @@ function AddMeeting(props) {
   const { getFieldDecorator } = props.form;
   return (
     <>
-      <Card title="会议室现有状态预览图" bordered={false} style={{ marginTop: 10 }}>
-        <Meeting environment={props.environment} date={dateFormat("YYYY-mm-dd", new Date(meetingDetail.beginTime))} />
-      </Card>
 
-      <Card title="填写会议室预订表" style={{ marginTop: 10 }}>
-        <form className="layui-form" lay-filter="formDemo" action="">
-          <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>呈报单位</label>
-              <div className="layui-input-block">
-                <input type="text" name="reportUnit" id='reportUnit' required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议名称</label>
-              <div className="layui-input-block">
-                <input type="text" name="meetingName" required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议类型</label>
-              <div className="layui-input-block">
-                <input type="radio" name="meetingType" value="MEETING_COMMON" title="普通会议" defaultChecked />
-                <input type="radio" name="meetingType" value="MEETING_VIDEO" title="视频会议" />
-              </div>
-            </div>
-          </div>
-
-          <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>参会领导</label>
-              <div className="layui-input-block">
-                <input type="text" name="attendLeader" required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>参会人数</label>
-              <div className="layui-input-block">
-                <input type="text" name="number" required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>主办单位</label>
-              <div className="layui-input-block">
-                <input type="text" name="organizer" required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
-            </div>
-          </div>
-
-          <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议时间</label>
-              <div className="layui-input-inline" >
-                <input type="text" name="date" className="layui-input" id="begindate" />
-              </div>
-              <div className="layui-form-mid">-</div>
-              <div className="layui-input-inline" >
-                <select name="beginTime" id="begin" lay-filter="begin" lay-verify="required">
-                </select>
-              </div>
-              <div className="layui-form-mid">-</div>
-              <div className="layui-input-inline" >
-                <select name="endTime" id="end" lay-verify="required">
-                </select>
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议地点</label>
-              <div className="layui-input-block">
-                <select name="roomId" id="meetingroom" lay-verify="required">
-                </select>
-              </div>
-            </div>
-          </div>
+      <Card title="会议基本信息" style={{ marginTop: 10 }}>
+          <Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
+            <Descriptions.Item label="主办单位">{Detail.organizer}</Descriptions.Item>
+            <Descriptions.Item label="会议名称">{Detail.meetingName}</Descriptions.Item>
+            <Descriptions.Item label="会议室">{Detail.meetingRoom.name}</Descriptions.Item>
+            <Descriptions.Item label="申请人">
+             <span>
+               {Detail.applyUserId === 'user-1' ? '王建国' :  ''}
+             </span>
+            </Descriptions.Item>
+            <Descriptions.Item label="参会人数">{Detail.number}</Descriptions.Item>
+            <Descriptions.Item label="会议日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
+          	 <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM", new Date(Detail.beginTime))}</Descriptions.Item>
+            <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM", new Date(Detail.endTime))}</Descriptions.Item>
+            <Descriptions.Item label="会议状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'block' : 'none' }}>
+              <Badge
+                status={Detail.status === 'MEETING_END' ? 'default' : Detail.status === 'MEETING_CANCEL' ? 'error' : Detail.status === 'MEETING_AWAIT' ? 'success' : ''}
+                text={Detail.status === 'MEETING_END' ? '会议结束' : Detail.status === 'MEETING_CANCEL' ? '已取消' : Detail.status === 'MEETING_AWAIT' ? '未开始' : ''} />
+            </Descriptions.Item>
+            <Descriptions.Item label="审核状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'none' : 'block' }}>
+              <Badge
+                status={Detail.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : Detail.review === 'MEETING_PASS' ? 'success' : 'error'}
+                text={Detail.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : Detail.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : Detail.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : Detail.review === 'MEETING_PASS' ? '审核通过' :''} />
+            </Descriptions.Item>
+          </Descriptions>
+          <Descriptions size="small" column={4} style={{ marginTop: "0px" }}>,
+          	<Descriptions.Item label="会场需求">{Detail.intro}</Descriptions.Item>
+          </Descriptions>
+			</Card>
+          
+			 <Card title="添加参会人员" style={{ marginTop: 10 }}>
+				<form className="layui-form" lay-filter="formDemo" action="">
           <div className="layui-form-item">
             <div className="top_button">
-              <div>参会人员</div>
               <div>
                 <button type="button" onClick={open} lay-event="delAll" className="layui-btn layui-btn-sm">删除</button>
                 <button type="button" onClick={() => { setModalAddAttendeesVisible(true) }} className="layui-btn layui-btn-sm">添加</button>
@@ -415,21 +374,7 @@ function AddMeeting(props) {
             <table id="demo" lay-filter="test"></table>
           </div>
           <div className="layui-form-item">
-            <label className="layui-form-label">复选框</label>
-            <div className="layui-input-block">
-              <input type="checkbox" name="checkbox0" lay-skin="primary" title="话筒" />
-              <input type="checkbox" name="checkbox1" lay-skin="primary" title="电子屏或投影仪" />
-              <input type="checkbox" name="checkbox2" lay-skin="primary" title="茶水" />
-              <input type="checkbox" name="checkbox3" lay-skin="primary" title="科信保障" />
-              <input type="checkbox" name="checkbox4" lay-skin="primary" title="物业服务员(涉密会议原则上不安排服务员)" />
-            </div>
-            <div className="layui-input-block">
-              其他需求
-              <textarea name="intro" placeholder="请输入内容" className="layui-textarea"></textarea>
-            </div>
-          </div>
-          <div className="layui-form-item">
-            <div className="layui-input-block">
+            <div className="layui-input-block" align="center">
               <button className="layui-btn" lay-submit="true" lay-filter="formDemo">立即提交</button>
               <button type="reset" className="layui-btn layui-btn-primary">重置</button>
             </div>
@@ -437,9 +382,6 @@ function AddMeeting(props) {
         </form>
 
         <script type="text/html" id="bar">
-          <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
-            <i className="layui-icon">&#xe6b2;</i>编辑
-                </button>
           <button type='button' lay-event="del" className='layui-btn layui-btn-danger layui-btn-xs'>
             <i className="layui-icon">&#xe640;</i>删除
                 </button>

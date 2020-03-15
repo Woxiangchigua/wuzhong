@@ -6,11 +6,13 @@ import dateFormat from '../../../../../ utils/dateFormat'
 import { useHistory, Link } from "react-router-dom";
 
 const query = graphql`
-    query Tableuser_MeetingListQuery(
+    query Tableinside_MeetingListQuery(
+			$orgId: ID!
             $order: String = ""
-            $meetingName: String = ""
+			$status: enumTypeMeetingStatus!
+			$review: EnumTypeAuditMeetingType!
     ){
-      myAwaitMeetingList(order: $order,first: 10,skip: 0,meetingName: $meetingName){
+      myOrgMeetingList(orgId: $orgId,order: $order,first: 10,skip: 0,status: $status,review: $review){
           edges{
             applyUserId,
             beginTime,
@@ -120,7 +122,10 @@ export default function Table(props) {
     function getList(searchKey) {
       fetchQuery(props.environment, query, {
           order: '',
-          meetingName: searchKey
+          meetingName: searchKey,
+		  orgId: 10,
+		  status: "MEETING_AWAIT",
+		  review: "MEETING_PASS",
       }).then(data => {
           if (data) {
               if (data.myAwaitMeetingList) {
