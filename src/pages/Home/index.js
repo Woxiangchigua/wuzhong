@@ -33,13 +33,13 @@ export default class Home extends Component {
 		    </Breadcrumb>
 		  </Card>
 		  <div className="layui-row">
-			  <Card title="今日会议" bordered={false} className="head2 layui-col-md4" style={{ marginTop: 10 }}>
+			  <Card title="今日会议" bordered={false} className="head8 layui-col-md4" style={{ marginTop: 10 }}>
 				<Tabletoday environment={this.props.environment}/>
 			  </Card>
-			  <Card title="待办事项" bordered={false} className="head2 layui-col-md5" style={{ marginTop: 10 }}>
+			  <Card title="待办事项" bordered={false} className="head8 layui-col-md5" style={{ marginTop: 10 }}>
 				<Tabletowait environment={this.props.environment}/>
 			  </Card>
-			  <Card title="通知" bordered={false} className="head3 layui-col-md3" style={{ marginTop: 10 }}>
+			  <Card title="通知" bordered={false} className="head9 layui-col-md3" style={{ marginTop: 10 }}>
 				<div className="text1">
 					<h4><i className="layui-icon user" style={{ marginRight: 5 }}>&#xe770;</i>管理员</h4>
 					<p>有一份关于《苏州市公安局关于依法严厉打击新型冠状病毒感染的肺炎疫情防控期间违法犯罪活动的通告》的相关资料请相关与会人员认真阅读,与会积极探讨.</p>
