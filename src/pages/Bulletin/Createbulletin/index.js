@@ -56,24 +56,23 @@ function AddMeeting(props) {
   useEffect(
     () => {
       /* global layer */
-       layui.use('form', function () {
+      layui.use('form', function () {
          //执行一个laydate实例
        $("#dep").empty();
-          $('#dep').append(`<option value="">sds</option>`)
+       $('#dep').append(`<option value=""></option>`)
           console.log($('#dep'))
          for (let i = 0; i <deplist.length; i++) {
-            console.log(deplist[i])
-           $('#dep').append(`<option value=${deplist[i].id}>${deplist[i].name}</option>`);
+                      $('#dep').append(`<option value=${deplist[i].name}>${deplist[i].name}</option>`);
          }
-         form.render();
+          form.render();
        });
 
-      form.on('submit(formDemo)', function(data){
-        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+        form.on('submit(formDemo)', function(data){
+        console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+        console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
         console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-        Submit()
-        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        Submit(data.field)
+        return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
       });
     }
   )
@@ -88,19 +87,17 @@ function AddMeeting(props) {
       values.receiptReq,
       (response, errors) => {
         if (errors) {
-          console.log(errors)
-          Modal.error({
-            title: errors[0].message,
+          /* global layer */
+          layer.alert(errors[0].message,{title:'错误',icon: 2} ,function(index){
+            //do something
+            layer.close(index);
           });
         } else {
-          console.log(response);
-          Modal.success({
-            content: '提交成功',
-            onOk() {
-              history.goBack()
-            },
+          layer.alert('提交成功',{title:'成功',icon: 1} ,function(index){
+            //do something
+            history.push('/Bulletin/List')
+            layer.close(index);
           });
-
         }
       },
       (response, errors) => {
@@ -125,7 +122,7 @@ function AddMeeting(props) {
         <form className="layui-form"  action="">
           <div className="layui-form-item" style={{ marginTop: '-20px',marginLeft: '-75px' }}>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>公文名称</label>
+              <label className="layui-form-label" style={{ width: 110 }}>公文名称<span style={{color:'red'}}>*</span></label>
               <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
                 <input type="text" name="name" placeholder="请输入公文名称" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
@@ -133,11 +130,10 @@ function AddMeeting(props) {
           </div>
           <div className="layui-form-item" style={{ marginTop: '-70px',marginLeft: '-75px' }}>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>公文来源</label>
+              <label className="layui-form-label" style={{ width: 110 }}>公文来源<span style={{color:'red'}}>*</span></label>
               <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
-                <input type="text" name="name" placeholder="请输入公文来源" required lay-verify="required" autoComplete="off" className="layui-input" />
-{/*               <select name="source" id="dep" lay-verify="required">
-                </select> */}
+              <select name="source" id="dep" lay-verify="required">
+                </select>
               </div>
             </div>
           </div>

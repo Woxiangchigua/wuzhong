@@ -31,6 +31,8 @@ query Querybulletin_BulletinDetailQuery($id:ID!){
         },
         id,
         name,
+        createdAt,
+        isNeedReceipt,
         source,
         status,
         priority,
@@ -54,7 +56,7 @@ function BulletinDetail(props) {
       </Card>
       <Divider />
       <Card title="" bordered={false} >
-        <Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
+        <Descriptions size="small" column={3} style={{ marginTop: "20px" }}>
           <Descriptions.Item label="公文名称">{Detail.name}</Descriptions.Item>
           <Descriptions.Item label="公文来源">{Detail.source}</Descriptions.Item>
           <Descriptions.Item label="公文发起人">
@@ -62,6 +64,7 @@ function BulletinDetail(props) {
               {Detail.sponsorUserId === 'user-1' ? '王建国' :  ''}
             </span>
           </Descriptions.Item>
+          <Descriptions.Item label="创建时间">{dateFormat("YYYY-mm-dd HH:MM", new Date(Detail.createdAt))}</Descriptions.Item>
           <Descriptions.Item label="归档状态">
             <Badge
                 status={Detail.status === 'BULLETIN_ARCHIVED' ? 'success' : Detail.status === 'BULLETIN_UNASSIGNED' ? 'error' : Detail.status === 'BULLETIN_NOT_ARCHIVED' ? 'warning' : ''}
