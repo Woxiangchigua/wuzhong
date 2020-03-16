@@ -1,0 +1,8 @@
+.top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ant-layout-content {
+	padding: 0!important;
+}

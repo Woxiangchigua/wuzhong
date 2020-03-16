@@ -39,7 +39,7 @@ function commit(
   error
 ) {
   return commitMutation(environment, {
-    mutation,
+    // mutation,
     variables: {
       id: id,
       review: review,

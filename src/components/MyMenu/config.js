@@ -1,5 +1,19 @@
 
-const menulist = [{
+const menulist = [
+	{
+		name: '警内公共门户',
+		icon: 'compass',
+		key: 'publicportal',
+		role: ['admin','管理人员','申请人','普通用户','部门领导'],
+		items: [{
+			name: '警内公共门户',
+			icon: '',
+			key: 'publiclist',
+			link: '/Publicportal',
+			role: ['admin','管理人员','申请人','普通用户','部门领导']
+		}]
+	},
+	{
 	name: '会议导览平台',
 	icon: 'compass',
 	key: 'callcenter',
@@ -57,6 +71,20 @@ const menulist = [{
 		key: 'List',
 		link: '/Meeting/List',
 		role: ['admin','管理人员']
+	},
+	]
+},
+{
+	name: '内勤人员',
+	icon: 'user',
+	key: 'inside',
+	role: ['admin','内勤人员'],
+	items: [{
+		name: '待开会议',
+		icon: '',
+		key: 'InsideList',
+		link: '/Meeting/InsideList',
+		role: ['admin','内勤人员']
 	},
 	]
 },

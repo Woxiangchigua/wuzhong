@@ -278,14 +278,14 @@ function MeetingDetail(props) {
           <Descriptions.Item label="主办单位">{Detail.organizer}</Descriptions.Item>
           <Descriptions.Item label="会议名称">{Detail.meetingName}</Descriptions.Item>
           <Descriptions.Item label="会议室">{Detail.meetingRoom.name}</Descriptions.Item>
-          <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM", new Date(Detail.beginTime))}</Descriptions.Item>
-          <Descriptions.Item label="参会人数">{Detail.number}</Descriptions.Item>
           <Descriptions.Item label="申请人">
-          <span>
-              {Detail.applyUserId === 'user-1' ? '王建国' :  ''}
-            </span>
+           <span>
+             {Detail.applyUserId === 'user-1' ? '王建国' :  ''}
+           </span>
           </Descriptions.Item>
-          <Descriptions.Item label="申请日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
+          <Descriptions.Item label="参会人数">{Detail.number}</Descriptions.Item>
+          <Descriptions.Item label="会议日期">{dateFormat("YYYY-mm-dd", new Date(Detail.beginTime))}</Descriptions.Item>
+					 <Descriptions.Item label="会议开始时间">{dateFormat("HH:MM", new Date(Detail.beginTime))}</Descriptions.Item>
           <Descriptions.Item label="会议结束时间">{dateFormat("HH:MM", new Date(Detail.endTime))}</Descriptions.Item>
           <Descriptions.Item label="会议状态" style={{ display: Detail.review === 'MEETING_PASS' ? 'block' : 'none' }}>
             <Badge
@@ -298,20 +298,11 @@ function MeetingDetail(props) {
               text={Detail.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : Detail.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : Detail.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : Detail.review === 'MEETING_PASS' ? '审核通过' :''} />
           </Descriptions.Item>
         </Descriptions>
+				<Descriptions size="small" column={4} style={{ marginTop: "0px" }}>,
+					<Descriptions.Item label="会场需求">{Detail.intro}</Descriptions.Item>
+				</Descriptions>
         <Card title="参会人员" bordered={false} style={{ margin: '0px 0 10px 0' }}>
-          <Table bordered size="middle" columns={columns} dataSource={data} pagination={false} />,
-        </Card>
-        <Card title="会场需求" bordered={false} style={{ margin: '0px 0 20px 0' }}>
-          <p style={{
-            fontSize: 14,
-            color: 'rgba(0, 0, 0, 0.85)',
-            marginBottom: 16,
-            fontWeight: 500,
-          }}
-          ></p>
-          <Card type="inner" title="备注信息" style={{ height: '300px' }}>
-            {Detail.intro}
-          </Card>
+          <Table bordered size="middle" columns={columns} dataSource={data} pagination={false} />
         </Card>
 
         <Col span={24}>
