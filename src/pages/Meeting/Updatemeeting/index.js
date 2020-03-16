@@ -55,7 +55,15 @@ const query = graphql`
           attendLeader,
           meetingType,
           reportUnit,
-          requirement
+          requirement,
+          meetingFile{name,url},
+          orgIds
+        }
+        orgList(first:100000,skip:0){
+          edges{
+            id,
+            name,
+          }
         }
     }`
 var childrenMsg = {}
@@ -69,6 +77,7 @@ function AddMeeting(props) {
   var laydate = layui.laydate;
   var table = window.layui.table;
   let meetingroom = props.meetingRoomList.edges
+  let orgList = props.orgList.edges
   const meetingDetail = props.meetingDetail
   let begin = [
     { lable: "09:00", val: "T01:00:00Z" },
@@ -149,6 +158,10 @@ function AddMeeting(props) {
         for (let i = 0; i < meetingroom.length; i++) {
           $('#meetingroom').append(`<option value=${meetingroom[i].id}>${meetingroom[i].name}</option>`);
         }
+        $("#org").empty();
+        for (let i = 0; i < orgList.length; i++) {
+          $('#org').append(`<input type="checkbox" value=${orgList[i].id} name="org${i}" lay-skin="primary" title=${orgList[i].name} />`);
+        }
         $("#end").empty();
         $('#end').append(`<option value="">请选择结束时间</option>`)
         for (let i = 0; i < end.length; i++) {
@@ -178,20 +191,20 @@ function AddMeeting(props) {
         console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
         let field = data.field
         let str = ["false", "false", "false", "false", "false"]
-        if (field.checkbox0) {
-          str[0] = "true"
-        }  if (field.checkbox1) {
-          str[1] = "true"
-        }  if (field.checkbox2) {
-          str[2] = "true"
-        }
-         if (field.checkbox3) {
-          str[3] = "true"
-        }
-         if (field.checkbox4) {
-          str[4] = "true"
+        for (let i = 0; i < str.length; i++) {
+          if (field[`checkbox${i}`]) {
+            str[i] = "true"
+          }
         }
         field.requirement = str.join()
+        let orgIds = []
+        for (let i = 0; i < orgList.length; i++) {
+          if (field[`org${i}`]) {
+            orgIds.push(field[`org${i}`])
+          }
+        }
+        field.orgIds = orgIds
+        console.log(field)
         Submit(field)
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
       });
@@ -206,12 +219,20 @@ function AddMeeting(props) {
         }
       }
       let requirementList = meetingDetail.requirement.split(",")
-      console.log(requirementList)
       for (let i = 0; i < requirementList.length; i++) {
         if (requirementList[i] === 'true') {
           detail[`checkbox${i}`] = "on"
         }
       }
+      for (let i = 0; i < orgList.length; i++) {
+        for (let n = 0; n < detail.orgIds.length; n++) {
+          if (orgList[i].id === detail.orgIds[n]) {
+            detail[`org${i}`] = "on"
+          }
+        }
+      }
+      
+
       console.log(detail)
       // $('#reportUnit').attr('value',detail.reportUnit)
 
@@ -279,32 +300,33 @@ function AddMeeting(props) {
       meetingId,
       new Date(date + begin[values.beginTime].val).toISOString(),
       values.roomId,
-      values.number,
       new Date(date + values.endTime).toISOString(),
       values.meetingName,
       values.organizer,
       'configuration',
       values.intro,
-      ["user-5",
-        "user-6"],
+      values.orgIds,
       values.requirement,
-      values.reportUnit,
+      'reportUnit',
       values.attendLeader,
       values.meetingType,
+      [],
       (response, errors) => {
         if (errors) {
           console.log(errors)
-          Modal.error({
-            title: errors[0].message,
-          });
+          /* global layer */
+          layer.alert(errors[0].message,{title:'错误',icon: 2} ,function(index){
+            //do something
+            layer.close(index);
+          }); 
         } else {
           console.log(response);
-          Modal.success({
-            content: '提交成功',
-            onOk() {
-              history.push('/Meeting/Applicant')
-            },
-          });
+          /* global layer */
+          layer.alert('提交成功',{title:'成功',icon: 1} ,function(index){
+            //do something
+            history.push('/Meeting/Applicant')
+            layer.close(index);
+          }); 
         }
       },
       (response, errors) => {
@@ -337,10 +359,10 @@ function AddMeeting(props) {
       <Card title="填写会议室预订表" style={{ marginTop: 10 }}>
         <form className="layui-form" lay-filter="formDemo" action="">
           <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>呈报单位</label>
+          <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>主办单位</label>
               <div className="layui-input-block">
-                <input type="text" name="reportUnit" id='reportUnit' required lay-verify="required" autoComplete="off" className="layui-input" />
+                <input type="text" name="organizer" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
             </div>
             <div className="layui-inline">
@@ -349,13 +371,7 @@ function AddMeeting(props) {
                 <input type="text" name="meetingName" required lay-verify="required" autoComplete="off" className="layui-input" />
               </div>
             </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>会议类型</label>
-              <div className="layui-input-block">
-                <input type="radio" name="meetingType" value="MEETING_COMMON" title="普通会议" defaultChecked />
-                <input type="radio" name="meetingType" value="MEETING_VIDEO" title="视频会议" />
-              </div>
-            </div>
+            
           </div>
 
           <div className="layui-form-item">
@@ -366,19 +382,19 @@ function AddMeeting(props) {
               </div>
             </div>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>参会人数</label>
+              <label className="layui-form-label" style={{ width: 100 }}>会议类型</label>
               <div className="layui-input-block">
-                <input type="text" name="number" required lay-verify="required" autoComplete="off" className="layui-input" />
+                <input type="radio" name="meetingType" value="MEETING_COMMON" title="普通会议" defaultChecked />
+                <input type="radio" name="meetingType" value="MEETING_VIDEO" title="视频会议" />
               </div>
             </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>主办单位</label>
-              <div className="layui-input-block">
-                <input type="text" name="organizer" required lay-verify="required" autoComplete="off" className="layui-input" />
-              </div>
+            
+          </div>
+          <div className="layui-form-item">
+            <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>参会部门</label>
+            <div className="layui-input-block" id='org' style={{ width: 700 }}>
             </div>
           </div>
-
           <div className="layui-form-item">
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>会议时间</label>
@@ -403,16 +419,6 @@ function AddMeeting(props) {
                 </select>
               </div>
             </div>
-          </div>
-          <div className="layui-form-item">
-            <div className="top_button">
-              <div>参会人员</div>
-              <div>
-                <button type="button" onClick={open} lay-event="delAll" className="layui-btn layui-btn-sm">删除</button>
-                <button type="button" onClick={() => { setModalAddAttendeesVisible(true) }} className="layui-btn layui-btn-sm">添加</button>
-              </div>
-            </div>
-            <table id="demo" lay-filter="test"></table>
           </div>
           <div className="layui-form-item">
             <label className="layui-form-label" style={{ width: 100 }}>会场要求</label>
@@ -489,7 +495,7 @@ function Home(props) {
 
               return (
                 <>
-                  <AddMeeting2 environment={environment} meetingRoomList={props.meetingRoomList} meetingDetail={props.meeting} meetingId={meetingId} ref="children" />
+                  <AddMeeting2 environment={environment} meetingRoomList={props.meetingRoomList} meetingDetail={props.meeting} meetingId={meetingId} orgList={props.orgList}  ref="children" />
                 </>
               )
             }
