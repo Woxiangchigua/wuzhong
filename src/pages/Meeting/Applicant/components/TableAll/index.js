@@ -140,7 +140,7 @@ export default function Table(props) {
                     }
                 }
                 , {
-                    field: 'review', title: '物业', width: 80, align: "center",
+                    field: 'review', title: '管理员', width: 80, align: "center",
                     templet: function (d) {
                         if (d.review === 'MEETING_PASS') {
                             return "<span class='layui-badge-dot layui-bg-green'></span>"
