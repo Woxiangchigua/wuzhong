@@ -47,6 +47,13 @@ export default function Table(props) {
     () => {
       getList(searchKey)
       /* global layer */
+      table.on('tool(test)', function (obj) {
+        console.log(obj)
+        let data = obj.data;
+        if(obj.event==="go"){
+            history.push('/Bulletin/Returnreceipt/' + JSON.stringify({id:data.bulletinId,distid:data.id,review:data.review}))
+        }
+      })
     }
   )
   
@@ -136,6 +143,7 @@ export default function Table(props) {
                 }
               }
             }
+            , { field: '', title: "操作", align: "center", toolbar: "#bar", width: 150, edit: 'text' }
         ]]
     });
   }
@@ -343,6 +351,11 @@ export default function Table(props) {
         <div style={{clear:"both"}}></div>
         <table id="demo" lay-filter="test" style={{width:"90%",marginLeft:"2%"}}></table>
       </div>
+      <script type="text/html" id="bar">
+        <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
+          <i className="layui-icon">&#xe6b2;</i>回执
+        </button>
+      </script>
     </>
   )
 }
