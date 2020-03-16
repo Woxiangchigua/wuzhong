@@ -13,19 +13,19 @@ const menulist = [
 			role: ['admin','管理人员','申请人','普通用户','部门领导']
 		}]
 	},
-	{
-	name: '会议导览平台',
-	icon: 'compass',
-	key: 'callcenter',
-	role: ['admin','管理人员','申请人','普通用户','部门领导'],
-	items: [{
-		name: '会议导览平台',
-		icon: '',
-		key: 'calllist',
-		link: '/Home',
-		role: ['admin','管理人员','申请人','普通用户','部门领导']
-	}]
-},
+// 	{
+// 	name: '会议导览平台',
+// 	icon: 'compass',
+// 	key: 'callcenter',
+// 	role: ['admin','管理人员','申请人','普通用户','部门领导'],
+// 	items: [{
+// 		name: '会议导览平台',
+// 		icon: '',
+// 		key: 'calllist',
+// 		link: '/Home',
+// 		role: ['admin','管理人员','申请人','普通用户','部门领导']
+// 	}]
+// },
 {
 	name: '会议管理',
 	icon: 'form',
