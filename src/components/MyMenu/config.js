@@ -2,7 +2,7 @@
 const menulist = [
 	{
 		name: '警内公共门户',
-		icon: 'compass',
+		icon: 'global',
 		key: 'publicportal',
 		role: ['admin','管理人员','申请人','普通用户','部门领导'],
 		items: [{
@@ -13,25 +13,32 @@ const menulist = [
 			role: ['admin','管理人员','申请人','普通用户','部门领导']
 		}]
 	},
-	{
-	name: '会议导览平台',
-	icon: 'compass',
-	key: 'callcenter',
-	role: ['admin','管理人员','申请人','普通用户','部门领导'],
+// 	{
+// 	name: '会议导览平台',
+// 	icon: 'compass',
+// 	key: 'callcenter',
+// 	role: ['admin','管理人员','申请人','普通用户','部门领导'],
+// 	items: [{
+// 		name: '会议导览平台',
+// 		icon: '',
+// 		key: 'calllist',
+// 		link: '/Home',
+// 		role: ['admin','管理人员','申请人','普通用户','部门领导']
+// 	}]
+// },
+{
+	name: '会议管理',
+	icon: 'form',
+	key: 'meeting',
+	role: ['admin','申请人'],
 	items: [{
 		name: '会议导览平台',
 		icon: '',
 		key: 'calllist',
 		link: '/Home',
 		role: ['admin','管理人员','申请人','普通用户','部门领导']
-	}]
-},
-{
-	name: '会议室申请',
-	icon: 'form',
-	key: 'meeting',
-	role: ['admin','申请人'],
-	items: [{
+	},
+		{
 		name: '填写会议室预订表',
 		icon: '',
 		key: 'Creatmeeting',
@@ -44,56 +51,29 @@ const menulist = [
 		key: 'Applicant',
 		link: '/Meeting/Applicant',
 		role: ['admin','申请人']
-	},]
-},
-{
-	name: '部门领导',
-	icon: 'codepen',
-	key: 'leader',
-	role: ['admin','部门领导'],
-	items: [{
-		name: '待审待开会议',
+	},
+	{
+		name: '部门领导',
 		icon: '',
 		key: 'Leaderlist',
 		link: '/Meeting/Leaderlist',
 		role: ['admin','部门领导']
 	},
-	]
-},
-{
-	name: '管理员',
-	icon: 'hdd',
-	key: 'administrator',
-	role: ['admin','管理人员'],
-	items: [{
-		name: '待审待开会议',
+	{
+		name: '管理人员',
 		icon: '',
 		key: 'List',
 		link: '/Meeting/List',
 		role: ['admin','管理人员']
 	},
-	]
-},
-{
-	name: '内勤人员',
-	icon: 'user',
-	key: 'inside',
-	role: ['admin','内勤人员'],
-	items: [{
+	{
 		name: '待开会议',
 		icon: '',
 		key: 'InsideList',
 		link: '/Meeting/InsideList',
 		role: ['admin','内勤人员']
 	},
-	]
-},
-{
-	name: '部门职员',
-	icon: 'user',
-	key: 'user',
-	role: ['admin','普通用户'],
-	items: [{
+	{
 		name: '待开会议',
 		icon: '',
 		key: 'Userlist',
@@ -102,6 +82,62 @@ const menulist = [
 	},
 	]
 },
+// {
+// 	name: '部门领导',
+// 	icon: 'codepen',
+// 	key: 'leader',
+// 	role: ['admin','部门领导'],
+// 	items: [{
+// 		name: '待审待开会议',
+// 		icon: '',
+// 		key: 'Leaderlist',
+// 		link: '/Meeting/Leaderlist',
+// 		role: ['admin','部门领导']
+// 	},
+// 	]
+// },
+// {
+// 	name: '管理员',
+// 	icon: 'hdd',
+// 	key: 'administrator',
+// 	role: ['admin','管理人员'],
+// 	items: [{
+// 		name: '待审待开会议',
+// 		icon: '',
+// 		key: 'List',
+// 		link: '/Meeting/List',
+// 		role: ['admin','管理人员']
+// 	},
+// 	]
+// },
+// {
+// 	name: '内勤人员',
+// 	icon: 'meh',
+// 	key: 'inside',
+// 	role: ['admin','内勤人员'],
+// 	items: [{
+// 		name: '待开会议',
+// 		icon: '',
+// 		key: 'InsideList',
+// 		link: '/Meeting/InsideList',
+// 		role: ['admin','内勤人员']
+// 	},
+// 	]
+// },
+// {
+// 	name: '部门职员',
+// 	icon: 'user',
+// 	key: 'user',
+// 	role: ['admin','普通用户'],
+// 	items: [{
+// 		name: '待开会议',
+// 		icon: '',
+// 		key: 'Userlist',
+// 		link: '/Meeting/Userlist',
+// 		role: ['admin','普通用户']
+// 	},
+// 	]
+// },
 // {
 // 	name: '会议管理',
 // 	icon: 'mail',
@@ -150,7 +186,7 @@ const menulist = [
 // }
 {
 	name: '公文管理',
-	icon: 'compass',
+	icon: 'audit',
 	key: 'bulletin',
 	role: ['admin','管理人员','部门领导'],
 	items: [{
@@ -172,7 +208,49 @@ const menulist = [
 		link: '/Bulletin/Bulldist',
 		role: ['admin','管理人员','部门领导']
 	}]
-}
+},
+{
+	name: '综合事务管理',
+	icon: 'database',
+	key: 'comprehensive',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: []
+},
+{
+	name: '科信保障',
+	icon: 'safety',
+	key: 'guarantee',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: []
+},
+{
+	name: '警务知识库',
+	icon: 'read',
+	key: 'knowledgebase',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: []
+},
+{
+	name: '吐槽池',
+	icon: 'project',
+	key: 'debunk',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: []
+},
+{
+	name: '问卷调查',
+	icon: 'file',
+	key: 'questionnaire',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: []
+},
+{
+	name: '六化应用',
+	icon: 'appstore',
+	key: 'six',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: []
+},
 ];
 
 const getMyMenuList = (lype) => {

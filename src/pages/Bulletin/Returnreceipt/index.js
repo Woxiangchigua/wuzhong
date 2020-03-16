@@ -83,7 +83,6 @@ function AddMeeting(props) {
   const Detail = props.bulletin;
   var dist = []
   for(let i in Detail.bulletinDistribution){
-    console.log(Detail.bulletinDistribution[i])
     if(props.distid == Detail.bulletinDistribution[i].id){
       dist.distdepId = Detail.bulletinDistribution[i].depId,
       dist.distdepReviewId = Detail.bulletinDistribution[i].depReviewId,
