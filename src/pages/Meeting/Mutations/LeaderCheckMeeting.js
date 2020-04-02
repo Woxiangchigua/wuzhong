@@ -5,7 +5,7 @@ import {
 
 const mutation = graphql`
   mutation LeaderCheckMeetingMutation($id: ID!) {
-    cancelMeeting(id: $id) {
+    leaderCheckMeeting(id: $id) {
         id
     }
   }

@@ -3,6 +3,7 @@ import CommitCheckMeeting from '../Mutations/CommitCheckMeeting'
 // import AuditMeeting from '../Mutations/AuditMeeting'
 import AbrogateMeeting from '../Mutations/AbrogateMeeting'
 import CancelMeeting from '../Mutations/CancelMeeting'
+import Leadercheck from "../Mutations/LeaderCheckMeeting"
 import {
   Breadcrumb,
   Input,
@@ -143,6 +144,33 @@ function MeetingDetail(props) {
       cancelText: '不同意',
       onOk() {
         console.log('确认');
+        Leadercheck.commit(
+          props.environment,
+          Detail.id,
+          (response, errors) => {
+            if (errors) {
+              // console.log(errors)
+              Modal.error({
+                title: errors[0].message,
+              });
+            } else {
+              // console.log(response);
+              Modal.success({
+                content: '审核成功',
+                onOk() {
+                  history.goBack()
+                },
+              });
+            }
+          },
+          (response, errors) => {
+            if (errors) {
+              console.log(errors)
+            } else {
+              console.log(response);
+            }
+          }
+        );
       },
       onCancel() {
         console.log('取消');
@@ -256,7 +284,7 @@ function MeetingDetail(props) {
                style={{ display: props.review === 'MEETING_EDIT_OR_FAIL' ? 'inline-block' : 'none', marginLeft: 10 }} 
                onClick={showConfirm}>提交审核</Button>
               <Button
-               style={{ display: props.review === 'MEETING_CHECK_PENDING_MANAGE'|| props.review === 'MEETING_CHECK_PENDING_ADMIN'? 'inline-block' : 'none', marginLeft: 10 }} type="primary" 
+               style={{ display: props.review === 'MEETING_CHECK_PENDING'? 'inline-block' : 'none', marginLeft: 10 }} type="primary" 
                onClick={showAuditConfirm}>
                 审核
               </Button>

@@ -67,14 +67,14 @@ const menulist = [
 		role: ['admin','管理人员']
 	},
 	{
-		name: '待开会议',
+		name: '内勤人员',
 		icon: '',
 		key: 'InsideList',
 		link: '/Meeting/InsideList',
 		role: ['admin','内勤人员']
 	},
 	{
-		name: '待开会议',
+		name: '普通用户',
 		icon: '',
 		key: 'Userlist',
 		link: '/Meeting/Userlist',
@@ -214,42 +214,83 @@ const menulist = [
 	icon: 'database',
 	key: 'comprehensive',
 	role: ['admin','普通用户','管理人员','部门领导'],
-	items: []
+	items: [
+		{
+			name: '综合事务管理',
+			icon: '',
+			key: 'comprehensive',
+			link: '/Comprehensive',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
 },
 {
 	name: '科信保障',
 	icon: 'safety',
 	key: 'guarantee',
 	role: ['admin','普通用户','管理人员','部门领导'],
-	items: []
+	items: [
+		{
+			name: '科信保障',
+			icon: '',
+			key: 'guarantee',
+			link: '/Guarantee',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
 },
 {
 	name: '警务知识库',
 	icon: 'read',
 	key: 'knowledgebase',
 	role: ['admin','普通用户','管理人员','部门领导'],
-	items: []
+	items: [
+		{
+			name: '警务知识库',
+			icon: '',
+			key: 'knowledgebase',
+			link: '/Knowledgebase',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
 },
 {
 	name: '吐槽池',
 	icon: 'project',
 	key: 'debunk',
 	role: ['admin','普通用户','管理人员','部门领导'],
-	items: []
+	items: [
+		{
+			name: '吐槽池',
+			icon: '',
+			key: 'debunk',
+			link: '/Debunk',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
 },
 {
 	name: '问卷调查',
 	icon: 'file',
 	key: 'questionnaire',
 	role: ['admin','普通用户','管理人员','部门领导'],
-	items: []
+	items: [
+		{
+			name: '问卷调查',
+			icon: '',
+			key: 'questionnaire',
+			link: '/Questionnaire',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
 },
 {
 	name: '六化应用',
 	icon: 'appstore',
 	key: 'six',
 	role: ['admin','普通用户','管理人员','部门领导'],
-	items: []
+	items: [
+	]
 },
 ];
 
