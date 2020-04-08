@@ -10,21 +10,21 @@ const menulist = [
 			icon: '',
 			key: 'home',
 			link: '/Publicportal',
-			role: ['admin','管理人员','申请人','普通用户','部门领导']
+			role: ['admin','普通用户']
 		},
 		{
 			name: '部门主页',
 			icon: '',
 			key: 'departhome',
 			link: '/Departhome',
-			role: ['admin','管理人员','申请人','普通用户','部门领导']
+			role: ['admin','管理人员']
 		},
 		{
 			name: '领导主页',
 			icon: '',
 			key: 'leaderhome',
 			link: '/Leaderhome',
-			role: ['admin','管理人员','申请人','普通用户','部门领导']
+			role: ['admin','部门领导']
 		},
 		{
 			name: '公文主页',
@@ -260,6 +260,37 @@ const menulist = [
 		link: '/Bulletin/Bulldist',
 		role: ['admin','管理人员','部门领导']
 	}]
+},
+{
+    name: '指令管理',
+    icon: 'audit',
+    key: 'instruct',
+    role: ['admin','管理人员','申请人','内勤','普通用户'],
+    items: [{
+        name: '分局指令列表',
+        icon: '',
+        key: 'instructlist',
+        link: '/Instruct/List',
+        role: ['admin','管理人员']
+    },{
+        name: '主办部门指令列表',
+        icon: '',
+        key: 'instructdeplist',
+        link: '/Instruct/Deplist',
+        role: ['admin','内勤']
+    },{
+        name: '协办部门指令列表',
+        icon: '',
+        key: 'assdeplist',
+        link: '/Instruct/Assdep',
+        role: ['admin','内勤']
+    },{
+        name: '警员指令列表',
+        icon: '',
+        key: 'instructpolice',
+        link: '/Instruct/Police',
+        role: ['admin','普通用户']
+    }]
 },
 {
 	name: '六化应用',

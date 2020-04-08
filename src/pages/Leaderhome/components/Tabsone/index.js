@@ -72,7 +72,7 @@ export default class TabsCard extends React.Component {
           style={{ width: '100%' }}
           tabList={tabListNoTitle}
           activeTabKey={this.state.noTitleKey}
-          tabBarExtraContent={<a href="#">...</a>}
+          tabBarExtraContent={<a href="../../../Instruct/List">...</a>}
           onTabChange={key => {
             this.onTabChange(key, 'noTitleKey');
           }}
