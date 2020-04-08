@@ -1,0 +1,14 @@
+.topBtn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.top{
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px
+}
+.layui-rate {
+    padding: 0 !important;
+}

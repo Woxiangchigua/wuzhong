@@ -49,7 +49,7 @@ export default function Table(props) {
         table.on('tool(complainList)', function(obj) {
           let data = obj.data;
           if(obj.event==="go"){
-            history.push('/Meeting/AddPersonnel/' + JSON.stringify({id:data.id,review:data.review}))
+            history.push('/Meeting/AddPersonnel/' + JSON.stringify({id:data.id}))
         }else if(obj.event==="del"){
         let delIndex = layer.confirm('真的删除id为' + data.id + "的信息吗?", function (delIndex) {
             DeleteMeeting.commit(
@@ -115,7 +115,7 @@ export default function Table(props) {
                   return '<span style="display:inline-block;color: #666666;border:1px solid #c9c9c9;height:22px;line-height:22px;padding:0 12px;font-size: 12px;border-radius: 2px;">已开</span>';
                 }
                 }}
-                ,{fixed: 'right', title:'操作', align:'center', width: 100, toolbar: '#barDemo'}
+                ,{fixed: 'right', title:'操作', align:'center', width: 120, toolbar: '#barDemo'}
               ]
              ]
         ,limits: [5,10,20,50]

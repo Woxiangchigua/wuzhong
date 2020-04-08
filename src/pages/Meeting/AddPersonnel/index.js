@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UpdateMeeting from '../Mutations/UpdateMeeting'
+import Addperson from '../Mutations/Addperson'
 import Calendar from '../../../components/CalendarUpdate/index'
 import { useHistory } from "react-router-dom";
 import dateFormat from '../../../ utils/dateFormat'
@@ -64,7 +65,8 @@ function AddMeeting(props) {
   let history = useHistory();
   const [modalAddAttendeesVisible, setModalAddAttendeesVisible] = useState(false);
   const environment = props.environment
-  const meetingId = props.meetingId
+  const meetingId = props.id
+	console.log(props.meetingId)
   var layui = window.layui
   var form = layui.form;
   var laydate = layui.laydate;
@@ -240,7 +242,7 @@ function AddMeeting(props) {
         , { field: 'id', title: 'ID', sort: true }
         , { field: 'name', title: '参会人姓名' }
         , { field: 'age', title: '警员编号' }
-        , { field: 'address', title: '所属部门' }
+        , { field: 'org_id', title: '所属部门' }
         , { field: '', title: "操作", align: "center", toolbar: "#bar" }
       ]]
     });
@@ -275,23 +277,16 @@ function AddMeeting(props) {
   function Submit(values) {
 
     let date = values.date
-    UpdateMeeting.commit(
+    Addperson.commit(
       props.environment,
-      meetingId,
-      new Date(date + begin[values.beginTime].val).toISOString(),
-      values.roomId,
-      values.number,
-      new Date(date + values.endTime).toISOString(),
-      values.meetingName,
-      values.organizer,
-      'configuration',
-      values.intro,
-      ["user-5",
-        "user-6"],
-      values.requirement,
-      values.reportUnit,
-      values.attendLeader,
-      values.meetingType,
+      props.meetingId,
+      "depid-1",
+      ["account-1",
+			"account-2",
+			"account-3",
+			"account-4",
+			"account-5",
+			"account-6"],
       (response, errors) => {
         if (errors) {
           console.log(errors)
@@ -397,8 +392,8 @@ function AddMeeting(props) {
 const AddMeeting2 = Form.create({ name: 'horizontal_login' })(AddMeeting)
 
 function Home(props) {
-  const meetingId = props.id
-  console.log(props.id)
+  const {id}=JSON.parse(props.id)
+  console.log(id)
   const environment = props.environment;
 
 
@@ -419,7 +414,7 @@ function Home(props) {
       <QueryRenderer
         environment={environment}
         query={query}
-        variables={{ id: props.id }}
+        variables={{ id: id }}
         render={({ error, props, retry }) => {
           if (error) {
             return (
@@ -431,7 +426,7 @@ function Home(props) {
 
               return (
                 <>
-                  <AddMeeting2 environment={environment} meetingRoomList={props.meetingRoomList} meetingDetail={props.meeting} meetingId={meetingId} ref="children" />
+                  <AddMeeting2 environment={environment} meetingRoomList={props.meetingRoomList} meetingDetail={props.meeting} meetingId={id} ref="children" />
                 </>
               )
             }

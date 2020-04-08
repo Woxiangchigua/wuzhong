@@ -6,66 +6,62 @@ import dateFormat from '../../../../ utils/dateFormat'
 
 const tabListNoTitle = [
   {
-    key: '吐槽池',
-    tab: '吐槽池',
+    key: '紧急指令',
+    tab: '紧急指令',
   },
   {
-    key: '话题',
-    tab: '话题',
+    key: '进程',
+    tab: '进程',
   },
   {
-    key: '提案',
-    tab: '提案',
+    key: '待办',
+    tab: '待办',
   },
   {
-    key: '建议',
-    tab: '建议',
+    key: '审核',
+    tab: '审核',
   },
   {
-    key: '求助',
-    tab: '求助',
+    key: '完成',
+    tab: '完成',
   },
 ];
 
 const contentListNoTitle = {
-  吐槽池: <div>
+  紧急指令: <div>
 			<div className="top_text">
 				<div className="topText1">
-					<span className="colorBtn red">置顶</span>
-					<p>《关于规范公安派出所出具证明工作的意见》解读</p>
+					<p>高标推进"护安苏城八大行动" 2020年苏州公...</p>
+					<span>2020-04-02</span>
 				</div>
 				<div className="topText1">
-					<span className="colorBtn red">置顶</span>
-					<p>《关于办理刑事案件证据若干问题的规定》解读</p>
+					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<span>2020-04-02</span>
 				</div>
-			</div>
-			<div className="bot_text">
-				<div className="clear">
-					<img src={require("../../../../img/policman.png")} alt=""/>
-					<div className="right_text">
-						<p>如烟如雾</p>
-						<span>2小时前 · 来自apple xl</span>
-					</div>
+				<div className="topText1">
+					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<span>2020-04-02</span>
 				</div>
-				<p>道路交通安全关乎每一个交通参与者的生命财产安全,近期各媒体报道的多起交通事故无不引起全民关注</p>
-				<div className="left_sign">
-					<span>#反馈&求助</span><span><i className="layui-icon radio">&#xe643;</i>交通法规</span>
+				<div className="topText1">
+					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<span>2020-04-02</span>
 				</div>
-				<div className="right_sign">
-					<span>3 浏览</span><span><i className="layui-icon praise">&#xe6c6;</i> 0</span>
+				<div className="topText1">
+					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<span>2020-04-02</span>
 				</div>
 			</div>
 		 </div>,
-  话题: <p>话题#</p>,
-  提案: <p>提案#</p>,
-  建议: <p>建议#</p>,
-  求助: <p>求助#</p>,
+  进程: <p>进程#</p>,
+  待办: <p>待办#</p>,
+  审核: <p>审核#</p>,
+  完成: <p>完成#</p>,
 };
 
 export default class TabsCard extends React.Component {
   state = {
     key: 'tab1',
-    noTitleKey: '吐槽池',
+    noTitleKey: '紧急指令',
   };
 
   onTabChange = (key, type) => {
@@ -80,7 +76,7 @@ export default class TabsCard extends React.Component {
           style={{ width: '100%' }}
           tabList={tabListNoTitle}
           activeTabKey={this.state.noTitleKey}
-          tabBarExtraContent={<a href="#">...</a>}
+          tabBarExtraContent={<a href="../../../Instruct/Police">...</a>}
           onTabChange={key => {
             this.onTabChange(key, 'noTitleKey');
           }}

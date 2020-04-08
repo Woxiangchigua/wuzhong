@@ -1,0 +1,298 @@
+.project-item{
+    display: flex;
+      margin-top: 8px;
+      overflow: hidden;
+      font-size: 12px;
+      height: 20px;
+      line-height: 20px;
+      justify-content: space-between;
+}
+
+.gutter-row300{
+    /* width: 300px; */
+}
+
+.ant-layout-content {
+    padding: 0!important;
+  }
+
+
+.bot_line{
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+}
+.head1{
+	height: 380px;
+	margin-right: 10px;
+}
+.head2{
+	width: calc(20% - 20px);
+	min-height: 380px;
+	margin-right: 10px;
+}
+.head2-1{
+	width: calc(46% - 20px);
+	min-height: 380px;
+	margin-right: 10px;
+}
+.head3{
+	width: calc(35% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head3-1{
+	width: calc(35% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head3-2{
+	width: calc(22% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head4{
+	width: calc(45% - 22px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head5{
+	width: calc(22% - 25px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head5-1{
+	width: calc(25% - 27px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head_last{
+	width: calc(21% - 25px);
+}
+.head6{
+	width: 21.5%;
+	height: 380px;
+	margin-right: 10px;
+}
+.head6-1{
+	width: 19.5%;
+	height: 380px;
+	margin-right: 10px;
+}
+.text1{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #dddddd6e;
+	margin-bottom: 10px;
+}
+.text1:last-child{
+	border: none;
+}
+.text1 p{
+	font-size: 13px;
+	color: #777777;
+}
+.text1 span{
+	color: #aaaaaa;
+	font-size: 12px;
+}
+
+.hoverno:hover{
+	background: #fff!important;
+}
+
+.topBtn{
+	text-align: right;
+}
+
+/* .layui-btn{
+	background: #1e9fff;
+} */
+
+.ant-card-head-title{
+	border-bottom: 1px solid #dddddd6e;
+	margin-bottom: 20px;
+}
+
+.top1{
+	width: 100%;
+	height: 210px;
+	background: url('../../img/banner.png') 0 0 no-repeat;
+	background-size: cover;
+	margin-top: 10px;
+}
+
+.left_icon{
+	color: #1e9fff;
+	float: left;
+	display: block;
+	font-size: 20px;
+}
+.right_text{
+	float: left;
+}
+.right_text p{
+	margin-bottom: 5px;
+	color: #777777;
+	font-size: 14px;
+}
+.right_text span{
+	margin-bottom: 5px;
+	color: #aaaaaa;
+	font-size: 12px;
+}
+
+.clear{
+	clear: both;
+	height: 58px;
+	margin-bottom: 10px;
+}
+.clear1{
+	height: 35px;
+}
+.clear1 .right_text p{
+	margin-bottom: -3px;
+}
+.ant-card-extra a{
+	color: #a9abbe;
+}
+.ant-tabs-extra-content a{
+	color: #a9abbe;
+}
+.ant-tabs .ant-tabs-large-bar .ant-tabs-nav-container {
+    font-size: 14px;
+}
+.ant-card-head{
+	font-size: 14px;
+	font-weight: 400;
+}
+.ant-card-head .ant-tabs-bar {
+    margin-bottom: 40px;
+}
+.colorBtn{
+	float: left;
+	display: block;
+	width: 49px;
+	height: 22px;
+	color: #fff;
+	text-align: center;
+	line-height: 22px;
+	font-size: 11px;
+	margin-right: 15px;
+}
+.blue{
+	background: #1a9aff;
+}
+.red{
+	background: #ff1a42;
+}
+.purple{
+	background: #991aff;
+}
+.green{
+	background: #00af3c;
+}
+.top_text{
+	padding-bottom: 20px;
+}
+.clear img{
+	display: block;
+	float: left;
+	margin-right: 18px;
+}
+.bot_text{
+	padding: 20px 10px;
+}
+.bot_text .right_text p{
+	margin-bottom: 0px;
+	color: #1d1e2e;
+	font-size: 14px;
+}
+.bot_text>p{
+	padding: 0 20px 0 10px;
+	color: #777777;
+}
+.left_sign{
+	float: left;
+	padding-left: 10px;
+	color: #b4b4b4;
+}
+.right_sign{
+	float: right;
+	padding-right: 20px;
+	color: #b4b4b4;
+}
+.left_sign span{
+	margin-right: 25px;
+}
+.right_sign span{
+	margin-left: 15px;
+}
+
+.extra{
+	display: flex;
+	margin-top: 10px;
+}
+.extra li{
+	width: 20%;
+	text-align: center;
+	position: relative;
+}
+.extra li p{
+	margin-top: 10px;
+	color: #888888;
+	font-size: 14px;
+}
+.extra li:hover .title{
+	color: #1e9fff;
+}
+.ant-card-body>img{
+	width: 100%;
+	height: 100%;
+}
+.layui-input-block{
+	margin-left: 0;
+	text-align: center;
+}
+.layui-textarea{
+	min-height: 235px;
+}
+.submit{
+	background-color: #1b9aff;
+}
+.topText1{
+	border-bottom: 1px dashed #dedede;
+    height: 40px;
+    border-left: 5px solid #1b9aff;
+    margin: 10px 0;
+    padding-left: 10px;
+}
+.topText1 p{
+	float: left;
+	line-height: 35px;
+	margin-bottom: 0;
+}
+.topText1 span{
+	float: right;
+	line-height: 35px;
+	color: #aaaaaa;
+}
+.text-right{
+	float: right;
+}
+.btn_more{
+	width: 40px;
+	height: 20px;
+	background: #1b9aff;
+	color: #fff;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 13px;
+	text-decoration: none;
+}
+.btn_more:hover{
+	color: #fff;
+	background: #007DDB;
+}
+.ant-rate{
+	font-size: 14px;
+}
