@@ -30,8 +30,23 @@
 	min-height: 380px;
 	margin-right: 10px;
 }
+.head2-1{
+	width: calc(46% - 20px);
+	min-height: 380px;
+	margin-right: 10px;
+}
 .head3{
 	width: calc(35% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head3-1{
+	width: calc(35% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head3-2{
+	width: calc(22% - 20px);
 	height: 380px;
 	margin-right: 10px;
 }
@@ -45,11 +60,21 @@
 	height: 380px;
 	margin-right: 10px;
 }
+.head5-1{
+	width: calc(25% - 27px);
+	height: 380px;
+	margin-right: 10px;
+}
 .head_last{
 	width: calc(21% - 25px);
 }
 .head6{
 	width: 21.5%;
+	height: 380px;
+	margin-right: 10px;
+}
+.head6-1{
+	width: 19.5%;
 	height: 380px;
 	margin-right: 10px;
 }
@@ -99,6 +124,7 @@
 	color: #1e9fff;
 	float: left;
 	display: block;
+	font-size: 20px;
 }
 .right_text{
 	float: left;

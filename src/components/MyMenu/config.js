@@ -1,52 +1,104 @@
 
 const menulist = [
 	{
-		name: '警内公共门户',
+		name: '分局主页',
 		icon: 'global',
 		key: 'publicportal',
 		role: ['admin','管理人员','申请人','普通用户','部门领导'],
 		items: [{
-			name: '警内公共门户',
+			name: '警员主页',
 			icon: '',
-			key: 'publiclist',
+			key: 'home',
 			link: '/Publicportal',
 			role: ['admin','管理人员','申请人','普通用户','部门领导']
-		}]
+		},
+		{
+			name: '部门主页',
+			icon: '',
+			key: 'departhome',
+			link: '/Departhome',
+			role: ['admin','管理人员','申请人','普通用户','部门领导']
+		},
+		{
+			name: '领导主页',
+			icon: '',
+			key: 'leaderhome',
+			link: '/Leaderhome',
+			role: ['admin','管理人员','申请人','普通用户','部门领导']
+		},
+		{
+			name: '公文主页',
+			icon: '',
+			key: 'documenthome',
+			link: '/#',
+			role: ['admin','管理人员','申请人','普通用户','部门领导']
+		},
+		{
+			name: '会议室主页',
+			icon: '',
+			key: 'meetinghome',
+			link: '/Home',
+			role: ['admin','管理人员','申请人','普通用户','部门领导']
+		}
+		]
 	},
-// 	{
-// 	name: '会议导览平台',
-// 	icon: 'compass',
-// 	key: 'callcenter',
-// 	role: ['admin','管理人员','申请人','普通用户','部门领导'],
-// 	items: [{
-// 		name: '会议导览平台',
-// 		icon: '',
-// 		key: 'calllist',
-// 		link: '/Home',
-// 		role: ['admin','管理人员','申请人','普通用户','部门领导']
-// 	}]
-// },
+	{
+	name: '综合事务',
+	icon: 'compass',
+	key: 'callcenter',
+	role: ['admin','管理人员','申请人','普通用户','部门领导'],
+	items: [{
+		name: '外出',
+		icon: '',
+		key: 'goout',
+		link: '/#',
+		role: ['admin','管理人员','申请人','普通用户','部门领导']
+	},
+	{
+		name: '车辆',
+		icon: '',
+		key: 'car',
+		link: '/#',
+		role: ['admin','管理人员','申请人','普通用户','部门领导']
+	},
+	{
+		name: '值班',
+		icon: '',
+		key: 'duty',
+		link: '/#',
+		role: ['admin','管理人员','申请人','普通用户','部门领导']
+	},
+	{
+		name: '领导日程',
+		icon: '',
+		key: 'timetable',
+		link: '/#',
+		role: ['admin','管理人员','申请人','普通用户','部门领导']
+	},
+	{
+		name: '待办事项列表',
+		icon: '',
+		key: 'todolist',
+		link: '/#',
+		role: ['admin','管理人员','申请人','普通用户','部门领导']
+	}
+	]
+},
 {
 	name: '会议管理',
 	icon: 'form',
 	key: 'meeting',
 	role: ['admin','申请人'],
-	items: [{
-		name: '会议导览平台',
-		icon: '',
-		key: 'calllist',
-		link: '/Home',
-		role: ['admin','管理人员','申请人','普通用户','部门领导']
-	},
+	items: [
 		{
-		name: '填写会议室预订表',
+		name: '会议室申请',
 		icon: '',
 		key: 'Creatmeeting',
 		link: '/Meeting/Creatmeeting',
 		role: ['admin','申请人']
 	},
 	{
-		name: '会议过审及过往纪要',
+		name: '会议管理',
 		icon: '',
 		key: 'Applicant',
 		link: '/Meeting/Applicant',
@@ -210,16 +262,51 @@ const menulist = [
 	}]
 },
 {
-	name: '综合事务管理',
-	icon: 'database',
-	key: 'comprehensive',
+	name: '六化应用',
+	icon: 'appstore',
+	key: 'six',
 	role: ['admin','普通用户','管理人员','部门领导'],
 	items: [
 		{
-			name: '综合事务管理',
+			name: '指挥调度',
 			icon: '',
-			key: 'comprehensive',
-			link: '/Comprehensive',
+			key: 'zhihui',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '合成作战',
+			icon: '',
+			key: 'zuozhan',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '动态巡防',
+			icon: '',
+			key: 'xunfang',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '社区警务',
+			icon: '',
+			key: 'shequ',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '执法监管',
+			icon: '',
+			key: 'jianguan',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '队伍建设',
+			icon: '',
+			key: 'duiwu',
+			link: '/#',
 			role: ['admin','管理人员','部门领导']
 		}
 	]
@@ -235,21 +322,6 @@ const menulist = [
 			icon: '',
 			key: 'guarantee',
 			link: '/Guarantee',
-			role: ['admin','管理人员','部门领导']
-		}
-	]
-},
-{
-	name: '警务知识库',
-	icon: 'read',
-	key: 'knowledgebase',
-	role: ['admin','普通用户','管理人员','部门领导'],
-	items: [
-		{
-			name: '警务知识库',
-			icon: '',
-			key: 'knowledgebase',
-			link: '/Knowledgebase',
 			role: ['admin','管理人员','部门领导']
 		}
 	]
@@ -285,9 +357,61 @@ const menulist = [
 	]
 },
 {
-	name: '六化应用',
-	icon: 'appstore',
-	key: 'six',
+	name: '警务知识库',
+	icon: 'read',
+	key: 'knowledgebase',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: [
+		{
+			name: '警务知识库',
+			icon: '',
+			key: 'knowledgebase',
+			link: '/Knowledgebase',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
+},
+{
+	name: '用户',
+	icon: 'user',
+	key: 'user',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: [
+		{
+			name: '用户列表',
+			icon: '',
+			key: 'userlist',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '部门列表',
+			icon: '',
+			key: 'departlist',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		},
+		{
+			name: '组织结构图',
+			icon: '',
+			key: 'zuzhi',
+			link: '/#',
+			role: ['admin','管理人员','部门领导']
+		}
+	]
+},
+{
+	name: '设置',
+	icon: 'setting',
+	key: 'set',
+	role: ['admin','普通用户','管理人员','部门领导'],
+	items: [
+	]
+},
+{
+	name: '权限',
+	icon: 'database',
+	key: 'jurisdiction',
 	role: ['admin','普通用户','管理人员','部门领导'],
 	items: [
 	]

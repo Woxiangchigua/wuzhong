@@ -1,0 +1,552 @@
+.project-item{
+    display: flex;
+      margin-top: 8px;
+      overflow: hidden;
+      font-size: 12px;
+      height: 20px;
+      line-height: 20px;
+      justify-content: space-between;
+}
+
+.gutter-row300{
+    /* width: 300px; */
+}
+
+.ant-layout-content {
+    padding: 0!important;
+  }
+
+
+.bot_line{
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+}
+.head1{
+	height: 380px;
+	margin-right: 10px;
+}
+.head2{
+	width: calc(20% - 20px);
+	min-height: 380px;
+	margin-right: 10px;
+}
+.head2-1{
+	width: calc(46% - 20px);
+	min-height: 380px;
+	margin-right: 10px;
+}
+.head3{
+	width: calc(35% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head3-1{
+	width: calc(35% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head3-2{
+	width: calc(22% - 20px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head4{
+	width: calc(45% - 22px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head5{
+	width: calc(22% - 25px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head5-1{
+	width: calc(25% - 27px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head5-2{
+	width: calc(31% - 27px);
+	height: 380px;
+	margin-right: 10px;
+}
+.head_last{
+	width: calc(21% - 25px);
+}
+.head6{
+	width: 21.5%;
+	height: 380px;
+	margin-right: 10px;
+}
+.head6-1{
+	width: 19.5%;
+	height: 380px;
+	margin-right: 10px;
+}
+.text1{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #dddddd6e;
+	margin-bottom: 10px;
+}
+.text1:last-child{
+	border: none;
+}
+.text1 p{
+	font-size: 13px;
+	color: #777777;
+}
+.text1 span{
+	color: #aaaaaa;
+	font-size: 12px;
+}
+
+.hoverno:hover{
+	background: #fff!important;
+}
+
+.topBtn{
+	text-align: right;
+}
+
+/* .layui-btn{
+	background: #1e9fff;
+} */
+
+.ant-card-head-title{
+	border-bottom: 1px solid #dddddd6e;
+	margin-bottom: 20px;
+}
+
+.top1{
+	width: 100%;
+	height: 210px;
+	background: url('../../img/banner.png') 0 0 no-repeat;
+	background-size: cover;
+	margin-top: 10px;
+}
+
+.left_icon{
+	color: #1e9fff;
+	float: left;
+	display: block;
+	font-size: 20px;
+}
+.right_text{
+	float: left;
+}
+.right_text p{
+	margin-bottom: 5px;
+	color: #777777;
+	font-size: 14px;
+}
+.right_text span{
+	margin-bottom: 5px;
+	color: #aaaaaa;
+	font-size: 12px;
+}
+
+.clear{
+	clear: both;
+	height: 58px;
+	margin-bottom: 10px;
+}
+.clear1{
+	height: 35px;
+}
+.clear1 .right_text p{
+	margin-bottom: -3px;
+}
+.ant-card-extra a{
+	color: #a9abbe;
+}
+.ant-tabs-extra-content a{
+	color: #a9abbe;
+}
+.ant-tabs .ant-tabs-large-bar .ant-tabs-nav-container {
+    font-size: 14px;
+}
+.ant-card-head{
+	font-size: 14px;
+	font-weight: 400;
+}
+.ant-card-head .ant-tabs-bar {
+    margin-bottom: 40px;
+}
+.colorBtn{
+	float: left;
+	display: block;
+	width: 49px;
+	height: 22px;
+	color: #fff;
+	text-align: center;
+	line-height: 22px;
+	font-size: 11px;
+	margin-right: 15px;
+}
+.blue{
+	background: #1a9aff;
+}
+.red{
+	background: #ff1a42;
+}
+.purple{
+	background: #991aff;
+}
+.green{
+	background: #00af3c;
+}
+.top_text{
+	padding-bottom: 20px;
+}
+.clear img{
+	display: block;
+	float: left;
+	margin-right: 18px;
+}
+.bot_text{
+	padding: 20px 10px;
+}
+.bot_text .right_text p{
+	margin-bottom: 0px;
+	color: #1d1e2e;
+	font-size: 14px;
+}
+.bot_text>p{
+	padding: 0 20px 0 10px;
+	color: #777777;
+}
+.left_sign{
+	float: left;
+	padding-left: 10px;
+	color: #b4b4b4;
+}
+.right_sign{
+	float: right;
+	padding-right: 20px;
+	color: #b4b4b4;
+}
+.left_sign span{
+	margin-right: 25px;
+}
+.right_sign span{
+	margin-left: 15px;
+}
+
+.extra{
+	display: flex;
+	margin-top: 10px;
+}
+.extra li{
+	width: 20%;
+	text-align: center;
+	position: relative;
+}
+.extra li p{
+	margin-top: 10px;
+	color: #888888;
+	font-size: 14px;
+}
+.extra li:hover .title{
+	color: #1e9fff;
+}
+.ant-card-body>img{
+	width: 100%;
+	height: 100%;
+}
+.layui-input-block{
+	margin-left: 0;
+	text-align: center;
+}
+.layui-textarea{
+	min-height: 235px;
+}
+.submit{
+	background-color: #1b9aff;
+}
+.topText1{
+	border-bottom: 1px dashed #dedede;
+    height: 40px;
+    border-left: 5px solid #1b9aff;
+    margin: 10px 0;
+    padding-left: 10px;
+}
+.topText1 p{
+	float: left;
+	line-height: 35px;
+	margin-bottom: 0;
+}
+.topText1 span{
+	float: right;
+	line-height: 35px;
+	color: #aaaaaa;
+}
+.text-right{
+	float: right;
+}
+.btn_more{
+	width: 40px;
+	height: 20px;
+	background: #1b9aff;
+	color: #fff;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 20px;
+	font-size: 13px;
+	text-decoration: none;
+}
+.btn_more:hover{
+	color: #fff;
+	background: #007DDB;
+}
+.ant-rate{
+	font-size: 14px;
+}
+
+
+.zongshu p{
+	font-size: 13px;
+	float: left;
+	color: #313131;
+}
+.line_grey{
+	float: left;
+	width: 255px;
+	height: 5px;
+	background: #ebeef5;
+	border-radius: 2px;
+	margin-top: 7px;
+}
+.line_grey i{
+	display: block;
+	height: 5px;
+	width: 73%;
+	background: #1b9aff;
+}
+.line_grey2 i{
+	display: block;
+	height: 5px;
+	width: 63%;
+	background: #1b9aff;
+}
+.line_grey3 i{
+	display: block;
+	height: 5px;
+	width: 55%;
+	background: #1b9aff;
+}
+.line_grey4 i{
+	display: block;
+	height: 5px;
+	width: 68%;
+	background: #1b9aff;
+}
+.line_grey5 i{
+	display: block;
+	height: 5px;
+	width: 73%;
+	background: #1b9aff;
+}
+.line_grey6 i{
+	display: block;
+	height: 5px;
+	width: 27%;
+	background: #1b9aff;
+}
+.line_grey7 i{
+	display: block;
+	height: 5px;
+	width: 80%;
+	background: #1b9aff;
+}
+.zongshu span{
+	font-size: 13px;
+	float: right;
+	color: #706f81;
+}
+.zongshu_bot{
+	margin: 20px;
+}
+.zongshu_bot p{
+	float: left;
+	font-size: 20px;
+	font-weight: 800;
+	margin-right: 18px;
+}
+.zongshu_bot p span{
+	color: #1b9aff;
+	font-weight: 800;
+}
+.up,.up1{
+	font-size: 25px;
+	color: #1b9aff;
+	font-weight: 800;
+	BORDER-BOTTOM: 1px solid #1b9aff; 
+	FONT-FAMILY: Arial; 
+	TEXT-DECORATION: underline
+}
+
+.zhengzhi{
+	display: flex;
+	position: relative;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px dashed #dedede;
+}
+.zhengzhi img{
+	width: 40px;
+	height: 40px;
+}
+.zhengzhi h2{
+	line-height: 40px;
+	margin: 0 10px;
+	font-size: 16px;
+}
+.zhengzhi p{
+	width: 60%;
+	font-size: 15px;
+	margin: 0 10px;
+	color: #2d2d2d;
+}
+.zhengzhi span{
+	font-size: 15px;
+	color: #9d9d9d;
+	line-height: 35px;
+	position: absolute;
+	right: 0;
+}
+.line1 {
+    display: inline-block;
+    width: 3px;
+    height: 24px;
+    margin-top: 7px;
+    background: linear-gradient( to bottom, rgba(89, 114, 240) 20%, rgba(17, 181, 131) 80%);
+}
+
+.num_list{
+	margin-top: 20px;
+}
+.num_list h3{
+	text-align: center;
+	font-size: 45px;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+.num_list p{
+	text-align: center;
+	font-size: 23px;
+	font-weight: bold;
+}
+.yellow1{
+	color: #ffa000;
+}
+.blue1{
+	color: #5661d5;
+}
+.green1{
+	color: #16ccb3;
+}
+.red1{
+	color: #f90400;
+}
+
+.left1 h4{
+	float: right;
+	font-size: 16px;
+	color: #2ec5c0;
+	line-height: 40px;
+}
+.left1 h4 span{
+	font-size: 25px;
+	font-weight: bold;
+}
+.left1 p{
+	float: left;
+	font-size: 16px;
+	line-height: 40px;
+}
+.top11{
+	padding: 0 15px;
+}
+.top11>div:first-child{
+	padding-right: 10px;
+}
+.top11>div:last-child{
+	padding-left: 10px;
+}
+.detail{
+	display: inline-block;
+	width: 66px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	color: #5d8dfc;
+	background: #e9f1fe;
+	font-size: 15px;
+	border-radius: 12px;
+	margin-top: 10px;
+}
+.detail:hover{
+	background: #5d8dfc;
+	color: #FFFFFF;
+}
+.percentline{
+	display: inline-block;
+	width: 100%;
+    height: 5px;
+    background: linear-gradient(
+            to right,
+            rgba(34, 199, 185) 20%,
+            rgba(255, 183, 29) 80%)
+}
+.percentline2{
+	display: inline-block;
+	width: 100%;
+    height: 5px;
+    background: linear-gradient(
+            to right,
+            rgba(34, 199, 185) 34%,
+            rgba(255, 183, 29) 80%)
+}
+.percentline3{
+	display: inline-block;
+	width: 100%;
+    height: 5px;
+    background: linear-gradient(
+            to right,
+            rgba(34, 199, 185) 74%,
+            rgba(255, 183, 29) 80%)
+}
+.percentline4{
+	display: inline-block;
+	width: 100%;
+    height: 5px;
+    background: linear-gradient(
+            to right,
+            rgba(34, 199, 185) 20%,
+            rgba(255, 183, 29) 40%)
+}
+.percentline5{
+	display: inline-block;
+	width: 100%;
+    height: 5px;
+    background: linear-gradient(
+            to right,
+            rgba(34, 199, 185) 20%,
+            rgba(255, 183, 29) 40%)
+}
+.percent span{
+	color: #848692;
+	font-size: 13px;
+}
+.percents{
+	margin-top: 5px;
+}
+.percent span:first-child{
+	float: left;
+}
+.percent span:last-child{
+	float: right;
+}
+.percents>div{
+	padding: 0 10px;
+}

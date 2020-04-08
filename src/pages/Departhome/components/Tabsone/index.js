@@ -31,23 +31,23 @@ const contentListNoTitle = {
   紧急指令: <div>
 			<div className="top_text">
 				<div className="topText1">
-					<p>高标推进"护安苏城八大行动" 2020年苏州公...</p>
+					<p>指挥中心：战"疫"先锋,用心用情筑牢疫情"防控墙"</p>
 					<span>2020-04-02</span>
 				</div>
 				<div className="topText1">
-					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<p>指挥中心: 警务科技助推改革平稳落地</p>
 					<span>2020-04-02</span>
 				</div>
 				<div className="topText1">
-					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<p>指挥中心: 该辖区居民刘某可能被骗,正在与诈骗嫌疑人通话中</p>
 					<span>2020-04-02</span>
 				</div>
 				<div className="topText1">
-					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<p>指挥中心: 冒充社保,司法工作人员 30人跨国电信诈骗</p>
 					<span>2020-04-02</span>
 				</div>
 				<div className="topText1">
-					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
+					<p>指挥中心:  冒充社保,司法工作人员 30人跨国电信诈骗</p>
 					<span>2020-04-02</span>
 				</div>
 			</div>
@@ -80,7 +80,7 @@ export default class TabsCard extends React.Component {
           onTabChange={key => {
             this.onTabChange(key, 'noTitleKey');
           }}
-		  bordered={false} className="head3 layui-col-md5" style={{ marginTop: 10 }}
+		  bordered={false} className="head3-1 layui-col-md5" style={{ marginTop: 10 }}
         >
           {contentListNoTitle[this.state.noTitleKey]}
         </Card>
