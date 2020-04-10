@@ -16,26 +16,76 @@ const wsurl = `ws://${host}/api/v1/subscriptions`;
 function fetchQuery(url, token) {
   return function (
     operation,
-    variables,
+    variables1,
+    cacheConfig,
+    uploadables,
   ) {
-    const headers = {
-      'Accept': "application/json",
-      'Content-Type': 'application/json',
-    }
-
-    if (token)
-      headers['Authorization'] = 'Bearer ' + token;
-
-    return fetch(url, {
+    const variables = Object.assign({}, variables1);
+    const request = {
       method: 'POST',
-      headers: headers,
-      body: JSON.stringify({
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    if (uploadables) {
+      console.log(uploadables);
+      if (!window.FormData) {
+        throw new Error('Uploading files without `FormData` not supported.');
+      }
+
+      const fileMap = [];
+      const writeMapFromFileAndMarkVariable = (searchable, parents) => {
+        Object.keys(searchable).forEach((key) => {
+          const currentValue = searchable[key];
+
+          if (typeof currentValue === 'object' && (currentValue.constructor === Object || currentValue.constructor === Array)) {
+            writeMapFromFileAndMarkVariable(currentValue, [...parents, key]);
+          } else {
+            fileMap.push({
+              operationPath: ['variables', ...parents, key].join('.'),
+              file: currentValue,
+            });
+
+            let currentDepthVariable = variables;
+            parents.forEach((parent) => {
+              if (!currentDepthVariable[parent]) {
+                currentDepthVariable[parent] = {};
+              }
+              currentDepthVariable = currentDepthVariable[parent];
+            });
+
+            currentDepthVariable[key] = null;
+          }
+        });
+      };
+
+      writeMapFromFileAndMarkVariable(uploadables, []);
+
+      const formData = new FormData();
+      formData.append('operations', JSON.stringify({ query: operation.text, variables: variables }));
+      formData.append('map', JSON.stringify(fileMap.reduce((reducedMap, value, index) => ({ ...reducedMap, [index]: [value.operationPath] }), {})));
+
+      fileMap.forEach((mapValue, index) => {
+        formData.append(index, mapValue.file);
+      });
+
+      request.body = formData;
+    } else {
+      request.headers['Content-Type'] = 'application/json';
+      request.body = JSON.stringify({
         query: operation.text,
         variables,
-      }),
-    }).then(response => {
-      return response.json();
-    });
+      });
+    }
+
+    return fetch(url, request)
+      .then(response => {
+        return response.json();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 }
 
