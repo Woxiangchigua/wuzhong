@@ -101,7 +101,7 @@
 	display: block;
 }
 .right_text{
-	float: left;
+	padding: 0 25px;
 }
 .right_text p{
 	margin-bottom: 5px;
@@ -269,4 +269,7 @@
 }
 .ant-rate{
 	font-size: 14px;
+}
+a{
+	color: #777777;
 }

@@ -25,13 +25,16 @@ const tabListNoTitle = [
 
 const contentListNoTitle = {
   法律法规: <div>
+	   <Link to={"/Insidepage/Law"}>
 			 <div className="clear">
 			 	<span className="colorBtn blue">法律</span>
 			 	<div className="right_text">
-			 		<p>中华人民共和国政府信息公开条例</p>
-			 		<span>2019年08月07日 14:07</span>
+					<p>中华人民共和国政府信息公开条例</p>
+					<span>2019年08月07日 14:07</span>
 			 	</div>
 			 </div>
+			 </Link>
+			 <Link to={"/Insidepage/Law"}>
 			 <div className="clear">
 			 	<span className="colorBtn red">法规</span>
 			 	<div className="right_text">
@@ -39,6 +42,8 @@ const contentListNoTitle = {
 			 		<span>2019年08月07日 13:48</span>
 			 	</div>
 			 </div>
+			 </Link>
+			 <Link to={"/Insidepage/Law"}>
 			 <div className="clear">
 			 	<span className="colorBtn purple">规章</span>
 			 	<div className="right_text">
@@ -46,13 +51,16 @@ const contentListNoTitle = {
 			 		<span>2019年04月18日 09:32</span>
 			 	</div>
 			 </div>
+			 </Link>
+			 <Link to={"/Insidepage/Law"}>
 			 <div className="clear">
 			 	<span className="colorBtn green">规范</span>
 			 	<div className="right_text">
 			 		<p>印发《关于办理刑事案件严格排除非法证据若干问题的规定》的通知</p>
 			 		<span>2019年03月17日 13:27</span>
 			 	</div>
-			 </div>			
+			 </div>
+			 </Link>
 		  </div>,
   上级指令: <p>上级指令#</p>,
   工作要求: <p>工作要求#</p>,
@@ -77,7 +85,7 @@ export default class TabsCard extends React.Component {
           style={{ width: '100%' }}
           tabList={tabListNoTitle}
           activeTabKey={this.state.noTitleKey}
-          tabBarExtraContent={<a href="#">...</a>}
+          tabBarExtraContent={<a href="../../../Insidepage/Law">...</a>}
           onTabChange={key => {
             this.onTabChange(key, 'noTitleKey');
           }}

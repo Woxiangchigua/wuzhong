@@ -3,6 +3,7 @@ import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import { Button, Breadcrumb, Card, Table, Tabs, Divider, Input } from 'antd';
 import './index.css';
 import Tableone from './components/Tableone/index'
+import Tabletwo from './components/Tabletwo/index'
 import Tablethree from './components/Tablethree/index'
 import {
   useHistory, Link
@@ -37,7 +38,7 @@ function Lists(props) {
 						<Tableone />
 					</TabPane>
 					<TabPane tab="知识库" key="2">
-						Content of Tab Pane 2
+						<Tabletwo />
 					</TabPane>
 					<TabPane tab="吐槽池" key="3">
 						<Tablethree />

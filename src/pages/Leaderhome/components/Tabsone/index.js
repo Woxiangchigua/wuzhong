@@ -21,6 +21,7 @@ const tabListNoTitle = [
 
 const contentListNoTitle = {
   领导审核: <div>
+				<Link to={"/Instruct/Police"}>
 			<div className="zhengzhi clearfix">
 				<img className="img" src={require('../../../../img/police.png')} alt=""/>
 				<h2>政治处</h2>
@@ -28,6 +29,8 @@ const contentListNoTitle = {
 				<p>区政府办公室对“关于转发社会及社区防控组”依法科学精准做好社区疫...</p>
 				<span>2020-04-02</span>
 			</div>
+				</Link>
+				<Link to={"/Instruct/Police"}>
 			<div className="zhengzhi clearfix">
 				<img className="img" src={require('../../../../img/police.png')} alt=""/>
 				<h2>政治处</h2>
@@ -35,6 +38,8 @@ const contentListNoTitle = {
 				<p>区政府办公室对“关于转发社会及社区防控组”依法科学精准做好社区疫..</p>
 				<span>2020-04-02</span>
 			</div>
+				</Link>
+				<Link to={"/Instruct/Police"}>
 			<div className="zhengzhi clearfix">
 				<img className="img" src={require('../../../../img/police.png')} alt=""/>
 				<h2>政治处</h2>
@@ -42,6 +47,8 @@ const contentListNoTitle = {
 				<p>区政府办公室对“关于转发社会及社区防控组”依法科学精准做好社区疫...</p>
 				<span>2020-04-02</span>
 			</div>
+				</Link>
+				<Link to={"/Instruct/Police"}>
 			<div className="zhengzhi clearfix">
 				<img className="img" src={require('../../../../img/police.png')} alt=""/>
 				<h2>政治处</h2>
@@ -49,6 +56,7 @@ const contentListNoTitle = {
 				<p>区政府办公室对“关于转发社会及社区防控组”依法科学精准做好社区疫...</p>
 				<span>2020-04-02</span>
 			</div>
+				</Link>
 		 </div>,
   领导指示: <p>领导指示#</p>,
   指示必达: <p>指示必达#</p>,

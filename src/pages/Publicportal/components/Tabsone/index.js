@@ -31,24 +31,34 @@ const contentListNoTitle = {
   紧急指令: <div>
 			<div className="top_text">
 				<div className="topText1">
+				<Link to={"/Instruct/Police"}>
 					<p>高标推进"护安苏城八大行动" 2020年苏州公...</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Police"}>
 					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Police"}>
 					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Police"}>
 					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Police"}>
 					<p>下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 			</div>
 		 </div>,
@@ -57,7 +67,6 @@ const contentListNoTitle = {
   审核: <p>审核#</p>,
   完成: <p>完成#</p>,
 };
-
 export default class TabsCard extends React.Component {
   state = {
     key: 'tab1',
