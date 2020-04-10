@@ -31,24 +31,34 @@ const contentListNoTitle = {
   紧急指令: <div>
 			<div className="top_text">
 				<div className="topText1">
+				<Link to={"/Instruct/Deplist"}>
 					<p>指挥中心：战"疫"先锋,用心用情筑牢疫情"防控墙"</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Deplist"}>
 					<p>指挥中心: 警务科技助推改革平稳落地</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Deplist"}>
 					<p>指挥中心: 该辖区居民刘某可能被骗,正在与诈骗嫌疑人通话中</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Deplist"}>
 					<p>指挥中心: 冒充社保,司法工作人员 30人跨国电信诈骗</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 				<div className="topText1">
+				<Link to={"/Instruct/Deplist"}>
 					<p>指挥中心:  冒充社保,司法工作人员 30人跨国电信诈骗</p>
 					<span>2020-04-02</span>
+				</Link>
 				</div>
 			</div>
 		 </div>,
