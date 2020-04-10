@@ -84,13 +84,13 @@ function AddMeeting(props) {
   var dist = []
   for(let i in Detail.bulletinDistribution){
     if(props.distid == Detail.bulletinDistribution[i].id){
-      dist.distdepId = Detail.bulletinDistribution[i].depId,
-      dist.distdepReviewId = Detail.bulletinDistribution[i].depReviewId,
-      dist.distdepClerkId = Detail.bulletinDistribution[i].depClerkId,
-      dist.diststatus = Detail.bulletinDistribution[i].status,
-      dist.distisNeedReceipt = Detail.bulletinDistribution[i].isNeedReceipt,
-      dist.distisReview = Detail.bulletinDistribution[i].isReview,
-      dist.distneedReview = Detail.bulletinDistribution[i].needReview,
+      dist.distdepId = Detail.bulletinDistribution[i].depId;
+      dist.distdepReviewId = Detail.bulletinDistribution[i].depReviewId;
+      dist.distdepClerkId = Detail.bulletinDistribution[i].depClerkId;
+      dist.diststatus = Detail.bulletinDistribution[i].status;
+      dist.distisNeedReceipt = Detail.bulletinDistribution[i].isNeedReceipt;
+      dist.distisReview = Detail.bulletinDistribution[i].isReview;
+      dist.distneedReview = Detail.bulletinDistribution[i].needReview;
       dist.distreceiptReply = Detail.bulletinDistribution[i].receiptReply
     }
   }

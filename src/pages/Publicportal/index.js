@@ -67,50 +67,62 @@ export default class Publicportal extends Component {
 					</Link>
 			  	</div>			
 			  </Card>
-			  <Card title="公众信箱" bordered={false} className="head6 layui-col-md3" extra={<a href="#">...</a>} style={{ marginTop: 10 }}>
+			  <Card title="公众信箱" bordered={false} className="head6 layui-col-md3" extra={<a href="../../../Insidepage/Mailbox">...</a>} style={{ marginTop: 10 }}>
 				 <div>
+					<Link to={"/Insidepage/Mailbox"}>
 					 <div className="clear clear1">
 						<span className="colorBtn red">投诉</span>
 						<div className="right_text">
-							<p>向相城区望亭镇派出所报案,警察...</p>
+							<p>关于当前外出踏青注意事项的调查...</p>
 							<span>2020-04-02</span>
 						</div>
 					 </div>
+					</Link>
+					<Link to={"/Insidepage/Mailbox"}>
 					 <div className="clear clear1">
 						<span className="colorBtn red">投诉</span>
 						<div className="right_text">
-							<p>微信群诱导炒币被骗</p>
+							<p>关于春运期间网络购票的调查问卷</p>
 							<span>2020-03-30</span>
 						</div>
 					 </div>
+					 </Link>
+					 <Link to={"/Insidepage/Mailbox"}>
 					 <div className="clear clear1">
 						<span className="colorBtn blue">建议</span>
 						<div className="right_text">
-							<p>建议增加车道导向</p>
+							<p>2019网民网络安全感满意度调查...</p>
 							<span>2020-03-29</span>
 						</div>
 					 </div>
+					 </Link>
+					 <Link to={"/Insidepage/Mailbox"}>
 					 <div className="clear clear1">
 						<span className="colorBtn blue">建议</span>
 						<div className="right_text">
-							<p>临近住宅烽火路</p>
+							<p>关于清明祭扫安全隐患的调查问卷</p>
 							<span>2020-03-27</span>
 						</div>
 					 </div>
+					 </Link>
+					 <Link to={"/Insidepage/Mailbox"}>
 					 <div className="clear clear1">
 						<span className="colorBtn green">咨询</span>
 						<div className="right_text">
-							<p>身份证挂失</p>
+							<p>关于防范电信诈骗的调查问卷</p>
 							<span>2020-04-02</span>
 						</div>
-					 </div>		
+					 </div>
+					 </Link>
+					 <Link to={"/Insidepage/Mailbox"}>
 					 <div className="clear clear1">
 						<span className="colorBtn green">咨询</span>
 						<div className="right_text">
-							<p>大学生毕业户口迁出</p>
+							<p>关于确定苏州市区养犬重点管理区...</p>
 							<span>2020-03-02</span>
 						</div>
-					 </div>		
+					 </div>
+					</Link>
 				  </div>
 			  </Card>
 			  <Card title="反馈意见" bordered={false} className="head6 layui-col-md3" extra={<a href="#">...</a>} style={{ marginTop: 10 }}>
