@@ -82,13 +82,9 @@ function AddMeeting(props) {
   let history = useHistory();
   const Detail = props.bulletin;
   var dist = []
-<<<<<<< HEAD
-  for(let i in Detail.bulletinDistribution){
-    if(props.distid == Detail.bulletinDistribution[i].id){
-=======
+
   for (let i in Detail.bulletinDistribution) {
     if (props.distid == Detail.bulletinDistribution[i].id) {
->>>>>>> fogmaster
       dist.distdepId = Detail.bulletinDistribution[i].depId;
       dist.distdepReviewId = Detail.bulletinDistribution[i].depReviewId;
       dist.distdepClerkId = Detail.bulletinDistribution[i].depClerkId;
@@ -96,11 +92,7 @@ function AddMeeting(props) {
       dist.distisNeedReceipt = Detail.bulletinDistribution[i].isNeedReceipt;
       dist.distisReview = Detail.bulletinDistribution[i].isReview;
       dist.distneedReview = Detail.bulletinDistribution[i].needReview;
-<<<<<<< HEAD
-      dist.distreceiptReply = Detail.bulletinDistribution[i].receiptReply
-=======
       dist.distreceiptReply = Detail.bulletinDistribution[i].receiptReply;
->>>>>>> fogmaster
     }
   }
   // Detail.push({dist})
