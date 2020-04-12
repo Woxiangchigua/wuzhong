@@ -141,6 +141,7 @@ export default function Table(props) {
 
   function getList(searchKey) {
     // init()
+  setInterval(function(){
     fetchQuery(props.environment, query, {
         first: 10,
         skip: 0,
@@ -151,9 +152,17 @@ export default function Table(props) {
         if (data.policeToDoList) {
           let data2 = JSON.parse(JSON.stringify(data.policeToDoList.edges))
           init(data2)
+          // layer.alert('您有新的指令',{title:'新的指令',icon: 1} ,function(index){
+          //   layer.close( 
+          //     index,
+          //     clearInterval()
+          //   );
+          // });
+          layer.msg("你有新的指令");
         }
       }
     });
+    }, 1000);
   }
 
   function search() {
