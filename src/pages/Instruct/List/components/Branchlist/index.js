@@ -76,7 +76,7 @@ export default function Table(props) {
   
   //下发
   function issued(id){
-    let delIndex = layer.confirm("的确定下发这条指令信息吗?", function (delIndex) {
+    let delIndex = layer.confirm("你确定下发这条指令信息吗?", function (delIndex) {
       Branchdist.commit(
         props.environment,
         id,
@@ -126,8 +126,8 @@ export default function Table(props) {
             // , 
             { field: 'id', title: 'id', width: 150, sort: true }
             , { field: 'name', title: '指令名称', }
-            , { field: 'source', title: '指令来源', width: 150, }
-            , { field: 'initiator', title: '指令发起人', align: "center", width: 150,
+            , { field: 'source', title: '指令来源', width: 130, }
+            , { field: 'initiator', title: '指令发起人', align: "center", width: 130,
               templet: function (d) {
                 if (d.initiator === 1) {
                     return "<span>王建国</span>"
@@ -163,7 +163,7 @@ export default function Table(props) {
                 }
               }
             }
-					  ,{field:'sourceTime', title: '来源时间',
+					  ,{field:'sourceTime', title: '来源时间', width: 150,
               templet: function (d) {
                   return `<div>${dateFormat("YYYY-mm-dd", new Date(d.sourceTime))}</div>`
               }
