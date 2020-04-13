@@ -14,36 +14,31 @@ import dateFormat from '../../../../../ utils/dateFormat'
 		   
 		  //第一个实例
 		  table.render({
-		 		elem: '#demo'
+		 		elem: '#demo2'
 		 		,height: 312
 		 		,data: [{
 		 			  "id": "10001"
-		 			  ,"username": "中华人民共和国政府信息公开条例"
+		 			  ,"username": "苏州网格化社会治理“吴江样本”小平安支撑社会大稳定"
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10002"
-		 			  ,"username": "公安机关互联网安全监督检查规定（公安部令第151号）"
+		 			  ,"username": "苏州木渎拟筹建社会治理指挥协调中心"
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10003"
-		 			  ,"username": "关于办理套路贷刑事案件若干问题的意见"
+		 			  ,"username": "苏州市公安局警务科技助推改革平稳落地"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10004"
-		 			  ,"username": "印发《关于办理刑事案件严格排除非法证据若干问题的规定》的通知"
+		 			  ,"username": "“归来即是回家” 入境来苏旅客护送侧记"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10005"
-		 			  ,"username": "《关于改进和规范公安派出所出具证明工作的意见》解读"
-		 			  ,"originator": "吴刚"
-		 			  ,"priority": "0"
-		 			}, {
-		 			  "id": "10006"
-		 			  ,"username": "公安部关于印发《公安机关执法公开规定》的通知"
+		 			  ,"username": "下周一苏州姑苏区25所学校复学 姑苏公安全力保驾护航"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}]
@@ -65,7 +60,7 @@ import dateFormat from '../../../../../ utils/dateFormat'
     return (
         <>
             <div>
-                <table id="demo" className="layui-hide1" ></table>
+                <table id="demo2" className="layui-hide1" ></table>
             </div>
             <script type="text/html" id="bar">
                 <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>

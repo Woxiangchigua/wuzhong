@@ -4,7 +4,6 @@ import { Button, Breadcrumb, Card, Table, Tabs, Divider, Input } from 'antd';
 import './index.css';
 import Tableone from './components/Tableone/index'
 import Tabletwo from './components/Tabletwo/index'
-import Tablethree from './components/Tablethree/index'
 import {
   useHistory, Link
 } from "react-router-dom";
@@ -27,21 +26,18 @@ function Lists(props) {
       <Card title="" bordered={false} >
         <Breadcrumb style={{ margin: '0px 0px 0px 0px' }}>
           <Breadcrumb.Item>公文管理</Breadcrumb.Item>
-          <Breadcrumb.Item>吐槽池</Breadcrumb.Item>
+          <Breadcrumb.Item>公安情报</Breadcrumb.Item>
         </Breadcrumb>
       </Card>
       {/* <Divider /> */}
 
       <Card title="" bordered={false} style={{marginTop:10}}>
         <Tabs defaultActiveKey="1" onChange={callback}>
-					<TabPane tab="政务公告" key="1">
+					<TabPane tab="公安情报" key="1">
 						<Tableone />
 					</TabPane>
-					<TabPane tab="知识库" key="2">
+					<TabPane tab="巡防指导" key="2">
 						<Tabletwo />
-					</TabPane>
-					<TabPane tab="吐槽池" key="3">
-						<Tablethree />
 					</TabPane>
 				</Tabs>
 				

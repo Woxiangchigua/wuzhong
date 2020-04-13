@@ -29,7 +29,7 @@ export default class Publicportal extends Component {
 			  	<div className="clear">
 				<Link to={"/Insidepage/Information"}>
 			  		<i className="layui-icon form left_icon" style={{ marginRight: 10 }}>&#xe63c;</i>
-			  		<div className="right_text">
+			  		<div className="right_text1">
 			  			<p>关于当前外出踏青注意事项的调查问卷</p>
 						<span>进行中</span>
 			  			<span className="text-right">2020-01-06</span>
@@ -39,7 +39,7 @@ export default class Publicportal extends Component {
 			  	<div className="clear">
 				<Link to={"/Insidepage/Information"}>
 			  		<i className="layui-icon form left_icon" style={{ marginRight: 10 }}>&#xe63c;</i>
-			  		<div className="right_text">
+			  		<div className="right_text1">
 			  			<p>关于春运期间网络购票的调查问卷</p>
 						<span>进行中</span>
 			  			<span className="text-right">2020-01-06</span>
@@ -49,7 +49,7 @@ export default class Publicportal extends Component {
 			  	<div className="clear">
 				<Link to={"/Insidepage/Information"}>
 			  		<i className="layui-icon form left_icon" style={{ marginRight: 10 }}>&#xe63c;</i>
-			  		<div className="right_text">
+			  		<div className="right_text1">
 			  			<p>2019网民网络安全感满意度调查问卷</p>
 						<span>已结束</span>
 			  			<span className="text-right">2020-01-06</span>
@@ -59,7 +59,7 @@ export default class Publicportal extends Component {
 			  	<div className="clear">
 				<Link to={"/Insidepage/Information"}>
 			  		<i className="layui-icon form left_icon" style={{ marginRight: 10 }}>&#xe63c;</i>
-			  		<div className="right_text">
+			  		<div className="right_text1">
 			  			<p>关于清明祭扫安全隐患的调查问卷</p>
 						<span>已结束</span>
 			  			<span className="text-right">2020-01-06</span>
@@ -73,7 +73,7 @@ export default class Publicportal extends Component {
 					 <div className="clear clear1">
 						<span className="colorBtn red">投诉</span>
 						<div className="right_text">
-							<p>关于当前外出踏青注意事项的调查...</p>
+							<p>公交游5线太不准了</p>
 							<span>2020-04-02</span>
 						</div>
 					 </div>
@@ -82,7 +82,7 @@ export default class Publicportal extends Component {
 					 <div className="clear clear1">
 						<span className="colorBtn red">投诉</span>
 						<div className="right_text">
-							<p>关于春运期间网络购票的调查问卷</p>
+							<p>医保转出迟迟未办理</p>
 							<span>2020-03-30</span>
 						</div>
 					 </div>
@@ -91,7 +91,7 @@ export default class Publicportal extends Component {
 					 <div className="clear clear1">
 						<span className="colorBtn blue">建议</span>
 						<div className="right_text">
-							<p>2019网民网络安全感满意度调查...</p>
+							<p>关于线上教育与回校学习的衔接</p>
 							<span>2020-03-29</span>
 						</div>
 					 </div>
@@ -100,7 +100,7 @@ export default class Publicportal extends Component {
 					 <div className="clear clear1">
 						<span className="colorBtn blue">建议</span>
 						<div className="right_text">
-							<p>关于清明祭扫安全隐患的调查问卷</p>
+							<p>关于积极回应许可馨事件的建议</p>
 							<span>2020-03-27</span>
 						</div>
 					 </div>
@@ -109,7 +109,7 @@ export default class Publicportal extends Component {
 					 <div className="clear clear1">
 						<span className="colorBtn green">咨询</span>
 						<div className="right_text">
-							<p>关于防范电信诈骗的调查问卷</p>
+							<p>市区社保转出和新增</p>
 							<span>2020-04-02</span>
 						</div>
 					 </div>
@@ -118,7 +118,7 @@ export default class Publicportal extends Component {
 					 <div className="clear clear1">
 						<span className="colorBtn green">咨询</span>
 						<div className="right_text">
-							<p>关于确定苏州市区养犬重点管理区...</p>
+							<p>住房公积金提取问题</p>
 							<span>2020-03-02</span>
 						</div>
 					 </div>
@@ -145,14 +145,18 @@ export default class Publicportal extends Component {
 			<Tabstwo />
 			<Card title="新闻动态" bordered={false} className="head1 layui-col-md3" extra={<a href="../../../Insidepage/News">...</a>} style={{ marginTop: 10 }}>
 				<div className="text1">
+				<Link to={"/Insidepage/News"}>
 					<h4>苏城码---你我的"通行证",苏城的"护身符"</h4>
 					<p>有一份关于《苏州市公安局关于依法严厉打击新型冠状病毒感染的肺炎疫情防控期间违法犯罪活动的通告》的相关资料请相关与会人员认真阅读,与会积极探讨.</p>
 					<span>2月25日 17:00</span>
+				</Link>
 				</div>
 				<div className="text1">
+				<Link to={"/Insidepage/News"}>
 					<h4>战"疫"破案两手抓,吴中警方筑起平安墙</h4>
 					<p>为了认真贯彻落实上级公安机关的相关会议精神,确保国庆期间辖区社会治安大局稳定,9月30日上午,召开专门会议,对国庆期间的安保维稳工作进行详细安排部署.</p>
 					<span>9月30日 10:00</span>
+				</Link>
 				</div>
 			</Card>
 			<Tabsthree/>

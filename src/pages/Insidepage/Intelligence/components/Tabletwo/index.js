@@ -14,45 +14,45 @@ import dateFormat from '../../../../../ utils/dateFormat'
 		   
 		  //第一个实例
 		  table.render({
-		 		elem: '#demo'
+		 		elem: '#demo1'
 		 		,height: 312
 		 		,data: [{
 		 			  "id": "10001"
-		 			  ,"username": "中华人民共和国政府信息公开条例"
+		 			  ,"username": "苏州市公安局智慧警务交出“平安答卷”"
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10002"
-		 			  ,"username": "公安机关互联网安全监督检查规定（公安部令第151号）"
+		 			  ,"username": "苏州园区公安开创动态巡防新格局"
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10003"
-		 			  ,"username": "关于办理套路贷刑事案件若干问题的意见"
+		 			  ,"username": "苏州市吴中区警方首次引入无人机水陆空巡防"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10004"
-		 			  ,"username": "印发《关于办理刑事案件严格排除非法证据若干问题的规定》的通知"
+		 			  ,"username": "苏州市公安局:打造立体化信息化巡防体系"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10005"
-		 			  ,"username": "《关于改进和规范公安派出所出具证明工作的意见》解读"
+		 			  ,"username": "以“姑苏平”护“苏州安” 姑苏动态巡防体系全面启动"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10006"
-		 			  ,"username": "公安部关于印发《公安机关执法公开规定》的通知"
+		 			  ,"username": "苏州网格巡防助推警情“连环降”"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}]
 		 		,page: true //开启分页
 		 		,cols: [[ //表头
 		 		   {checkbox: true}
-		 		  ,{field: 'id', title: '公文ID', width:180, sort: true}
-		 		  ,{field: 'username', title: '公文名称'}
-		 		  ,{field: 'originator', title: '公文发起人', width:250}
+		 		  ,{field: 'id', title: '通知ID', width:180, sort: true}
+		 		  ,{field: 'username', title: '通知名称'}
+		 		  ,{field: 'originator', title: '通知发起人', width:250}
 		 		  ,{field: 'priority', title: '优先级', width:180, sort: true} 
 		 		  ,{field: '', title: "操作", align: "center", width: 160, toolbar: "#bar"}
 		 		]]
@@ -65,7 +65,7 @@ import dateFormat from '../../../../../ utils/dateFormat'
     return (
         <>
             <div>
-                <table id="demo" className="layui-hide1" ></table>
+                <table id="demo1" className="layui-hide1" ></table>
             </div>
             <script type="text/html" id="bar">
                 <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>

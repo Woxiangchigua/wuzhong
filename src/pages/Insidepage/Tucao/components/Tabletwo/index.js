@@ -1,322 +1,79 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 // import DeleteMeeting from '../../../Mutations/DeleteMeeting'
-import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Table, Divider, Badge, Modal, Button } from 'antd';
-import dateFormat from '../../../../../ utils/dateFormat'
+import { Button } from 'antd';
 import { useHistory, Link } from "react-router-dom";
-// import CommitCheckMeeting from '../../../Mutations/CommitCheckMeeting'
-// import AbrogateMeeting from '../../../Mutations/AbrogateMeeting'
+import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
+import dateFormat from '../../../../../ utils/dateFormat'
 
-function Lists(props) {
-    const [meetingList, setmeetingList] = useState([]);
-    let history = useHistory();
-    const { confirm } = Modal;
-//     const query = graphql`
-//     query TableAwait1_MeetingListQuery(
-//             $order: String = ""
-//             $meetingName: String = ""
-//     ){
-//         applyPendingMeetingList(order: $order,first: 10,skip: 0,meetingName: $meetingName){
-//           edges{
-//             applyUserId,
-//             beginTime,
-//             configuration,
-//             createdAt,
-//             deletedAt,
-//             endTime,
-//             id,
-//             intro,
-//             meetingName,
-//             meetingRoom{
-//               id,
-//               name
-//             },
-//             organizer,
-//             review,
-//             reviewUserId,
-//             status,
-//             updatedAt
-//           }
-//         }
-//     }`
-
-    const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-            className: 'tabcolums'
-        },
-        {
-            title: '会议名称',
-            dataIndex: 'meetingName',
-            key: 'meetingName',
-            className: 'tabcolums'
-        },
-        {
-            title: '申请人',
-            dataIndex: 'applyUserId',
-            key: 'applyUserId',
-            className: 'tabcolums'
-        },
-        
-        {
-            title: '会议室',
-            dataIndex: 'meetingRoomname',
-            key: 'meetingRoomname',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {record.meetingRoom.name}
-                </span>
-            ),
-        },
-        {
-            title: '日期',
-            dataIndex: 'createdAt',
-            key: 'createdAt',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {dateFormat("YYYY-mm-dd", new Date(record.createdAt))}
-                </span>
-            ),
-        },
-        {
-            title: '开始时间',
-            dataIndex: 'beginTime',
-            key: 'beginTime',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {dateFormat("HH:MM", new Date(record.beginTime))}
-                </span>
-            ),
-        },
-        {
-            title: '结束时间',
-            dataIndex: 'endTime',
-            key: 'endTime',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <span>
-                    {dateFormat("HH:MM", new Date(record.endTime))}
-                </span>
-            ),
-        },
-        {
-            title: '会议状态',
-            dataIndex: 'status',
-            key: 'status',
-            className: 'tabcolums',
-            render: (text, record) => (
-                <Badge
-                    status={record.review === 'MEETING_EDIT_OR_FAIL' ? 'warning' : 'error'}
-                    text={record.review === 'MEETING_EDIT_OR_FAIL' ? '待提交' : record.review === 'MEETING_CHECK_PENDING_MANAGE' ? '部门审核' : record.review === 'MEETING_CHECK_PENDING_ADMIN' ? '管理员审核' : ''} />
-            ),
-
-        },
-        {
-            title: '操作',
-            dataIndex: 'delete',
-            key: 'delete',
-            render: (text, record) => (
-                <span>
-                    {/* <Button style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
-                        onClick={() => { showConfirm(record.id) }}
-                        type="link">
-                        提交审核
-                    </Button>
-                    <Divider style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }} type="vertical" /> */}
-                    <Link to={"/Meeting/Querymeeting/" + JSON.stringify({id:record.id,review:record.review})}>详情</Link>
-                    {/* <Divider type="vertical" />
-                    <Link
-                        style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
-                        to={"/Meeting/Updatemeeting/" + record.id}>
-                        编辑
-                    </Link>
-                    <Divider style={{ display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }} type="vertical" />
-                    <Button
-                        style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'block' : 'none' }}
-                        onClick={() => { showDeleteConfirm(record.id) }}
-                        type="link">
-                        删除
-                    </Button>
-                    <Button
-                        style={{ padding: 0, display: record.review === 'MEETING_EDIT_OR_FAIL' ? 'none' : 'block' }}
-                        onClick={() => { showAbrogateConfirm(record.id) }}
-                        type="link">
-                        取消
-                    </Button> */}
-                </span>
-            ),
-        },
-    ];
-
-    function showDeleteConfirm(id) {
-        confirm({
-            title: '你确定要删除这条会议申请吗？',
-            okText: '确认',
-            cancelText: '取消',
-            onOk() {
-//                 DeleteMeeting.commit(
-//                     props.environment,
-//                     id,
-//                     (response, errors) => {
-//                         if (errors) {
-//                             console.log(errors)
-//                         } else {
-//                             console.log(response);
-//                         }
-//                     },
-//                     (response, errors) => {
-//                         if (errors) {
-//                             console.log(errors)
-//                         } else {
-//                             console.log(response);
-//                         }
-//                     }
-//                 );
-            },
-            onCancel() {
-                console.log('取消删除');
-            },
-        });
-    }
-
-//     function showAbrogateConfirm(id) {
-//         confirm({
-//             title: '你确定要取消这条会议申请吗？',
-//             okText: '确认',
-//             cancelText: '取消',
-//             onOk() {
-//                 AbrogateMeeting.commit(
-//                     props.environment,
-//                     id,
-//                     (response, errors) => {
-//                         if (errors) {
-//                             console.log(errors)
-//                         } else {
-//                             console.log(response);
-//                         }
-//                     },
-//                     (response, errors) => {
-//                         if (errors) {
-//                             console.log(errors)
-//                         } else {
-//                             console.log(response);
-//                         }
-//                     }
-//                 );
-//             },
-//             onCancel() {
-//                 console.log('取消删除');
-//             },
-//         });
-//     }
-
-    function getList() {
-        fetchQuery(props.environment, {
-            order: '',
-            meetingName: props.searchKey
-        }).then(data => {
-            if (data) {
-                if (data.applyPendingMeetingList) {
-                    setmeetingList(data.applyPendingMeetingList)
-                }
-            }
-        });
-    }
-
-//     function showConfirm(id) {
-//         confirm({
-//             title: '你真的要提交这个会议吗?',
-//             content: '',
-//             onOk() {
-//                 console.log('确认');
-//                 CommitCheckMeeting.commit(
-//                     props.environment,
-//                     id,
-//                     (response, errors) => {
-//                         if (errors) {
-//                             // console.log(errors)
-//                             Modal.error({
-//                                 title: errors[0].message,
-//                             });
-//                         } else {
-//                             // console.log(response);
-//                             Modal.success({
-//                                 content: '提交成功',
-//                                 onOk() {
-//                                     // history.goBack()
-//                                     getList()
-//                                 },
-//                             });
-//                         }
-//                     },
-//                     (response, errors) => {
-//                         if (errors) {
-//                             console.log(errors)
-//                         } else {
-//                             console.log(response);
-//                         }
-//                     }
-//                 );
-//             },
-//             onCancel() {
-//                 console.log('取消');
-//             },
-//         });
-//     }
-    class TableAwait extends Component {
-        state = {
-            environment: this.props.environment,
-            resourceMap: this.props.meetingList.edges,
-            loading: false,
-        };
-        render() {
-            return (
-                <div>
-                    <Table bordered size="middle"
-                        columns={columns}
-                        dataSource={this.state.resourceMap}
-                        pagination={false} 
-                         />
-                </div>
-            )
-        }
-    }
-
-    const environment = props.environment;
+ function Table(props) {
+	 
+	 useEffect(
+	     () => {
+		  window.layui.use('table', function(){
+		 		var table = window.layui.table;
+		   
+		  //第一个实例
+		  table.render({
+		 		elem: '#demo1'
+		 		,height: 312
+		 		,data: [{
+		 			  "id": "10001"
+		 			  ,"username": "关于新学期疫情防控工作若干问题的温馨提示"
+		 			  ,"originator": "王建国"
+		 			  ,"priority": "0"
+		 			}, {
+		 			  "id": "10002"
+		 			  ,"username": "关于苏州图书馆闭馆期间的常见问题解答"
+		 			  ,"originator": "王建国"
+		 			  ,"priority": "0"
+		 			}, {
+		 			  "id": "10003"
+		 			  ,"username": "自动放弃社保声明能否构成不予认定工伤的理由？"
+		 			  ,"originator": "吴刚"
+		 			  ,"priority": "0"
+		 			}, {
+		 			  "id": "10004"
+		 			  ,"username": "基本生活暂时出现严重困难什么意思？"
+		 			  ,"originator": "吴刚"
+		 			  ,"priority": "0"
+		 			}, {
+		 			  "id": "10005"
+		 			  ,"username": "如何确保为中小学教师减负政策举措落地见效？"
+		 			  ,"originator": "吴刚"
+		 			  ,"priority": "0"
+		 			}, {
+		 			  "id": "10006"
+		 			  ,"username": "非苏州市户籍人员申请临时救助对社保是否有要求？"
+		 			  ,"originator": "吴刚"
+		 			  ,"priority": "0"
+		 			}]
+		 		,page: true //开启分页
+		 		,cols: [[ //表头
+		 		   {checkbox: true}
+		 		  ,{field: 'id', title: '通知ID', width:180, sort: true}
+		 		  ,{field: 'username', title: '通知名称'}
+		 		  ,{field: 'originator', title: '通知发起人', width:250}
+		 		  ,{field: 'priority', title: '优先级', width:180, sort: true} 
+		 		  ,{field: '', title: "操作", align: "center", width: 160, toolbar: "#bar"}
+		 		]]
+		  });
+	
+    
+	});
+	}
+	)
     return (
-        <div>
-
-            <QueryRenderer
-                environment={environment}
-                
-                variables={{
-                    order: '',
-                    meetingName: props.searchKey
-                }}
-                render={({ error, props, retry }) => {
-                    if (error) {
-                        return (
-                            <div>
-                                <h1>Error!</h1><br />{error.message}
-                            </div>)
-                    } else if (props) {
-                        if (props.applyPendingMeetingList) {
-                            return (
-                                <TableAwait environment={environment} meetingList={props.applyPendingMeetingList} />
-
-                            )
-                        }
-                    }
-                    return <div>Loading</div>;
-                }}
-            />
-        </div>
+        <>
+            <div>
+                <table id="demo1" className="layui-hide1" ></table>
+            </div>
+            <script type="text/html" id="bar">
+                <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
+                    <i className="layui-icon">&#xe6b2;</i>详情
+                </button>
+            </script>
+        </>
     )
-    // }
+
 }
-export default Lists;
+export default Table;
