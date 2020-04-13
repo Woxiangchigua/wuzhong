@@ -198,7 +198,7 @@ function AddMeeting(props) {
         <form className="layui-form"  action="">
           <div className="layui-form-item">
             <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
-              <div className="layui-input-block" id='police' required lay-verify="required" style={{ width: 700 }}>
+              <div className="layui-input-block" id='police' style={{ width: 700 }}>
             </div>
           </div>
           <div className="layui-form-item">
