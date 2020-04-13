@@ -141,7 +141,7 @@ export default function Table(props) {
 
   function getList(searchKey) {
     // init()
-  setInterval(function(){
+  // setInterval(function(){
     fetchQuery(props.environment, query, {
         first: 10,
         skip: 0,
@@ -162,7 +162,7 @@ export default function Table(props) {
         }
       }
     });
-    }, 1000);
+    // }, 1000);
   }
 
   function search() {

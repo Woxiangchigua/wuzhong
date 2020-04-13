@@ -67,6 +67,8 @@ export default function Table(props) {
           history.push('/Instruct/Updateinstruct/' + JSON.stringify({id:data.id,review:data.review}))
        }else if(obj.event==="xia"){
           issued(data.id)
+        }else if(obj.event==="jin"){
+          history.push('/Instruct/Timeline/' + JSON.stringify({id:data.id,review:data.review}))
         }
       })
     }
@@ -243,6 +245,9 @@ export default function Table(props) {
         </button>
         <button type='button' lay-event="xia" className='layui-btn layui-btn-normal layui-btn-xs'>
           <i className="layui-icon">&#xe63c;</i>下发
+        </button>
+        <button type='button' lay-event="jin" className='layui-btn layui-btn-normal layui-btn-xs'>
+          <i className="layui-icon">&#xe63c;</i>进程
         </button>
         {/* <button type='button' lay-event="qing" className='layui-btn layui-btn-normal layui-btn-xs'>
           <i className="layui-icon">&#xe6b2;</i>请示

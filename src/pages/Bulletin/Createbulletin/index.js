@@ -25,24 +25,6 @@ query Createbulletin_OrgListListQuery{
     }
   }
 }`
-//上传
-const { Dragger } = Upload;
-const uploadfile = {
-  name: 'file',
-  multiple: true,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (status === 'done') {
-      // message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
-      // message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
 
 var childrenMsg = {}
 function AddMeeting(props) {
@@ -53,6 +35,67 @@ function AddMeeting(props) {
   const deplist = props.orgList.edges
   const loading = false
   const $ = window.$
+  var annex= []
+  const uploadlist = {
+    name: 'file',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    beforeUpload(file, fileList) {
+      console.log("beforeUpload:", file, fileList);
+    },
+    customRequest({
+      action,
+      data,
+      file,
+      filename,
+      headers,
+      onError,
+      onProgress,
+      onSuccess,
+      withCredentials,
+    }) {
+      const inputs = { [filename]: null }
+      const uploadables = { [filename]: file }
+      UploadFile.commit(
+        props.environment,
+        inputs,
+        uploadables,
+        (response, errors) => {
+          if (errors) {
+            onError(errors, response);
+          } else {
+            onSuccess(response);
+          }
+        },
+        onError
+      )
+      return false;
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+        const list = info.fileList
+        for(let i in list){
+          annex.push({name:list[i].response.singleUpload.id,url:list[i].response.singleUpload.url})
+        }
+        for (var i = 0; i < annex.length; i++) {
+          for (var j = i + 1; j < annex.length; j++) {
+            if (annex[i].name == annex[j].name) {
+              //第一个等同于第二个，splice方法删除第二个
+              annex.splice(j, 1);
+              j--;
+            }
+          }
+        }
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
   useEffect(
     () => {
       /* global layer */
@@ -82,7 +125,7 @@ function AddMeeting(props) {
       props.environment,
       values.name,
       values.source,
-      [],
+      annex,
       values.isNeedReceipt,
       values.receiptReq,
       (response, errors) => {
@@ -158,13 +201,9 @@ function AddMeeting(props) {
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>附件上传</label>
               <div className="layui-input-block" style={{ marginLeft:'30px',width:'612px' }}>
-                <Dragger {...uploadfile} style={{ minHeight:'250px' }}>
-                  <p className="ant-upload-drag-icon" style={{ marginTop: '30px' }}>
-                    <Icon type="upload" />
-                  </p>
-                  <p className="ant-upload-text">点击或将文件拖拽到这里上传</p>
-                  <p className="ant-upload-hint">支持文件扩展名：.rar .zip .doc .pdf .jpg...</p>
-                </Dragger>
+               <Upload {...uploadlist}>
+                  <Button>点击上传</Button>
+                </Upload>
               </div>
             </div>
           </div>
