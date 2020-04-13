@@ -23,7 +23,7 @@ const query = graphql`
 query Child_ListQuery(
   $order: String = ""
   $instructionsId:ID!){
-  PoliceToDoListByInstructionsId(first:10,skip:0,order:$order,instructionsId:$instructionsId){
+  PoliceToDoListByInstructionsId(first:100000,skip:0,order:$order,instructionsId:$instructionsId){
     edges{
       askFor
       deadline

@@ -22,7 +22,7 @@ query Bulldist_BulldistListQuery(
   $needReview: [enumTypeBulletinDistributionNeedReview]!
   $isReview: [enumTypeBulletinDistributionIsReview]!
 ){
-  bulletinDistributionList(first:10,skip:0,order:$order,name:$name,source:$source,status:$status,needReview:$needReview,isReview:$isReview){
+  bulletinDistributionList(first:100000,skip:0,order:$order,name:$name,source:$source,status:$status,needReview:$needReview,isReview:$isReview){
     edges{
       id,
       bulletinId,
