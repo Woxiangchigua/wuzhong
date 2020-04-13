@@ -125,7 +125,7 @@ function AddMeeting(props) {
           } else {
             layer.alert('提交成功',{title:'成功',icon: 1} ,function(index){
               //do something
-              history.push('/Instruct/Deplist')
+              history.goBack()
               layer.close(index);
             });
 
@@ -147,7 +147,7 @@ function AddMeeting(props) {
   const loading = false
 
   function goBack() {
-    history.push('/Instruct/Deplist')
+    history.goBack()
   }
 
   const { getFieldDecorator } = props.form;

@@ -82,6 +82,7 @@ function AddMeeting(props) {
   let history = useHistory();
   const Detail = props.bulletin;
   var dist = []
+
   for (let i in Detail.bulletinDistribution) {
     if (props.distid == Detail.bulletinDistribution[i].id) {
       dist.distdepId = Detail.bulletinDistribution[i].depId;
