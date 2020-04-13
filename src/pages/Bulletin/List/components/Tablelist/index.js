@@ -14,7 +14,7 @@ query Tablelist_BulletinListQuery(
   $source: String = ""
   $status: [enumTypeBulletinStatus]!
 ){
-  bulletinList(first:10,skip:0,order:$order,name:$name,source:$source,status:$status){
+  bulletinList(first:100000,skip:0,order:$order,name:$name,source:$source,status:$status){
     edges{
       annex{
         name,

@@ -11,7 +11,7 @@ query Constable_InstructListQuery(
   $order: String = ""
   $disposePeople: String
 ){
-  policeToDoList(first:10,skip:0,order:$order,disposePeople:$disposePeople){
+  policeToDoList(first:100000,skip:0,order:$order,disposePeople:$disposePeople){
     edges{
       deadline
       id

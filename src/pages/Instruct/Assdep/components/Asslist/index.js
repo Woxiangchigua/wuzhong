@@ -12,7 +12,7 @@ const query = graphql`
     $order: String = ""
     $departmentName: String = ""
   ){
-    queryJointlyList(first:10,skip:0,order:$order,departmentName:$departmentName){
+    queryJointlyList(first:100000,skip:0,order:$order,departmentName:$departmentName){
     totalCount
     edges{
       annex{

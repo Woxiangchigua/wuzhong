@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const ButtonGroup = Button.Group;
 const query = graphql`
     query Meetingminutes_MeetingListQuery{
-        meetingList(first:1000,skip:0){
+        meetingList(first:100000,skip:0){
             edges{
               applyUserId,
               beginTime,

@@ -14,7 +14,7 @@ query Branchlist_InstructListQuery(
   $kind: enumTypeInstructionsKind
   $hostDepartment: String = ""
 ){
-  instructionsList(first:10,skip:0,order:$order,hostDepartment:$hostDepartment,kind:$kind){
+  instructionsList(first:100000,skip:0,order:$order,hostDepartment:$hostDepartment,kind:$kind){
     totalCount
     edges{
       annex{
