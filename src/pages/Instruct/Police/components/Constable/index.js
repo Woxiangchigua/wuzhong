@@ -100,12 +100,12 @@ export default function Table(props) {
                   return `<div>${d.instructions.name}</div>`
                 }
               }
-            , { field: 'source', title: '指令来源', width: 300,
+            , { field: 'source', title: '指令来源', width: 130,
                 templet: function (d) {
                   return `<div>${d.instructions.source}</div>`
                 }
               }
-            , { field: 'sponsorUserId', title: '指令发起人', align: "center", width: 150,
+            , { field: 'sponsorUserId', title: '指令发起人', align: "center", width: 130,
                 templet: function (d) {
                   if (d.instructions.initiator === 1) {
                       return "<span>王建国</span>"
@@ -129,7 +129,7 @@ export default function Table(props) {
                   }
                 }
               }
-            , {field:'sourceTime', title: '来源时间',
+            , {field:'sourceTime', title: '来源时间', width: 150,
                 templet: function (d) {
                     return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.sourceTime))}</div>`
                 }
