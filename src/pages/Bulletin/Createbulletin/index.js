@@ -13,7 +13,7 @@ import {
   Card,
   Col,
   Button,
-  Divider,Upload,Icon,
+  Divider,Upload,Icon,message,
   Modal
 } from 'antd';
 
