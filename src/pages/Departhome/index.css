@@ -139,6 +139,19 @@
 	color: #aaaaaa;
 	font-size: 12px;
 }
+.right_text1{
+	padding: 0 25px;
+}
+.right_text1 p{
+	margin-bottom: 5px;
+	color: #777777;
+	font-size: 14px;
+}
+.right_text1 span{
+	margin-bottom: 5px;
+	color: #aaaaaa;
+	font-size: 12px;
+}
 
 .clear{
 	clear: both;
@@ -269,6 +282,10 @@
 	float: left;
 	line-height: 35px;
 	margin-bottom: 0;
+	max-width: 400px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
 }
 .topText1 span{
 	float: right;

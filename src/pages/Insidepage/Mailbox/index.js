@@ -20,42 +20,42 @@ import dateFormat from '../../../ utils/dateFormat'
 		 		,data: [{
 		 			  "id": "10001"
 						,"type": "0"
-		 			  ,"username": '关于当前外出踏青注意事项的调查问卷'
+		 			  ,"username": '公交游5线太不准了'
 		 			  ,"originator": "王建国"
 						,'status': '0'
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10002"
 						,"type": "0"
-		 			  ,"username": "关于春运期间网络购票的调查问卷"
+		 			  ,"username": "医保转出迟迟未办理"
 		 			  ,"originator": "吴刚"
 						,'status': '0'
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10003"
 						,"type": "1"
-		 			  ,"username": '2019网民网络安全感满意度调查问卷'
+		 			  ,"username": '关于线上教育与回校学习的衔接'
 		 			  ,"originator": "王建国"
 						,'status': '0'
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10004"
 						,"type": "1"
-		 			  ,"username": "关于清明祭扫安全隐患的调查问卷"
+		 			  ,"username": "关于积极回应许可馨事件的建议"
 		 			  ,"originator": "吴刚"
 						,'status': '1'
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10005"
 						,"type": "2"
-		 			  ,"username": '关于防范电信诈骗的调查问卷'
+		 			  ,"username": '市区社保转出和新增'
 		 			  ,"originator": "王建国"
 						,'status': '1'
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10006"
 						,"type": "2"
-		 			  ,"username": "关于确定苏州市区养犬重点管理区域的问卷调查"
+		 			  ,"username": "住房公积金提取问题"
 		 			  ,"originator": "吴刚"
 						,'status': '1'
 		 			  ,"priority": "0"
@@ -75,11 +75,11 @@ import dateFormat from '../../../ utils/dateFormat'
 					}}
 		 		  ,{field: 'username', title: '公文名称'}
 		 		  ,{field: 'originator', title: '公文发起人', width:250},
-					,{field:'status', width:150, title: '归档状态', align:'center', templet : function(d){
+					,{field:'status', width:150, title: '回复状态', align:'center', templet : function(d){
 												if(d.status === '0'){
-													return '<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">进行中</span>';
+													return '<span style="display:inline-block;color: #fff;background:#e2151b;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">待回复</span>';
 												}else if(d.status === '1'){
-													return '<span style="display:inline-block;color: #fff;background:#009688;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">已完结</span>';
+													return '<span style="display:inline-block;color: #fff;background:#009688;height:22px;line-height:22px;padding:0 5px;font-size: 12px;border-radius: 2px;">已回复</span>';
 												}
 					}}
 		 		  ,{field: 'priority', title: '优先级', width:180, sort: true} 
@@ -109,6 +109,9 @@ import dateFormat from '../../../ utils/dateFormat'
 			        <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
 			            <i className="layui-icon">&#xe6b2;</i>详情
 			        </button>
+							<button type='button' lay-event="del" className='layui-btn layui-btn-danger layui-btn-xs'>
+							    <i className="layui-icon">&#xe640;</i>删除
+							</button>
 			    </script>
 			  </Card>
 			</div>

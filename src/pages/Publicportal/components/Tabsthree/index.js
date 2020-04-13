@@ -58,8 +58,82 @@ const contentListNoTitle = {
 			</div>
 			</Link>
 		 </div>,
-  知识库: <p>知识库#</p>,
-  吐槽池: <p>吐槽池#</p>,
+  知识库: <div>
+						<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>关于新学期疫情防控工作若干问题的...</p>
+									<span>2020-04-08</span>
+								</div>
+							</div>
+							</Link>
+							<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>关于苏州图书馆闭馆期间的常见问题</p>
+									<span>2020-04-07</span>
+								</div>
+							</div>
+							</Link>
+							<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>自动放弃社保声明能否构成不予认定...</p>
+									<span>2020-04-06</span>
+								</div>
+							</div>
+							</Link>
+							<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>基本生活暂时出现严重困难什么意思？</p>
+									<span>2020-04-05</span>
+								</div>
+							</div>
+							</Link>
+				 </div>,
+  吐槽池: <div>
+						<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>苏州市无新增新冠肺炎确诊病例</p>
+									<span>2020-04-08</span>
+								</div>
+							</div>
+							</Link>
+							<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>苏州市无新增新冠肺炎确诊病例</p>
+									<span>2020-04-07</span>
+								</div>
+							</div>
+							</Link>
+							<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>苏州市无新增新冠肺炎确诊病例</p>
+									<span>2020-04-06</span>
+								</div>
+							</div>
+							</Link>
+							<Link to={"/Insidepage/Tucao"}>
+							<div className="clear">
+								<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
+								<div className="right_text">
+									<p>苏州市无新增新冠肺炎确诊病例</p>
+									<span>2020-04-05</span>
+								</div>
+							</div>
+							</Link>
+	       </div>,
 };
 
 export default class TabsCard extends React.Component {

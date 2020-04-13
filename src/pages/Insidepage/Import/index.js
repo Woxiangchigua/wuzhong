@@ -19,41 +19,41 @@ import dateFormat from '../../../ utils/dateFormat'
 		 		,height: 312
 		 		,data: [{
 		 			  "id": "10001"
-		 			  ,"username": '苏城码---你我的"通行证",苏城的"护身符"'
+		 			  ,"username": '苏州市文化广电和旅游局2020年工作要点'
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10002"
-		 			  ,"username": "战疫破案两手抓,吴中警方筑起平安墙"
+		 			  ,"username": "苏州市政府网站2020年第一季度常态化监测情况"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10003"
-		 			  ,"username": '苏州市医疗保障工作暨市级统筹工作新闻发布会'
+		 			  ,"username": '2020年政府工作报告'
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10004"
-		 			  ,"username": "苏州市“331”专项行动三级挂牌督办重点隐患新闻发布会"
+		 			  ,"username": "关于苏州市2019年预算执行情况和2020年预算草案的报告"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10005"
-		 			  ,"username": '苏州市机动车停车场管理办法新闻发布会'
+		 			  ,"username": '常熟市2020年政府工作报告'
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10006"
-		 			  ,"username": "苏州海关2019年新闻发布会"
+		 			  ,"username": "苏州市财政局2019年工作总结和2020年工作打算"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}]
 		 		,page: true //开启分页
 		 		,cols: [[ //表头
 		 		   {checkbox: true}
-		 		  ,{field: 'id', title: '新闻ID', width:180, sort: true}
-		 		  ,{field: 'username', title: '新闻标题'}
-		 		  ,{field: 'originator', title: '新闻发起人', width:250}
+		 		  ,{field: 'id', title: '信息ID', width:180, sort: true}
+		 		  ,{field: 'username', title: '信息标题'}
+		 		  ,{field: 'originator', title: '信息发起人', width:250}
 		 		  ,{field: 'priority', title: '优先级', width:180, sort: true} 
 		 		  ,{field: '', title: "操作", align: "center", width: 160, toolbar: "#bar"}
 		 		]]
@@ -68,7 +68,7 @@ import dateFormat from '../../../ utils/dateFormat'
 			  <Card title="" bordered={false} >
 			    <Breadcrumb style={{ margin: '0px 0px 0px 0px' }}>
 			      <Breadcrumb.Item>公文管理</Breadcrumb.Item>
-			      <Breadcrumb.Item>新闻动态</Breadcrumb.Item>
+			      <Breadcrumb.Item>重要信息</Breadcrumb.Item>
 			    </Breadcrumb>
 			  </Card>
 			  {/* <Divider /> */}

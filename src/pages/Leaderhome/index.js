@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Breadcrumb, Card, Rate } from 'antd';
 import Meeting from '../../components/Meeting'
 import './index.css';
+import { useHistory, Link } from "react-router-dom";
 import Tabsone from '../Leaderhome/components/Tabsone/index'
 import Echartsone from '../Leaderhome/components/Echartsone/index'
 import Echartstwo from '../Leaderhome/components/Echartstwo/index'
@@ -53,35 +54,43 @@ export default class Leaderhome extends Component {
 			  		<p>转换进度：<span className="up1">60%</span></p>
 			  	</div>
 			  </Card>
-			  <Card title="重要信息" bordered={false} className="head6-1 layui-col-md3" extra={<a href="#">...</a>} style={{ marginTop: 10 }}>
+			  <Card title="重要信息" bordered={false} className="head6-1 layui-col-md3" extra={<a href="../../../Insidepage/Import">...</a>} style={{ marginTop: 10 }}>
 				 <div>
 					 <div className="clear">
+					 <Link to={"/Insidepage/Import"}>
 					 	<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
 					 	<div className="right_text">
-					 		<p>关于苏州市公安局网站域名变更的通知</p>
+					 		<p>苏州市文化广电和旅游局2020年工作...</p>
 					 		<span>2020-01-06</span>
 					 	</div>
+						</Link>
 					 </div>
 					 <div className="clear">
+					 <Link to={"/Insidepage/Import"}>
 					 	<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
 					 	<div className="right_text">
-					 		<p>吴江区公安局招录警务辅警人员简章</p>
+					 		<p>苏州市政府网站2020年第一季度常态...</p>
 					 		<span>2020-03-10</span>
 					 	</div>
+						</Link>
 					 </div>
 					 <div className="clear">
+					 <Link to={"/Insidepage/Import"}>
 					 	<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
 					 	<div className="right_text">
-					 		<p>关于增设道路交通技术监控系统的通告</p>
+					 		<p>2020年政府工作报告</p>
 					 		<span>2020-03-09</span>
 					 	</div>
+						</Link>
 					 </div>
 					 <div className="clear">
+					 <Link to={"/Insidepage/Import"}>
 					 	<i className="layui-icon reply-fill left_icon" style={{ marginRight: 10 }}>&#xe611;</i>
 					 	<div className="right_text">
-					 		<p>关于增加非现场违法预约办理点的通告</p>
+					 		<p>关于苏州市2019年预算执行情况和...</p>
 					 		<span>2020-03-02</span>
 					 	</div>
+						</Link>
 					 </div>
 				  </div>
 			  </Card>

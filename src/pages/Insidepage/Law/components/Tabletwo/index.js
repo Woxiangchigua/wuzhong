@@ -18,41 +18,36 @@ import dateFormat from '../../../../../ utils/dateFormat'
 		 		,height: 312
 		 		,data: [{
 		 			  "id": "10001"
-		 			  ,"username": "关于苏州市公安局网站域名变更的通知"
+		 			  ,"username": "苏州市公安局以问题解决确保主题教育实效"
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10002"
-		 			  ,"username": "吴中区公安局招录警务辅警人员简章"
+		 			  ,"username": "苏州市公安局苏州高新区分局招聘警务辅助人员简章"
 		 			  ,"originator": "王建国"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10003"
-		 			  ,"username": "关于增设道路交通技术监控系统的通知"
+		 			  ,"username": "发布《通告》:250克以上无人机实名登记"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10004"
-		 			  ,"username": "关于增加非现场违法预约办理点的通告"
+		 			  ,"username": "姑苏分局观前派出所:“科技+志愿者”及时消除隐患"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}, {
 		 			  "id": "10005"
-		 			  ,"username": "关于增加非现场违法预约办理点的通告"
-		 			  ,"originator": "吴刚"
-		 			  ,"priority": "0"
-		 			}, {
-		 			  "id": "10006"
-		 			  ,"username": "关于增加非现场违法预约办理点的通告"
+		 			  ,"username": "召开全市公安机关学习部署会"
 		 			  ,"originator": "吴刚"
 		 			  ,"priority": "0"
 		 			}]
 		 		,page: true //开启分页
 		 		,cols: [[ //表头
 		 		   {checkbox: true}
-		 		  ,{field: 'id', title: '通知ID', width:180, sort: true}
-		 		  ,{field: 'username', title: '通知名称'}
-		 		  ,{field: 'originator', title: '通知发起人', width:250}
+		 		  ,{field: 'id', title: '公文ID', width:180, sort: true}
+		 		  ,{field: 'username', title: '公文名称'}
+		 		  ,{field: 'originator', title: '公文发起人', width:250}
 		 		  ,{field: 'priority', title: '优先级', width:180, sort: true} 
 		 		  ,{field: '', title: "操作", align: "center", width: 160, toolbar: "#bar"}
 		 		]]
