@@ -5,7 +5,8 @@ import { useHistory } from "react-router-dom";
 import dateFormat from '../../../ utils/dateFormat'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import './index.css';
-import {Breadcrumb,Form,Card,Modal,} from 'antd';
+import {Breadcrumb,Form,Card,Modal,message,Upload,Button,} from 'antd';
+import UploadFile from '../Mutations/Upload';
 import moment from 'moment';
 import ModalAddAttendees from '@/components/ModalAddAttendees';
 
@@ -72,6 +73,67 @@ function AddMeeting(props) {
     {value:'INSTRUCTIONS_EMPHASIS',name:'重点人员下发'},
   ]
 
+  var annex= []
+  const uploadlist = {
+    name: 'file',
+    headers: {
+      authorization: 'authorization-text',
+    },
+    beforeUpload(file, fileList) {
+      console.log("beforeUpload:", file, fileList);
+    },
+    customRequest({
+      action,
+      data,
+      file,
+      filename,
+      headers,
+      onError,
+      onProgress,
+      onSuccess,
+      withCredentials,
+    }) {
+      const inputs = { [filename]: null }
+      const uploadables = { [filename]: file }
+      UploadFile.commit(
+        props.environment,
+        inputs,
+        uploadables,
+        (response, errors) => {
+          if (errors) {
+            onError(errors, response);
+          } else {
+            onSuccess(response);
+          }
+        },
+        onError
+      )
+      return false;
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList);
+      }
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`);
+        const list = info.fileList
+        for(let i in list){
+          annex.push({name:list[i].response.singleUpload.id,url:list[i].response.singleUpload.url})
+        }
+        for (var i = 0; i < annex.length; i++) {
+          for (var j = i + 1; j < annex.length; j++) {
+            if (annex[i].name == annex[j].name) {
+              //第一个等同于第二个，splice方法删除第二个
+              annex.splice(j, 1);
+              j--;
+            }
+          }
+        }
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
   useEffect(
     () => {
       /* global layer */
@@ -93,7 +155,7 @@ function AddMeeting(props) {
         elem: '#star'
         ,value: 2 //初始值
         ,text: true //开启文本
-        ,half: true //开启半星
+        // ,half: true //开启半星
         ,choose: function(value){
           // if(value > 4) alert( '么么哒' )
           stars = value
@@ -179,7 +241,7 @@ function AddMeeting(props) {
       sourceTime,
       'INSTRUCTIONS_SUBOFFICE_NOT_ISSUE',  //指令状态，分局未下发
       deadline,
-      [],
+      annex,
       values.isNeedReceipt,
       values.source,
       values.hostDepartment,
@@ -303,6 +365,16 @@ function AddMeeting(props) {
               <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>指令要求</label>
               <div className="layui-input-block" style={{ width:'612px' }}>
                 <textarea name="require" placeholder="请输入指令要求" required lay-verify="required" className="layui-textarea"></textarea>
+              </div>
+            </div>
+          </div>
+          <div className="layui-form-item">
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>附件上传</label>
+              <div className="layui-input-block" style={{ width:'612px' }}>
+              <Upload {...uploadlist}>
+                  <Button>点击上传</Button>
+              </Upload>
               </div>
             </div>
           </div>

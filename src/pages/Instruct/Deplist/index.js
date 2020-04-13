@@ -21,7 +21,7 @@ function Lists(props) {
           <Breadcrumb.Item>指令管理</Breadcrumb.Item>
           <Breadcrumb.Item>主办部门指令列表</Breadcrumb.Item>
         </Breadcrumb>
-        <ButtonGroup style={{ margin: '10px 0px', marginLeft: '83%' }}>
+        <ButtonGroup style={{ margin: '10px 0px', marginLeft: '80%' }}>
           <Link to={"/Instruct/DepCreateinstruct"}>
             <Button>新增指令</Button>
           </Link>

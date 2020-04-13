@@ -96,7 +96,7 @@ function AddMeeting(props) {
             elem: '#star'
             ,value: 0 //初始值
             ,text: true //开启文本
-            ,half: true //开启半星
+            // ,half: true //开启半星
             ,choose: function(value){
               // if(value > 4) alert( '么么哒' )
               stars = value
