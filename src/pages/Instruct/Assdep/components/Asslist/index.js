@@ -12,7 +12,7 @@ const query = graphql`
     $order: String = ""
     $departmentName: String = ""
   ){
-    queryJointlyList(first:10,skip:0,order:$order,departmentName:$departmentName){
+    queryJointlyList(first:100000,skip:0,order:$order,departmentName:$departmentName){
     totalCount
     edges{
       annex{
@@ -61,12 +61,18 @@ export default function Table(props) {
         }else if(obj.event==="hui"){
           history.push('/Instruct/Depreplyins/' + JSON.stringify({id:data.id}))
         }else if(obj.event==="xia"){
-          history.push('/Instruct/Distinstruct/' + JSON.stringify({id:data.id}))
+          history.push('/Instruct/Distinstructins/' + JSON.stringify({id:data.id,listid:2}))
         }else if(obj.event==="qing"){
           history.push('/Instruct/Depaskins/' + JSON.stringify({id:data.id}))
         }else if(obj.event==="bo"){
           history.push('/Instruct/Deprejectedins/' + JSON.stringify({id:data.id}))
         }else if(obj.event==="child"){
+          history.push('/Instruct/Policechild/' + JSON.stringify({id:data.id}))
+        }else if(obj.event==="shen"){
+          history.push('/Instruct/Depauditins/' + JSON.stringify({id:data.id}))
+        }else if(obj.event==="pi"){
+          history.push('/Instruct/Depbatchins/' + JSON.stringify({id:data.id}))
+        }else if(obj.event==="shang"){
           history.push('/Instruct/Policechild/' + JSON.stringify({id:data.id}))
         }
       })
@@ -86,12 +92,27 @@ export default function Table(props) {
         , cols: [[ //表头 
             // { checkbox: true }
             // , 
-            { field: 'id', title: 'id', width: 150, sort: true }
-            , { field: 'name', title: '指令名称', }
+            // { field: 'id', title: 'id', width: 150, sort: true }, 
+              { field: 'name', title: '指令名称', }
+            , { field: 'classify', title: '指令类型', width: 130,
+                templet: function (d) {
+                  if (d.classify === 'INSTRUCTIONS_CASE') {
+                    return "案件督导"
+                  } else if(d.classify === 'INSTRUCTIONS_NOTICE') {
+                    return "会议通知"
+                  }else if(d.classify === 'INSTRUCTIONS_INFORM'){
+                    return "通知通报"
+                  }else if(d.classify === 'INSTRUCTIONS_EMPHASIS'){
+                    return "重点人员下发"
+                  }else if(d.classify === 'INSTRUCTIONS_OTHERS'){
+                    return "其他"
+                  }
+                }
+              }
             , { field: 'source', title: '指令来源', width: 130, }
-            , { field: 'initiator', title: '指令发起人', align: "center", width: 130,
+            , { field: 'initiator', title: '发起人', align: "center", width: 130,
               templet: function (d) {
-                if (d.initiator === 1) {
+                if (d.initiator === "account-1") {
                     return "<span>王建国</span>"
                 }
               }
@@ -125,9 +146,9 @@ export default function Table(props) {
                 }
               }
             }
-					  ,{field:'sourceTime', title: '来源时间', width: 150,
+					  ,{field:'deadline', title: '来源时间', width: 150, align: "center", 
               templet: function (d) {
-                  return `<div>${dateFormat("YYYY-mm-dd", new Date(d.sourceTime))}</div>`
+                  return `<div>${dateFormat("YYYY-mm-dd", new Date(d.deadline))}</div>`
               }
 					  }
             , { field: '', title: "操作", align: "center", width: 420, toolbar: "#bar" }
@@ -168,23 +189,41 @@ export default function Table(props) {
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
-      <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe60a;</i>详情
+      <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/xiangqing.png")} style={{marginTop:"-5px"}}/>
+          <div>详情</div>
         </button>
-        <button type='button' lay-event="xia" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe63c;</i>下发
+        <button type='button' lay-event="xia" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/xiafa.png")} style={{marginTop:"-5px"}}/>
+          <div>下发</div>
         </button>
-        <button type='button' lay-event="hui" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe63c;</i>回复
+        <button type='button' lay-event="hui" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/huifu.png")} style={{marginTop:"-5px"}}/>
+          <div>回复</div>
         </button>
-        <button type='button' lay-event="qing" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe63c;</i>请示
+        <button type='button' lay-event="qing" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/qingshi.png")} style={{marginTop:"-5px"}}/>
+          <div>请示</div>
         </button>
-        <button type='button' lay-event="bo" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe63c;</i>驳回
+        <button type='button' lay-event="bo" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/bohui.png")} style={{marginTop:"-5px"}}/>
+          <div>驳回</div>
         </button>
-        <button type='button' lay-event="child" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe63c;</i>下级指令
+        <button type='button' lay-event="child" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/xiaji.png")} style={{marginTop:"-5px"}}/>
+          <div>下级指令</div>
+        </button>
+        <button type='button' lay-event="shen" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/shenpi.png")} style={{marginTop:"-5px"}}/>
+          <div>审批</div>
+        </button>
+        <button type='button' lay-event="pi" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/pishi.png")} style={{marginTop:"-5px"}}/>
+          <div>批示</div>
+        </button>
+        <button type='button' lay-event="shang" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/shangbao.png")} style={{marginTop:"-5px"}}/>
+          <div>上报</div>
         </button>
       </script>
     </>

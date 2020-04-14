@@ -8,8 +8,9 @@ const mutation = graphql`
     $require: String
     $instructionsId: ID!
     $disposePeople: [String]!
+    $kind: enumTypeInstructionsToDoKind
 ) {
-    depResolveInstructions(require: $require,instructionsId: $instructionsId,disposePeople: $disposePeople) {
+    depResolveInstructions(require: $require,instructionsId: $instructionsId,disposePeople: $disposePeople,kind: $kind) {
       id
     }
   }
@@ -20,6 +21,7 @@ function commit(
   require,
   instructionsId,
   disposePeople,
+  kind,
   onCompleted,
   error
 ) {
@@ -29,6 +31,7 @@ function commit(
         require: require,
         instructionsId: instructionsId,
         disposePeople: disposePeople,
+        kind: kind,
     },
     onCompleted: onCompleted,
     onError: error,

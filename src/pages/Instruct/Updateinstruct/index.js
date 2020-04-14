@@ -51,6 +51,7 @@ const query = graphql`
     }`
 var childrenMsg = {}
 function AddMeeting(props) {
+  console.log(props)
   let history = useHistory();
   const [modalAddAttendeesVisible, setModalAddAttendeesVisible] = useState(false);
   const environment = props.environment

@@ -23,7 +23,7 @@ const query = graphql`
 query Child_ListQuery(
   $order: String = ""
   $instructionsId:ID!){
-  PoliceToDoListByInstructionsId(first:10,skip:0,order:$order,instructionsId:$instructionsId){
+  PoliceToDoListByInstructionsId(first:100000,skip:0,order:$order,instructionsId:$instructionsId){
     edges{
       askFor
       deadline
@@ -213,11 +213,13 @@ export default function Table(props) {
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
-        <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>详情
+        <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/xiangqing.png")} style={{marginTop:"-5px"}}/>
+          <div>详情</div>
         </button>
-        <button type='button' lay-event="ping" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>评分
+        <button type='button' lay-event="ping" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/pingfen.png")} style={{marginTop:"-5px"}}/>
+          <div>评分</div>
         </button>
       </script>
     </>

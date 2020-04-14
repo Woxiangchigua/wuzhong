@@ -14,17 +14,18 @@ const mutation = graphql`
     $require: String!
     $classify: enumTypeInstructionsClassify!
     $deadline: DateTime!
-    $initiator: Int!
+    $initiator: ID!
     $id: ID!
     $source: String!
     $sourceTime: DateTime
     $startTime: DateTime!
     $status: enumTypeInstructionsStatus!
     $isNeedReceipt: enumTypeInstructionsIsNeedReceipt!
+    $receiptRequire: String = ""
     ) {
     updateInstructions(id: $id,classify: $classify,jointlyDepartment: $jointlyDepartment,sourceTime: $sourceTime,status: $status,deadline: $deadline,
         annex: $annex,isNeedReceipt: $isNeedReceipt,source: $source,hostDepartment: $hostDepartment,initiator: $initiator
-        require: $require,priority: $priority,name: $name,startDepartment: $startDepartment,startTime: $startTime) {
+        require: $require,priority: $priority,name: $name,startDepartment: $startDepartment,startTime: $startTime,receiptRequire: $receiptRequire) {
       id
     }
   }
@@ -48,6 +49,7 @@ function commit(
     name,
     startDepartment,
     startTime,
+    receiptRequire,
     onCompleted,
     error
 ) {
@@ -70,6 +72,7 @@ function commit(
             name: name,
             startDepartment: startDepartment,
             startTime: startTime,
+            receiptRequire: receiptRequire,
         },
         onCompleted: onCompleted,
         onError: error,

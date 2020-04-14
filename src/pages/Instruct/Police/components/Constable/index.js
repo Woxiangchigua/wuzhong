@@ -11,7 +11,7 @@ query Constable_InstructListQuery(
   $order: String = ""
   $disposePeople: String
 ){
-  policeToDoList(first:10,skip:0,order:$order,disposePeople:$disposePeople){
+  policeToDoList(first:100000,skip:0,order:$order,disposePeople:$disposePeople){
     edges{
       deadline
       id
@@ -94,20 +94,35 @@ export default function Table(props) {
         , cols: [[ //表头 
             // { checkbox: true }
             // , 
-            { field: 'id', title: 'id', width: 200, sort: true }
-            , { field: 'name', title: '指令名称', 
+            // { field: 'id', title: 'id', width: 200, sort: true },
+              { field: 'name', title: '指令名称', 
                 templet: function (d) {
                   return `<div>${d.instructions.name}</div>`
                 }
               }
+              , { field: 'classify', title: '指令类型', width: 130,
+                  templet: function (d) {
+                    if (d.instructions.classify === 'INSTRUCTIONS_CASE') {
+                      return "案件督导"
+                    } else if(d.instructions.classify === 'INSTRUCTIONS_NOTICE') {
+                      return "会议通知"
+                    }else if(d.instructions.classify === 'INSTRUCTIONS_INFORM'){
+                      return "通知通报"
+                    }else if(d.instructions.classify === 'INSTRUCTIONS_EMPHASIS'){
+                      return "重点人员下发"
+                    }else if(d.instructions.classify === 'INSTRUCTIONS_OTHERS'){
+                      return "其他"
+                    }
+                  }
+                }
             , { field: 'source', title: '指令来源', width: 130,
                 templet: function (d) {
                   return `<div>${d.instructions.source}</div>`
                 }
               }
-            , { field: 'sponsorUserId', title: '指令发起人', align: "center", width: 130,
+            , { field: 'sponsorUserId', title: '发起人', align: "center", width: 130,
                 templet: function (d) {
-                  if (d.instructions.initiator === 1) {
+                  if (d.instructions.initiator === "account-1") {
                       return "<span>王建国</span>"
                   }
                 }
@@ -129,9 +144,9 @@ export default function Table(props) {
                   }
                 }
               }
-            , {field:'sourceTime', title: '来源时间', width: 150,
+            , {field:'deadline', title: '来源时间', width: 150, align: "center", 
                 templet: function (d) {
-                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.sourceTime))}</div>`
+                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.deadline))}</div>`
                 }
               }
             , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
@@ -158,7 +173,7 @@ export default function Table(props) {
           //     clearInterval()
           //   );
           // });
-          layer.msg("你有新的指令");
+          // layer.msg("你有新的指令");
         }
       }
     });
@@ -181,17 +196,21 @@ export default function Table(props) {
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
-        <button type='button' lay-event="go" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>详情
+        <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/xiangqing.png")} style={{marginTop:"-5px"}}/>
+          <div>详情</div>
         </button>
-        <button type='button' lay-event="qing" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>请示
+        <button type='button' lay-event="qing" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/qingshi.png")} style={{marginTop:"-5px"}}/>
+          <div>请示</div>
         </button>
-        <button type='button' lay-event="hui" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>回复
+        <button type='button' lay-event="hui" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/huifu.png")} style={{marginTop:"-5px"}}/>
+          <div>回复</div>
         </button>
-        <button type='button' lay-event="bo" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>驳回
+        <button type='button' lay-event="bo" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+          <img src={require("../../../../../img/bohui.png")} style={{marginTop:"-5px"}}/>
+          <div>驳回</div>
         </button>
       </script>
     </>
