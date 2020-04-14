@@ -324,22 +324,41 @@ function AddMeeting(props) {
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>指令名称</label>
               <div className="layui-input-block">
-                <input type="text" name="name" required lay-verify="required" autoComplete="off" className="layui-input" />
+                <input type="text" name="name" required lay-verify="required" autoComplete="off" className="layui-input" style={{ width: 405 }}/>
               </div>
             </div>
+						<div className="layui-inline">
+						  <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>指令分类</label>
+						  <div className="layui-input-block">
+						  <select name="classify" id="fenlei" required lay-verify="required" lay-search="" placeholder="请选择指令分类"></select>
+						  </div>
+						</div>
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>指令来源</label>
               <div className="layui-input-block">
               <select name="source" id="dep" required lay-verify="required" lay-search="" placeholder="请选择指令来源"></select>
               </div>
             </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>指令分类</label>
-              <div className="layui-input-block">
-              <select name="classify" id="fenlei" required lay-verify="required" lay-search="" placeholder="请选择指令分类"></select>
-              </div>
-            </div>
           </div>
+					<div className="layui-form-item">
+						<div className="layui-inline">
+							<label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>发起部门</label>
+							<div className="layui-input-block">
+                <select name="startDepartment" id="startdep" required lay-verify="required" lay-search="" placeholder="请选择发起部门"></select>
+							</div>
+						</div>
+						<div className="layui-inline">
+							<label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>主办部门</label>
+							<div className="layui-input-block">
+                <select name="hostDepartment" id="hostdep" required lay-verify="required" lay-search="" placeholder="请选择主办部门"></select>
+							</div>
+						</div>
+						<div className="layui-inline">
+							<label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
+							<div className="layui-input-block" id='org' style={{ width: 700 }}>
+							</div>
+						</div>
+					</div>
           <div className="layui-form-item">
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>来源时间</label>
@@ -348,9 +367,9 @@ function AddMeeting(props) {
               </div>
             </div>
             <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>开始时间</label>
+              <label className="layui-form-label" style={{ width: 100 }}>开始时间</label>
               <div className="layui-input-block">
-                <input type="text" name="startTime" className="layui-input" id="test3"  required lay-verify="required"placeholder="请选择开始时间"/>
+                <input type="text" name="startTime" className="layui-input" id="test3" placeholder="请选择开始时间"/>
               </div>
             </div>
             <div className="layui-inline">
@@ -366,34 +385,7 @@ function AddMeeting(props) {
               </div>
             </div> */}
           </div>
-          <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}>回执</label>
-              <div className="layui-input-block">
-                <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" title="不需要" defaultChecked/>
-                <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" title="需要"/>
-              </div>
-            </div>
-          </div>
-          <div className="layui-form-item">
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>发起部门</label>
-              <div className="layui-input-block">
-                <select name="startDepartment" id="startdep" required lay-verify="required" lay-search="" placeholder="请选择发起部门"></select>
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>主办部门</label>
-              <div className="layui-input-block">
-                <select name="hostDepartment" id="hostdep" required lay-verify="required" lay-search="" placeholder="请选择主办部门"></select>
-              </div>
-            </div>
-            <div className="layui-inline">
-              <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
-              <div className="layui-input-block" id='org' style={{ width: 700 }}>
-              </div>
-            </div>
-          </div>
+          
           <div className="layui-form-item">
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>指令要求</label>
@@ -412,6 +404,16 @@ function AddMeeting(props) {
               </div>
             </div>
           </div>
+					<div className="layui-form-item">
+					  <div className="layui-inline">
+					    <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>是否回执</label>
+					    <div className="layui-input-block">
+					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" title="不需要" defaultChecked/>
+					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" title="需要"/>
+					    </div>
+					  </div>
+					</div>
+					
           <div className="layui-form-item">
             <div className="layui-input-block">
               <button className="layui-btn" lay-submit="true" lay-filter="formDemo">保存</button>
