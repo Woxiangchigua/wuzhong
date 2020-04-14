@@ -552,3 +552,13 @@ button.rbc-input::-moz-focus-inner {
 .meeting_requirements {
 	width: 70%;
 }
+.layui-btn div{
+    display: none;
+}
+.layui-btn:hover div{
+    display: initial;
+}
+
+.layui-btn:hover img{
+    display: none;
+}

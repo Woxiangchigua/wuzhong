@@ -9,3 +9,13 @@
     align-items: center;
     margin-bottom: 40px
 }
+.layui-btn div{
+    display: none;
+}
+.layui-btn:hover div{
+    display: initial;
+}
+
+.layui-btn:hover img{
+    display: none;
+}

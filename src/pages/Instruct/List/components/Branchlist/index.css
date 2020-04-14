@@ -12,3 +12,13 @@
 .layui-rate {
     padding: 0 !important;
 }
+.layui-btn div{
+    display: none;
+}
+.layui-btn:hover div{
+    display: initial;
+}
+
+.layui-btn:hover img{
+    display: none;
+}
