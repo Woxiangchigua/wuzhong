@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Table, Button, Breadcrumb, Input, Modal, Form, Radio, Select, } from 'antd';
 import DragTree from '../../../components/Tree/DragTree/index'
-import './index.css'
+// import './index.css'
 const { Search } = Input;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -245,10 +245,10 @@ export default class personnel extends Component {
             <div>
                 <Row gutter={16}>
                     <Col className="gutter-row" span={4}>
-                        <div style={{marginTop:16}}>
+                        <div style={{ marginTop: 16 }}>
                             <DragTree />
                         </div>
-                        
+
                     </Col>
                     <Col className="gutter-row300" span={20}>
                         <div>

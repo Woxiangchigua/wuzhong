@@ -1,250 +1,335 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import './index.css'
 import {
-    Row,
-    Col,
-    Table,
-    Button,
     Breadcrumb,
-    Input,
-    Modal,
-    Form,
-    Radio,
-    Select,
+    Button,
+    Table,
     Tabs
 } from 'antd';
+
+import { QueryRenderer, graphql } from 'react-relay';
+
+import CreateTitleForm from '../CreateTitle';
+import CreateJobForm from '../CreateJob';
+import CreateOfferCategoryForm from '../CreateOfferCategory';
+import CreateOrgCategoryForm from '../CreateOrgCategory';
+import UpdateBasicDataForm from '../UpdateBasicData';
+
+
 const { TabPane } = Tabs;
-const { TextArea } = Input;
-const columns = [
-    {
-        title: 'ID',
-        dataIndex: 'age',
-        key: '1',
-    },
-    {
-        title: '排序号',
-        dataIndex: 'name',
-        key: '2',
-    },
-    {
-        title: '职称名称',
-        dataIndex: 'address',
-        key: '3',
-    },
-    {
-        title: '操作',
-        render: (text, record) => (
-            <span>
-                <Button type="link">修改</Button>
-            </span>
-        ),
-    }
-];
 
-const data = [];
-for (let i = 0; i < 46; i++) {
-    data.push({
-        key: i,
-        name: `Edward King ${i}`,
-        age: 32,
-        address: `London, Park Lane no. ${i}`,
-    });
-}
-
-const formItemLayout = {
-    labelCol: { span: 4 },
-    wrapperCol: { span: 14 },
-}
-
-
-const CollectionCreateForm = Form.create({ name: 'form_in_modal' })(
-    // eslint-disable-next-line
-    class extends React.Component {
-        render() {
-            const { visible, onCancel, onCreate, form } = this.props;
-            const { getFieldDecorator } = form;
-            return (
-                <Modal
-                    visible={visible}
-                    title="新增人员"
-                    okText="确定"
-                    onCancel={onCancel}
-                    onOk={onCreate}
-                >
-                    <Form layout="horizontal">
-                        <Form.Item label="姓名" {...formItemLayout}>
-                            {getFieldDecorator('name', {
-                                rules: [{ required: true, message: '请输入姓名!' }],
-                            })(<Input />)}
-                        </Form.Item>
-                        <Form.Item label="备注" {...formItemLayout}>
-                            {getFieldDecorator('description')(<TextArea rows={4} />)}
-                        </Form.Item>
-                    </Form>
-                </Modal>
-            );
-        }
-    },
-);
-export default class BasicData extends Component {
-    state = {
-        selectedRowKeys: [], // Check here to configure the default column
-        loading: false,
-        visible: false,
-    };
-
-    start = () => {
-        this.setState({ loading: true });
-        // ajax request after empty completing
-        setTimeout(() => {
-            this.setState({
-                selectedRowKeys: [],
-                loading: false,
-            });
-        }, 1000);
-    };
-
-    onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        this.setState({ selectedRowKeys });
-    };
-
-    showModal = () => {
-        this.setState({ visible: true });
-    };
-
-    handleCancel = () => {
-        this.setState({ visible: false });
-    };
-
-    handleCreate = () => {
-        const { form } = this.formRef.props;
-        form.validateFields((err, values) => {
-            if (err) {
-                return;
+const query = graphql`
+    query BasicData_Query(
+        $first: Int,
+        $skip: Int
+    ) {
+        titleList(
+            first: $first,
+            skip: $skip
+        ){
+            edges {
+              id
+              name
+              remark
+              orderNumber
             }
+            totalCount
+        }
+        jobList(
+            first: $first,
+            skip: $skip
+        ){
+            edges {
+              id
+              name
+              remark
+              orderNumber
+            }
+            totalCount
+        }
+        offerCategoryList(
+            first:$first
+            skip: $skip
+        ) {
+              
+            edges {
+                id
+                name
+                remark
+                orderNumber
+            }
+            totalCount
+        }
+        orgCategoryList(
+            first:$first
+            skip: $skip
+        ) {
+              
+            edges {
+                id
+                name
+                remark
+                orderNumber
+            }
+            totalCount
+        }
+}`
 
-            console.log('Received values of form: ', values);
-            form.resetFields();
-            this.setState({ visible: false });
-        });
+function Listview(props) {
+    const data = props.data;
+    const environment = props.environment;
+
+    const titleData = props.titleList.edges.map((d)=>{
+        return {
+            key:d.key,
+            id: d.id,
+            name: d.name,
+            remark: d.remark || "",
+            orderNumber: d.orderNumber,
+            title: "职称",
+            action: "UpdateTitle"
+        }
+    });
+    const jobData = props.jobList.edges.map((d)=>{
+        return {
+            key:d.key,
+            id: d.id,
+            name: d.name,
+            remark: d.remark || "",
+            orderNumber: d.orderNumber,
+            title: "岗位",
+            action: "UpdateJob"
+        }
+    });
+
+    const offerCategoryData = props.offerCategoryList.edges.map((d)=>{
+        return {
+            key: d.key,
+            id: d.id,
+            name: d.name,
+            remark: d.remark || "",
+            orderNumber: d.orderNumber,
+            title: "人员类型",
+            action: "UpdateOfferCategory"
+        }
+    });
+
+    const orgCategoryData = props.orgCategoryList.edges.map((d)=>{
+        return {
+            key:d.key,
+            id: d.id,
+            name: d.name,
+            remark: d.remark || "",
+            orderNumber: d.orderNumber,
+            title: "组织类型",
+            action: "UpdateOrgCategory"
+        }
+    });
+    const showModal = () => {
+        
     };
 
-    saveFormRef = formRef => {
-        this.formRef = formRef;
-    };
-    render() {
-        const { loading, selectedRowKeys } = this.state;
-        const rowSelection = {
-            selectedRowKeys,
-            onChange: this.onSelectChange,
-        };
-        const hasSelected = selectedRowKeys.length > 0;
-        return (
+    const [createTitleFormVisible,setCreateTitleFormVisible] = useState(false);
+
+    //添加职称
+    let createTitleFormCallback = (a, d) => {
+        setCreateTitleFormVisible(false);
+        props.retry();
+    }
+
+    const [createJobFormVisible,setCreateJobFormVisible] = useState(false);
+
+    //添加岗位
+    let createJobFormCallback = (a, d) => {
+        setCreateJobFormVisible(false);
+        props.retry();
+    }
+
+    const [createOfferCategoryFormVisible,setCreateOfferCategoryFormVisible] = useState(false);
+
+    //添加人员类型
+    let createOfferCategoryFormCallback = (a, d) => {
+        setCreateOfferCategoryFormVisible(false);
+        props.retry();
+    }
+
+    const [createOrgCategoryFormVisible,setCreateOrgCategoryFormVisible] = useState(false);
+
+    //添加组织类型
+    let createOrgCategoryFormCallback = (a, d) => {
+        setCreateOrgCategoryFormVisible(false);
+        props.retry();
+    }
+
+
+    const [updateBasicDataFormVisible,setUpdateBasicDataFormVisible] = useState(false);
+    const [basicData,setBasicData] = useState({});
+
+    //修改数据
+    let updateBasicDataFormCallback = (a, d) => {
+        setUpdateBasicDataFormVisible(false);
+        props.retry();
+    }
+
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+        },
+        {
+            title: '排序号',
+            dataIndex: 'orderNumber',
+            key: 'orderNumber',
+        },
+        {
+            title: '职称名称',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: '操作',
+            render: (text, record) => (
+                <span>
+                    <Button type="link" onClick={()=>{
+                        console.log("record===>",record)
+                        setBasicData(record);
+                        setUpdateBasicDataFormVisible(true)
+                    }}>修改</Button>
+                </span>
+            ),
+        }
+    ];
+    return (
+        <>
             <div>
+                <Breadcrumb style={{ margin: '15px 0px' }}>
+                    <Breadcrumb.Item>
+                        组织架构
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item>
+                        基础数据
+                    </Breadcrumb.Item>
+                </Breadcrumb>
+            </div>
+            <div>
+                <UpdateBasicDataForm 
+                    environment={environment}
+                    visible={updateBasicDataFormVisible}
+                    basicData={basicData}
+                    callback={updateBasicDataFormCallback.bind(this)}
+                />
                 <Tabs tabPosition="left">
                     <TabPane tab="职称管理" key="1">
                         <div className="Htable">
                             <div>
-                                <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                    全不选
-                                    </Button>
-                                <span style={{ marginLeft: 8 }}>
-                                    {hasSelected ? `已选择 ${selectedRowKeys.length} 项` : ''}
-                                </span>
+                               
                             </div>
                             <div>
-                                <Button type="primary" onClick={this.showModal} style={{ marginRight: 10 }}>
+                                <Button type="primary" onClick={()=>{
+                                    setCreateTitleFormVisible(true)
+                                }} style={{ marginRight: 10 }}>
                                     新增
-                                    </Button>
-                                <CollectionCreateForm
-                                    wrappedComponentRef={this.saveFormRef}
-                                    visible={this.state.visible}
-                                    onCancel={this.handleCancel}
-                                    onCreate={this.handleCreate}
+                                </Button>
+                                <CreateTitleForm 
+                                    environment={environment}
+                                    visible={createTitleFormVisible}
+                                    callback={createTitleFormCallback.bind(this)}
                                 />
                                 <Button type="danger">删除</Button>
                             </div>
                         </div>
-                        <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+                        <Table bordered  columns={columns} dataSource={titleData} />
                     </TabPane>
                     <TabPane tab="岗位管理" key="2">
                         <div className="Htable">
                             <div>
-                                <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                    全不选
-                                    </Button>
-                                <span style={{ marginLeft: 8 }}>
-                                    {hasSelected ? `已选择 ${selectedRowKeys.length} 项` : ''}
-                                </span>
                             </div>
                             <div>
-                                <Button type="primary" onClick={this.showModal} style={{ marginRight: 10 }}>
+                                <Button type="primary" onClick={()=>{
+                                    setCreateJobFormVisible(true)
+                                }} style={{ marginRight: 10 }}>
                                     新增
-                                    </Button>
-                                <CollectionCreateForm
-                                    wrappedComponentRef={this.saveFormRef}
-                                    visible={this.state.visible}
-                                    onCancel={this.handleCancel}
-                                    onCreate={this.handleCreate}
+                                </Button>
+                                <CreateJobForm 
+                                    environment={environment}
+                                    visible={createJobFormVisible}
+                                    callback={createJobFormCallback.bind(this)}
                                 />
                                 <Button type="danger">删除</Button>
                             </div>
                         </div>
-                        <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+                        <Table bordered columns={columns} dataSource={jobData} />
                     </TabPane>
                     <TabPane tab="人员类型管理" key="3">
                         <div className="Htable">
                             <div>
-                                <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                    全不选
-                                    </Button>
-                                <span style={{ marginLeft: 8 }}>
-                                    {hasSelected ? `已选择 ${selectedRowKeys.length} 项` : ''}
-                                </span>
                             </div>
                             <div>
-                                <Button type="primary" onClick={this.showModal} style={{ marginRight: 10 }}>
+                                <Button type="primary" onClick={()=>{
+                                    setCreateOfferCategoryFormVisible(true)
+                                }} style={{ marginRight: 10 }}>
                                     新增
-                                    </Button>
-                                <CollectionCreateForm
-                                    wrappedComponentRef={this.saveFormRef}
-                                    visible={this.state.visible}
-                                    onCancel={this.handleCancel}
-                                    onCreate={this.handleCreate}
+                                </Button>
+                                <CreateOfferCategoryForm 
+                                    environment={environment}
+                                    visible={createOfferCategoryFormVisible}
+                                    callback={createOfferCategoryFormCallback.bind(this)}
                                 />
                                 <Button type="danger">删除</Button>
                             </div>
                         </div>
-                        <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+                        <Table bordered columns={columns} dataSource={offerCategoryData} />
                     </TabPane>
                     <TabPane tab="组织类型管理" key="4">
                         <div className="Htable">
                             <div>
-                                <Button type="primary" onClick={this.start} disabled={!hasSelected} loading={loading}>
-                                    全不选
-                                    </Button>
-                                <span style={{ marginLeft: 8 }}>
-                                    {hasSelected ? `已选择 ${selectedRowKeys.length} 项` : ''}
-                                </span>
+                                
                             </div>
                             <div>
-                                <Button type="primary" onClick={this.showModal} style={{ marginRight: 10 }}>
+                                <Button type="primary" onClick={()=>{
+                                    setCreateOrgCategoryFormVisible(true)
+                                }} style={{ marginRight: 10 }}>
                                     新增
-                                    </Button>
-                                <CollectionCreateForm
-                                    wrappedComponentRef={this.saveFormRef}
-                                    visible={this.state.visible}
-                                    onCancel={this.handleCancel}
-                                    onCreate={this.handleCreate}
+                                </Button>
+                                <CreateOrgCategoryForm 
+                                    environment={environment}
+                                    visible={createOrgCategoryFormVisible}
+                                    callback={createOrgCategoryFormCallback.bind(this)}
                                 />
                                 <Button type="danger">删除</Button>
                             </div>
                         </div>
-                        <Table bordered rowSelection={rowSelection} columns={columns} dataSource={data} />
+                        <Table bordered columns={columns} dataSource={orgCategoryData} />
                     </TabPane>
                 </Tabs>
             </div>
-        )
-    }
+        </>
+    )
 }
+
+function List(viewProps) {
+    const environment = viewProps.environment;
+    return (<QueryRenderer
+        environment={environment}
+        query={query}
+        variables={{
+            first: 100,
+            skip: 0
+        }}
+        render={({ error, props ,retry}) => {
+            if (error) {
+                return (
+                    <div>
+                        <h1>Error!</h1><br />{error.message}
+                    </div>)
+            } else if (props) {
+                return <Listview  retry={retry} environment={environment} titleList={props.titleList} jobList={props.jobList} offerCategoryList={props.offerCategoryList} orgCategoryList={props.orgCategoryList} />
+            }
+            return <div>Loading</div>;
+        }}
+    />);
+}
+
+
+export default List;
