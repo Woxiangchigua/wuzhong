@@ -93,52 +93,58 @@ function InstructDetail(props) {
             <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.startTime))}</Descriptions.Item>
             <Descriptions.Item label="截至时间">{dateFormat("YYYY-mm-dd", new Date(Detail.deadline))}</Descriptions.Item>
           </Descriptions>
-          <Descriptions size="small" column={2} style={{ marginTop: "20px" }}>
+          <Descriptions size="small" column={1} style={{ marginTop: "20px" }}>
+						<Descriptions.Item label="工作要求">{Detail.require}</Descriptions.Item>
             <Descriptions.Item label="回执内容">{Detail.receiptReply}</Descriptions.Item>
-            <Descriptions.Item label="工作要求">{Detail.require}</Descriptions.Item>
             <Descriptions.Item label="驳回内容">{Detail.reject}</Descriptions.Item>
           </Descriptions>
         </Card>
         <Card title="原指令详情" bordered={false} >
           <Descriptions size="small" column={4}>
             <Descriptions.Item label="指令名称">{Detail.instructions.name}</Descriptions.Item>
+						<Descriptions.Item label="指令状态">
+						  <span>
+						    {Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.instructions.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
+						    Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
+						    Detail.instructions.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
+						    Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.instructions.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
+						    Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
+						  </span>
+						</Descriptions.Item>
+					</Descriptions>
+					<Descriptions size="small" column={4}>
+						<Descriptions.Item label="指令分类">
+							<span>
+								{Detail.instructions.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.instructions.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
+								Detail.instructions.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.instructions.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :
+								Detail.instructions.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
+							</span>
+						</Descriptions.Item>
             <Descriptions.Item label="指令来源">{Detail.instructions.source}</Descriptions.Item>
-            <Descriptions.Item label="指令分类">
-              <span>
-                {Detail.instructions.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.instructions.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
-                Detail.instructions.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.instructions.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :
-                Detail.instructions.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
-              </span>
-            </Descriptions.Item>
             <Descriptions.Item label="指令发起人">
               <span>
                 {Detail.instructions.initiator === 1 ? '王建国' :  ''}
               </span>
             </Descriptions.Item>
-            <Descriptions.Item label="指令状态">
-              <span>
-                {Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.instructions.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
-                Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
-                Detail.instructions.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
-                Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.instructions.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
-                Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
-              </span>
-            </Descriptions.Item>
+					</Descriptions>
+					<Descriptions size="small" column={4}>
+						<Descriptions.Item label="发起部门">{Detail.instructions.startDepartment}</Descriptions.Item>
+						<Descriptions.Item label="主办部门">{Detail.instructions.hostDepartment}</Descriptions.Item>
+						<Descriptions.Item label="协办部门">{Detail.instructions.jointlyDepartment.join('，')}</Descriptions.Item>
+					</Descriptions>
+          <Descriptions size="small" column={4}>
             <Descriptions.Item label="来源时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.sourceTime))}</Descriptions.Item>
             <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.startTime))}</Descriptions.Item>
             <Descriptions.Item label="截至时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.deadline))}</Descriptions.Item>
-            <Descriptions.Item label="回执">
-              <span>
-                {Detail.instructions.isNeedReceipt === "INSTRUCTIONS_NOT_NEED" ? '不需要回执' : Detail.instructions.isNeedReceipt === "INSTRUCTIONS_NEED" ? '需要回执' : ''}
-              </span>
-            </Descriptions.Item>
-            <Descriptions.Item label="发起部门">{Detail.instructions.startDepartment}</Descriptions.Item>
-            <Descriptions.Item label="主办部门">{Detail.instructions.hostDepartment}</Descriptions.Item>
-            <Descriptions.Item label="协办部门">{Detail.instructions.jointlyDepartment.join('，')}</Descriptions.Item>
           </Descriptions>
-          <Descriptions size="small" column={2} style={{ marginTop: "20px" }}>
+          <Descriptions size="small" column={1} style={{ marginTop: "20px" }}>
+						<Descriptions.Item label="工作要求">{Detail.instructions.require}</Descriptions.Item>
+						<Descriptions.Item label="回执">
+						  <span>
+						    {Detail.instructions.isNeedReceipt === "INSTRUCTIONS_NOT_NEED" ? '不需要回执' : Detail.instructions.isNeedReceipt === "INSTRUCTIONS_NEED" ? '需要回执' : ''}
+						  </span>
+						</Descriptions.Item>
             <Descriptions.Item label="回执内容">{Detail.instructions.receiptReply}</Descriptions.Item>
-            <Descriptions.Item label="工作要求">{Detail.instructions.require}</Descriptions.Item>
           </Descriptions>
         </Card>
         <Col span={24} style={{ marginTop: "40px" }}>

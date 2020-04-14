@@ -552,3 +552,15 @@ button.rbc-input::-moz-focus-inner {
 .meeting_requirements {
 	width: 70%;
 }
+
+.layui-form-label{
+	float: inherit;
+	text-align: center;
+}
+.layui-input-block {
+    margin-left: 18px;
+    min-height: 36px;
+}
+.layui-input{
+	padding-right: 30px;
+}

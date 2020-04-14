@@ -574,3 +574,15 @@ button.rbc-input::-moz-focus-inner {
   border-radius: 5px !important;
   font-size: 20px;
 } */
+
+.layui-form-label{
+	float: inherit;
+	text-align: center;
+}
+.layui-input-block {
+    margin-left: 18px;
+    min-height: 36px;
+}
+.layui-input{
+	padding-right: 30px;
+}
