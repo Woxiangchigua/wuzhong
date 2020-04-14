@@ -59,6 +59,7 @@ query Distinstruct_ListQuery($id:ID!){
 }`
 var childrenMsg = {}
 function AddMeeting(props) {
+  const insid = props.insid
   const id = props.instructions.id
   let history = useHistory();
   const Detail = props.instructions;
@@ -115,6 +116,7 @@ function AddMeeting(props) {
         values.require,
         id,
         values.disposePeople,
+        "INSTRUCTIONSTODO_MAIN",
         (response, errors) => {
           if (errors) {
             /* global layer */
@@ -125,7 +127,12 @@ function AddMeeting(props) {
           } else {
             layer.alert('提交成功',{title:'成功',icon: 1} ,function(index){
               //do something
-              history.goBack()
+                history.push('/Instruct/Deplist/')
+              // if(insid.listid == 1){
+              //   history.push('/Instruct/Deplist/')
+              // }else if(insid.listid == 2){
+              //   history.push('/Instruct/Assdep/')
+              // }
               layer.close(index);
             });
 
@@ -147,7 +154,12 @@ function AddMeeting(props) {
   const loading = false
 
   function goBack() {
-    history.goBack()
+    history.push('/Instruct/Deplist/')
+    // if(insid.listid == 1){
+    //   history.push('/Instruct/Deplist/')
+    // }else if(insid.listid == 2){
+    //   history.push('/Instruct/Assdep/')
+    // }
   }
 
   const { getFieldDecorator } = props.form;
@@ -233,6 +245,7 @@ const AddMeeting2 = Form.create({ name: 'horizontal_login' })(AddMeeting)
 
 function Home(props) {
   const {id}=JSON.parse(props.id)
+  const insid =JSON.parse(props.id)
   const environment = props.environment;
   return (
     <div style={{ backgroundColor: '#f0f2f5' }}>
@@ -258,7 +271,7 @@ function Home(props) {
             if (props.accounts) {
               return (
                 <>
-                  <AddMeeting2 environment={environment} accounts={props.accounts} instructions={props.instructions} id={props.id} ref="children" />
+                  <AddMeeting2 environment={environment} accounts={props.accounts} instructions={props.instructions} insid={insid} id={props.id} ref="children" />
                 </>
               )
             }
