@@ -86,8 +86,10 @@ function InstructDetail(props) {
           <Descriptions size="small" column={4}>
             <Descriptions.Item label="指令状态">
               <span>
-                {Detail.status === "INSTRUCTIONSTODO_NOT" ? '未完成' : Detail.status === "INSTRUCTIONSTODO_YES" ? '已完成' : 
-                Detail.status === "INSTRUCTIONSTODO_ASK" ? '警员请示' : Detail.status === "INSTRUCTIONSTODO_REJECT" ? '警员反驳' : ''}
+               {Detail.status === "INSTRUCTIONSTODO_YES" ? '进行中' : Detail.status === "INSTRUCTIONSTODO_ASK" ? '已完成' : 
+                Detail.status === "INSTRUCTIONSTODO_ASK" ? '已请示' : Detail.status === "INSTRUCTIONSTODO_REJECT" ? '待处理' :
+                Detail.status === "INSTRUCTIONSTODO_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONSTODO_REJECT_OK" ? '同意驳回' : 
+                Detail.status === "INSTRUCTIONSTODO_REPLY" ? '已批示' : ''}
               </span>
             </Descriptions.Item>
             <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.startTime))}</Descriptions.Item>
@@ -104,11 +106,11 @@ function InstructDetail(props) {
             <Descriptions.Item label="指令名称">{Detail.instructions.name}</Descriptions.Item>
 						<Descriptions.Item label="指令状态">
 						  <span>
-						    {Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.instructions.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
-						    Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
-						    Detail.instructions.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
-						    Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.instructions.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
-						    Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
+              {Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '进行中' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_CHECK" ? '待审核' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK" ? '已终止' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" ? '已批示' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" ? '已完成' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '未下发' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '已下发' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ? '待确认' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '驳回无效' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
 						  </span>
 						</Descriptions.Item>
 					</Descriptions>
@@ -123,7 +125,7 @@ function InstructDetail(props) {
             <Descriptions.Item label="指令来源">{Detail.instructions.source}</Descriptions.Item>
             <Descriptions.Item label="指令发起人">
               <span>
-                {Detail.instructions.initiator === 1 ? '王建国' :  ''}
+                {Detail.instructions.initiator === "account-1" ? '王建国' :  ''}
               </span>
             </Descriptions.Item>
 					</Descriptions>

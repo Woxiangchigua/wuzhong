@@ -71,11 +71,11 @@ function InstructDetail(props) {
           <Descriptions.Item label="指令名称">{Detail.name}</Descriptions.Item>
 					<Descriptions.Item label="指令状态">
 					  <span>
-					    {Detail.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
-					     Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
-					     Detail.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
-					     Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
-					     Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
+            {Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '进行中' : Detail.status === "INSTRUCTIONS_SUBOFFICE_CHECK" ? '待审核' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK" ? '已终止' : Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" ? '已批示' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" ? '已完成' : Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '未下发' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '已下发' : Detail.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ? '待确认' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
 					  </span>
 					</Descriptions.Item>
 				</Descriptions>
@@ -89,7 +89,7 @@ function InstructDetail(props) {
           <Descriptions.Item label="指令来源">{Detail.source}</Descriptions.Item>
 					<Descriptions.Item label="指令发起人">
 					  <span>
-					    {Detail.initiator === 1 ? '王建国' :  ''}
+					    {Detail.initiator === "account-1" ? '王建国' :  ''}
 					  </span>
 					</Descriptions.Item>
 				</Descriptions>
