@@ -15,8 +15,10 @@ query Branchlist_InstructListQuery(
   $order: String = ""
   $kind: enumTypeInstructionsKind
   $hostDepartment: String = ""
+  $name: String = ""
+  $source: String = ""
 ){
-  instructionsList(first:100000,skip:0,order:$order,hostDepartment:$hostDepartment,kind:$kind){
+  instructionsList(first:100000,skip:0,order:$order,hostDepartment:$hostDepartment,name:$name,source:$source,kind:$kind){
     totalCount
     edges{
       annex{
@@ -56,6 +58,7 @@ export default function Table(props) {
   var layui = window.layui
   var table = layui.table;
   var rate = layui.rate
+  var $ = window.$
   let searchKey = ""
   useEffect(
     () => {
@@ -273,7 +276,7 @@ export default function Table(props) {
                   return '<div id="star'+d.id+'"></div>'
                 } 
               }
-            , { field: '', title: "操作", align: "center", width: 220, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
         ]],
         done: function (res, curr, count) {
          var data = res.data;
@@ -303,13 +306,15 @@ export default function Table(props) {
     });
   }
 
-  function getList(searchKey) {
+  function getList(searchKey1,searchKey2) {
     // init()
     fetchQuery(props.environment, query,{
         first: 10,
         skip: 0,
         order: '',
         hostDepartment: '',
+        name:searchKey1,
+        source:searchKey2,
     }).then(data => {
       if (data) {
         if (data.instructionsList) {
@@ -321,7 +326,9 @@ export default function Table(props) {
   }
 
   function search() {
-    getList(searchKey)
+    const searchKey1 = "%" + $('#tablename').val() + "%";
+    const searchKey2 = "%" + $('#tablesource').val() + "%";;
+    getList(searchKey1,searchKey2)
   }
   return (
     <>
@@ -333,6 +340,15 @@ export default function Table(props) {
           </div>
         </div>
         <div style={{clear:"both"}}></div> */}
+        <div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablename" placeholder="请输入名称" />
+          </div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablesource" placeholder="请输入来源"/>
+          </div>
+          <button className="layui-btn" data-type="reload" onClick={search}>搜索</button>
+        </div>
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">

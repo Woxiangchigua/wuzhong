@@ -10,8 +10,10 @@ const query = graphql`
 query Constable_InstructListQuery( 
   $order: String = ""
   $disposePeople: String
+  $name: String = ""
+  $source: String = ""
 ){
-  policeToDoList(first:100000,skip:0,order:$order,disposePeople:$disposePeople){
+  policeToDoList(first:100000,skip:0,order:$order,disposePeople:$disposePeople,name:$name,source:$source){
     edges{
       deadline
       id
@@ -60,6 +62,7 @@ export default function Table(props) {
   const [meetingList, setmeetingList] = useState([]);
   let history = useHistory();
   var table = window.layui.table;
+  var $ = window.$
   let searchKey = ""
   useEffect(
     () => {
@@ -158,12 +161,12 @@ export default function Table(props) {
                     return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.deadline))}</div>`
                 }
               }
-            , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 220, toolbar: "#bar" }
         ]]
     });
   }
 
-  function getList(searchKey) {
+  function getList(searchKey1,searchKey2) {
     // init()
   // setInterval(function(){
     fetchQuery(props.environment, query, {
@@ -171,6 +174,8 @@ export default function Table(props) {
         skip: 0,
         order: '',
         disposePeople: '普通用户',
+        name:searchKey1,
+        source:searchKey2,
     }).then(data => {
       if (data) {
         if (data.policeToDoList) {
@@ -190,7 +195,9 @@ export default function Table(props) {
   }
 
   function search() {
-    getList(searchKey)
+    const searchKey1 = "%" + $('#tablename').val() + "%";
+    const searchKey2 = "%" + $('#tablesource').val() + "%";;
+    getList(searchKey1,searchKey2)
   }
   return (
     <>
@@ -202,6 +209,15 @@ export default function Table(props) {
           </div>
         </div>
         <div style={{clear:"both"}}></div> */}
+        <div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablename" placeholder="请输入名称" />
+          </div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablesource" placeholder="请输入来源"/>
+          </div>
+          <button className="layui-btn" data-type="reload" onClick={search}>搜索</button>
+        </div>
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
