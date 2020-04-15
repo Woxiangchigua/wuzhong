@@ -111,7 +111,7 @@ export default function Table(props) {
                   return `<div>${d.instructions.name}</div>`
                 }
               }
-            , { field: 'source', title: '指令来源', width: 300,
+            , { field: 'source', title: '指令来源', width: 150,
                 templet: function (d) {
                   return `<div>${d.instructions.source}</div>`
                 }
@@ -123,7 +123,7 @@ export default function Table(props) {
                   }
                 }
               }
-            , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
+            , { field: 'status', title: '指令状态', align: "center", width: 150, sort: true,
                 templet: function (d) {
                   if (d.status === 'INSTRUCTIONSTODO_NOT') {
                     // return "<span class='layui-badge'>警员已处理</span>"
@@ -140,7 +140,7 @@ export default function Table(props) {
                   }
                 }
               }
-            , {field:'sourceTime', title: '来源时间',
+            , {field:'sourceTime', title: '来源时间',width: 150,
                 templet: function (d) {
                     return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.sourceTime))}</div>`
                 }
@@ -150,7 +150,7 @@ export default function Table(props) {
                     return '<div id="star'+d.id+'"></div>'
                   } 
                 }
-            , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 150, toolbar: "#bar" }
         ]],
         done: function (res, curr, count) {
          var data = res.data;

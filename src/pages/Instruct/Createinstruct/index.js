@@ -166,6 +166,13 @@ function AddMeeting(props) {
         }
           form.render();
        });
+				
+				$("#need").on('focus',function(){
+					$(".hide").css("display","block")
+				})
+				$("#noneed").on('focus',function(){
+					$(".hide").css("display","none")
+				})
 //提交
       form.on('submit(formDemo)', function(data){
         console.log(stars)
@@ -224,6 +231,7 @@ function AddMeeting(props) {
       values.hostDepartment,
       1,
       values.require,
+			values.receiptRequire,
       0,
       values.name,
       values.startDepartment,
@@ -268,7 +276,7 @@ function AddMeeting(props) {
       values.classify,
       values.orgIds,
       sourceTime,
-      'INSTRUCTIONS_SUBOFFICE_ISSUE',  //指令状态，分局未下发
+      'INSTRUCTIONS_SUBOFFICE_ISSUE',  //指令状态，分局下发
       deadline,
       annex,
       values.isNeedReceipt,
@@ -276,6 +284,7 @@ function AddMeeting(props) {
       values.hostDepartment,
       1,
       values.require,
+			values.receiptRequire,
       0,
       values.name,
       values.startDepartment,
@@ -405,9 +414,12 @@ function AddMeeting(props) {
 					  <div className="layui-inline">
 					    <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>是否回执</label>
 					    <div className="layui-input-block">
-					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" title="不需要" defaultChecked/>
-					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" onClick={check} title="需要"/>
+					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" id="noneed" title="不需要" defaultChecked/>
+					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" id="need" title="需要"/>
 					    </div>
+							<div className="layui-input-block" style={{ width:'612px' }}>
+                <textarea name="receiptRequire"  placeholder="请输入回执内容" required lay-verify="required" className="layui-textarea hide"></textarea>
+							</div>
 					  </div>
 					</div>
           <div className="layui-form-item">

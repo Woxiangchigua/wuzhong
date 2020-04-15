@@ -22,7 +22,7 @@ class EchartsTest extends Component {
 				}
 			},
 			legend: {
-				data: ['支出', '收入']
+				data: ['今年', '去年']
 			},
 			grid: {
 				left: '2%',
@@ -46,7 +46,7 @@ class EchartsTest extends Component {
 			],
 			series: [
 				{
-					name: '收入',
+					name: '今年',
 					type: 'bar',
 					stack: '总量',
 					label: {
@@ -55,14 +55,14 @@ class EchartsTest extends Component {
 					data: [320, 302, 341, 374, 390, 450, 420, 320, 302, 341, 374, 390]
 				},
 				{
-					name: '支出',
+					name: '去年',
 					type: 'bar',
 					stack: '总量',
 					label: {
 						
 						position: 'left'
 					},
-					data: [-120, -132, -101, -134, -190, -230, -210, -120, -132, -101, -134, -190]
+					data: [120, 132, 101, 134, 190, 230, 210, 120, 132, 101, 134, 190]
 				}
 			]
         });

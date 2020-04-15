@@ -195,6 +195,13 @@ function AddMeeting(props) {
         form.render();
       });
 
+			$("#need").on('focus',function(){
+				$(".hide").css("display","block")
+			})
+			$("#noneed").on('focus',function(){
+				$(".hide").css("display","none")
+			})
+			
       form.on('submit(formDemo)', function (data) {
         let field = data.field
         let orgIds = []
@@ -207,6 +214,18 @@ function AddMeeting(props) {
         Submit(field)
         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
       });
+			form.on('submit(formdist)', function (data) {
+			  let field = data.field
+			  let orgIds = []
+			  for (let i = 0; i < deplist.length; i++) {
+			    if (field[`org${i}`]) {
+			      orgIds.push(field[`org${i}`])
+			    }
+			  }
+			  field.orgIds = orgIds
+			  DistSubmit(field)
+			  return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+			});
       let detail = JSON.parse(JSON.stringify(Detail))
       detail.sourceTime = dateFormat("YYYY-mm-dd", new Date(Detail.sourceTime))
       detail.startTime = dateFormat("YYYY-mm-dd", new Date(Detail.startTime))
@@ -248,6 +267,7 @@ function AddMeeting(props) {
       values.hostDepartment,
       1,
       values.require,
+			values.receiptRequire,
       0,
       values.name,
       values.startDepartment,
@@ -279,7 +299,65 @@ function AddMeeting(props) {
       }
     );
   };
-
+	
+	function DistSubmit(values) {
+	  let id = insid.id
+	  //来源时间
+	  let onedate = values.sourceTime
+	  let sourceTime = new Date(onedate).toISOString()
+	  //开始时间
+	  let huidate = values.startTime
+	  let startTime = new Date(huidate).toISOString()
+	  //截至时间
+	  let twodate = values.deadline
+	  let deadline = new Date(twodate).toISOString()
+	  Updateinstruct.commit(
+	    props.environment,
+	    id,
+	    values.classify,
+	    values.orgIds,
+	    sourceTime,
+	    'INSTRUCTIONS_SUBOFFICE_ISSUE',  //指令状态，分局未下发
+	    deadline,
+	    annex,
+	    values.isNeedReceipt,
+	    values.source,
+	    values.hostDepartment,
+	    1,
+	    values.require,
+			values.receiptRequire,
+	    0,
+	    values.name,
+	    values.startDepartment,
+	    startTime,
+	    (response, errors) => {
+	      if (errors) {
+	        console.log(errors)
+	        /* global layer */
+	        layer.alert(errors[0].message,{title:'错误',icon: 2} ,function(index){
+	          //do something
+	          layer.close(index);
+	        }); 
+	      } else {
+	        console.log(response);
+	        /* global layer */
+	        layer.alert('编辑成功',{title:'成功',icon: 1} ,function(index){
+	          //do something
+	          history.push('/Instruct/List')
+	          layer.close(index);
+	        }); 
+	      }
+	    },
+	    (response, errors) => {
+	      if (errors) {
+	        console.log(errors)
+	      } else {
+	        console.log(response);
+	      }
+	    }
+	  );
+	};
+	
   function goBack() {
     // if(insid.bian === 2){
     //   history.push('/Instruct/Deplist/')
@@ -287,7 +365,7 @@ function AddMeeting(props) {
       history.push('/Instruct/List/')
     // }
   }
-
+	
   const { getFieldDecorator } = props.form;
   return (
     <>
@@ -374,15 +452,19 @@ function AddMeeting(props) {
 					  <div className="layui-inline">
 					    <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>是否回执</label>
 					    <div className="layui-input-block">
-					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" title="不需要" defaultChecked/>
-					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" title="需要"/>
+					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" id="noneed" title="不需要" defaultChecked/>
+					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" id="need" title="需要"/>
 					    </div>
+							<div className="layui-input-block" style={{ width:'612px' }}>
+                <textarea name="receiptRequire"  placeholder="请输入回执内容" required lay-verify="required" className="layui-textarea hide"></textarea>
+							</div>
 					  </div>
 					</div>
 					
           <div className="layui-form-item">
             <div className="layui-input-block">
-              <button className="layui-btn" lay-submit="true" lay-filter="formDemo">提交</button>
+              <button className="layui-btn" lay-submit="true" lay-filter="formDemo">保存</button>
+							<button className="layui-btn" lay-submit="true" lay-filter="formdist">下发</button>
               <button className="layui-btn layui-btn-primary" onClick={goBack}>取消</button>
             </div>
           </div>
