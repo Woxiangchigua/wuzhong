@@ -87,13 +87,16 @@ export default function Table(props) {
             history.push('/Instruct/Querypolice/' + JSON.stringify({id:data.id,listid:props.id}))
         }else if(obj.event==="ping"){
             history.push('/Instruct/Policescore/' + JSON.stringify({id:data.id,listid:props.id}))
+        }else if(obj.event==="shen"){
+          history.push('/Instruct/Depaudit/' + JSON.stringify({id:data.id,listid:props.id}))
+        }else if(obj.event==="pi"){
+          history.push('/Instruct/Depbatch/' + JSON.stringify({id:data.id,listid:props.id}))
         }
       })
     }
   )
   
   function init(data) {
-    console.log(data)
     /* global layer */
     //第一个实例
     table.render({
@@ -105,42 +108,51 @@ export default function Table(props) {
         , cols: [[ //表头 
             // { checkbox: true }
             // , 
-            { field: 'id', title: 'id', width: 200, sort: true }
-            , { field: 'name', title: '指令名称', 
+            // { field: 'id', title: 'id', width: 200, sort: true }, 
+            { field: 'name', title: '指令名称', 
                 templet: function (d) {
                   return `<div>${d.instructions.name}</div>`
                 }
               }
-            , { field: 'source', title: '指令来源', width: 300,
+            , { field: 'source', title: '指令来源', width: 130,
                 templet: function (d) {
                   return `<div>${d.instructions.source}</div>`
                 }
               }
-            , { field: 'sponsorUserId', title: '指令发起人', align: "center", width: 150,
+            , { field: 'sponsorUserId', title: '指令发起人', align: "center", width: 130,
                 templet: function (d) {
-                  if (d.instructions.initiator === 1) {
+                  if (d.instructions.initiator === "account-1") {
                       return "<span>王建国</span>"
                   }
                 }
               }
             , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
                 templet: function (d) {
-                  if (d.status === 'INSTRUCTIONSTODO_NOT') {
-                    // return "<span class='layui-badge'>警员已处理</span>"
-                    return "未完成"
-                  } else if(d.status === 'INSTRUCTIONSTODO_YES') {
-                    // return "<span class='layui-badge'>部门请示</span>"
+                  if (d.status === 'INSTRUCTIONSTODO_REJECT_NOT') {
+                    // return "<span class='layui-badge'>驳回无效</span>"
+                    return "驳回无效"
+                  }else if(d.status === 'INSTRUCTIONSTODO_SUBMIT') {
+                    // return "<span class='layui-badge'>已完成</span>"
                     return "已完成"
+                  }else if(d.status === 'INSTRUCTIONSTODO_YES'){
+                    // return "<span class='layui-badge layui-bg-green'>进行中</span>"
+                    return "进行中"
                   }else if(d.status === 'INSTRUCTIONSTODO_ASK'){
-                    // return "<span class='layui-badge layui-bg-green'>警员请示</span>"
-                    return "警员请示"
+                    // return "<span class='layui-badge layui-bg-green'>已请示</span>"
+                    return "已请示"
+                  }else if(d.status === 'INSTRUCTIONSTODO_REPLY') {
+                    // return "<span class='layui-badge'>已批示</span>"
+                    return "已批示"
                   }else if(d.status === 'INSTRUCTIONSTODO_REJECT'){
-                    // return "<span class='layui-badge layui-bg-green'>部门驳回</span>"
-                    return "警员驳回"
+                    // return "<span class='layui-badge layui-bg-green'>待处理</span>"
+                    return "待处理"
+                  }else if(d.status === 'INSTRUCTIONSTODO_REJECT_OK'){
+                    // return "<span class='layui-badge layui-bg-green'>同意驳回</span>"
+                    return "同意驳回"
                   }
                 }
               }
-            , {field:'sourceTime', title: '来源时间',
+            , {field:'sourceTime', title: '来源时间', width: 150,
                 templet: function (d) {
                     return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.sourceTime))}</div>`
                 }
@@ -150,12 +162,11 @@ export default function Table(props) {
                     return '<div id="star'+d.id+'"></div>'
                   } 
                 }
-            , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 150, toolbar: "#bar" }
         ]],
         done: function (res, curr, count) {
          var data = res.data;
          for(var i in data){
-          console.log(data[i])
           rate.render({
             elem:'#star'+data[i].id+'',
             length:5,
@@ -213,14 +224,30 @@ export default function Table(props) {
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
-        <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
+        {`
+          {{#  if(d.status === "INSTRUCTIONSTODO_REJECT" && d.status !== "INSTRUCTIONSTODO_REJECT_NOT" && d.status !== "INSTRUCTIONSTODO_REJECT_OK" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="shen">审批</button>
+          {{#  } }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_ASK" && d.status !== "INSTRUCTIONSTODO_REPLY" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="pi">批示</button>
+          {{#  } }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_SUBMIT"){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="ping">评分</button>
+          {{#  } }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_YES" || d.status === "INSTRUCTIONSTODO_ASK" || d.status === "INSTRUCTIONSTODO_REPLY"
+              || d.status === "INSTRUCTIONSTODO_REJECT" || d.status === "INSTRUCTIONSTODO_REJECT_OK" || d.status === "INSTRUCTIONSTODO_REJECT_NOT" 
+              || d.status === "INSTRUCTIONSTODO_SUBMIT" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="go">详情</button>
+          {{#  } }}
+        `}
+        {/* <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
           <img src={require("../../../../../img/xiangqing.png")} style={{marginTop:"-5px"}}/>
           <div>详情</div>
         </button>
         <button type='button' lay-event="ping" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
           <img src={require("../../../../../img/pingfen.png")} style={{marginTop:"-5px"}}/>
           <div>评分</div>
-        </button>
+        </button> */}
       </script>
     </>
   )

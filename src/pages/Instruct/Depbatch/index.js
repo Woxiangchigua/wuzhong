@@ -22,41 +22,55 @@ import {
 } from 'antd';
 const { Option } = Select;
 const query = graphql`
-query Depbatch_ListQuery($id:ID!){
-  instructions(id:$id){
-    annex{
-      name
-      url
-    }
-    classify
+query Depbatch_InstructDetailQuery($id:ID!){
+  queryPoliceToDo(id:$id){
+    askFor
     deadline
-    hostDepartment
     id
-    initiator
-    isNeedReceipt
-    jointlyDepartment
-    kind
-    name
-    priority
+    instructions{
+      annex{
+        name
+        url
+      }
+      classify
+      deadline
+      hostDepartment
+      id
+      initiator
+      isNeedReceipt
+      jointlyDepartment
+      kind
+      name
+      priority
+      receiptAnnex{
+        name
+        url
+      }
+      receiptReply
+      receiptReply
+      require
+      source
+      sourceTime
+      startDepartment
+      startTime
+      status
+    }
     receiptAnnex{
       name
       url
     }
     receiptReply
-    receiptReply
+    reject
     require
-    source
-    sourceTime
-    startDepartment
     startTime
     status
   }
 }`
 var childrenMsg = {}
 function AddMeeting(props) {
-  const id = props.instructions.id
+  const id = props.queryPoliceToDo.id
   let history = useHistory();
-  const Detail = props.instructions;
+  const Detail = props.queryPoliceToDo;
   var layui = window.layui
   var table = window.layui.table;
   var laydate = layui.laydate;
@@ -101,7 +115,7 @@ function AddMeeting(props) {
           } else {
             layer.alert('保存成功',{title:'成功',icon: 1} ,function(index){
               //do something
-              history.push('/Instruct/Deplist')
+              history.goBack()
               layer.close(index);
             });
 
@@ -123,52 +137,78 @@ function AddMeeting(props) {
   const loading = false
 
   function goBack() {
-    history.push('/Instruct/Deplist')
+    history.goBack()
   }
 
   const { getFieldDecorator } = props.form;
   return (
     <>
-    <Card title="基本信息" >
-    <Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
-          <Descriptions.Item label="指令名称">{Detail.name}</Descriptions.Item>
-          <Descriptions.Item label="指令来源">{Detail.source}</Descriptions.Item>
-          <Descriptions.Item label="指令分类">
-            <span>
-              {Detail.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
-               Detail.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :  Detail.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
-            </span>
-          </Descriptions.Item>
-          <Descriptions.Item label="指令发起人">
-            <span>
-              {Detail.initiator === "account-1" ? '王建国' :  ''}
-            </span>
-          </Descriptions.Item>
-          <Descriptions.Item label="指令状态">
-            <span>
-              {Detail.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
-               Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
-               Detail.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
-               Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
-               Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
-            </span>
-          </Descriptions.Item>
-          <Descriptions.Item label="来源时间">{dateFormat("YYYY-mm-dd", new Date(Detail.sourceTime))}</Descriptions.Item>
-          <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.startTime))}</Descriptions.Item>
-          <Descriptions.Item label="截至时间">{dateFormat("YYYY-mm-dd", new Date(Detail.deadline))}</Descriptions.Item>
-          <Descriptions.Item label="回执">
-            <span>
-              {Detail.isNeedReceipt === "INSTRUCTIONS_NOT_NEED" ? '不需要回执' : Detail.isNeedReceipt === "INSTRUCTIONS_NEED" ? '需要回执' : ''}
-            </span>
-          </Descriptions.Item>
-          <Descriptions.Item label="发起部门">{Detail.startDepartment}</Descriptions.Item>
-          <Descriptions.Item label="主办部门">{Detail.hostDepartment}</Descriptions.Item>
-          <Descriptions.Item label="协办部门">{Detail.jointlyDepartment.join('，')}</Descriptions.Item>
-        </Descriptions>
-        <Descriptions size="small" column={2} style={{ marginTop: "20px" }}>
-          <Descriptions.Item label="回执内容">{Detail.receiptReply}</Descriptions.Item>
-          <Descriptions.Item label="工作要求">{Detail.require}</Descriptions.Item>
-        </Descriptions>
+    <Card title="基础信息" bordered={false} >
+          <Descriptions size="small" column={4}>
+            <Descriptions.Item label="指令状态">
+              <span>
+               {Detail.status === "INSTRUCTIONSTODO_YES" ? '进行中' : Detail.status === "INSTRUCTIONSTODO_ASK" ? '已完成' : 
+                Detail.status === "INSTRUCTIONSTODO_ASK" ? '已请示' : Detail.status === "INSTRUCTIONSTODO_REJECT" ? '待处理' :
+                Detail.status === "INSTRUCTIONSTODO_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONSTODO_REJECT_OK" ? '同意驳回' : 
+                Detail.status === "INSTRUCTIONSTODO_REPLY" ? '已批示' : ''}
+              </span>
+            </Descriptions.Item>
+            <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.startTime))}</Descriptions.Item>
+            <Descriptions.Item label="截至时间">{dateFormat("YYYY-mm-dd", new Date(Detail.deadline))}</Descriptions.Item>
+          </Descriptions>
+          <Descriptions size="small" column={1} style={{ marginTop: "20px" }}>
+						<Descriptions.Item label="工作要求">{Detail.require}</Descriptions.Item>
+            <Descriptions.Item label="回执内容">{Detail.receiptReply}</Descriptions.Item>
+            <Descriptions.Item label="驳回内容">{Detail.reject}</Descriptions.Item>
+          </Descriptions>
+        </Card>
+        <Card title="原指令详情" bordered={false} >
+          <Descriptions size="small" column={4}>
+            <Descriptions.Item label="指令名称">{Detail.instructions.name}</Descriptions.Item>
+						<Descriptions.Item label="指令状态">
+						  <span>
+              {Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '进行中' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_CHECK" ? '待审核' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK" ? '已终止' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" ? '已批示' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" ? '已完成' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '未下发' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '已下发' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ? '待确认' : 
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '驳回无效' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
+						  </span>
+						</Descriptions.Item>
+					</Descriptions>
+					<Descriptions size="small" column={4}>
+						<Descriptions.Item label="指令分类">
+							<span>
+								{Detail.instructions.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.instructions.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
+								Detail.instructions.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.instructions.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :
+								Detail.instructions.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
+							</span>
+						</Descriptions.Item>
+            <Descriptions.Item label="指令来源">{Detail.instructions.source}</Descriptions.Item>
+            <Descriptions.Item label="指令发起人">
+              <span>
+                {Detail.instructions.initiator === "account-1" ? '王建国' :  ''}
+              </span>
+            </Descriptions.Item>
+					</Descriptions>
+					<Descriptions size="small" column={4}>
+						<Descriptions.Item label="发起部门">{Detail.instructions.startDepartment}</Descriptions.Item>
+						<Descriptions.Item label="主办部门">{Detail.instructions.hostDepartment}</Descriptions.Item>
+						<Descriptions.Item label="协办部门">{Detail.instructions.jointlyDepartment.join('，')}</Descriptions.Item>
+					</Descriptions>
+          <Descriptions size="small" column={4}>
+            <Descriptions.Item label="来源时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.sourceTime))}</Descriptions.Item>
+            <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.startTime))}</Descriptions.Item>
+            <Descriptions.Item label="截至时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.deadline))}</Descriptions.Item>
+          </Descriptions>
+          <Descriptions size="small" column={1} style={{ marginTop: "20px" }}>
+						<Descriptions.Item label="工作要求">{Detail.instructions.require}</Descriptions.Item>
+						<Descriptions.Item label="回执">
+						  <span>
+						    {Detail.instructions.isNeedReceipt === "INSTRUCTIONS_NOT_NEED" ? '不需要回执' : Detail.instructions.isNeedReceipt === "INSTRUCTIONS_NEED" ? '需要回执' : ''}
+						  </span>
+						</Descriptions.Item>
+            <Descriptions.Item label="回执内容">{Detail.instructions.receiptReply}</Descriptions.Item>
+          </Descriptions>
         </Card>
         <Card title="批示信息">
         <form className="layui-form"  action="">
@@ -226,10 +266,10 @@ function Home(props) {
                 <h1>Error!</h1><br />{error.message}
               </div>)
           } else if (props) {
-            if (props.instructions) {
+            if (props.queryPoliceToDo) {
               return (
                 <>
-                  <AddMeeting2 environment={environment} instructions={props.instructions} id={props.id} ref="children" />
+                  <AddMeeting2 environment={environment} queryPoliceToDo={props.queryPoliceToDo} id={props.id} ref="children" />
                 </>
               )
             }

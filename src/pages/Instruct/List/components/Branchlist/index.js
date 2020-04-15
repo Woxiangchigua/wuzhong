@@ -230,30 +230,36 @@ export default function Table(props) {
             }
             , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
               templet: function (d) {
-                if (d.status === 'INSTRUCTIONS_POLICE_DISPOSE') {
-                  // return "<span class='layui-badge'>警员已处理</span>"
-                  return "警员已处理"
-                } else if(d.status === 'INSTRUCTIONS_DEPARTMENT_ASK') {
-                  // return "<span class='layui-badge'>部门请示</span>"
-                  return "部门请示"
-                }else if(d.status === 'INSTRUCTIONS_POLICE_ASK'){
-                  // return "<span class='layui-badge layui-bg-green'>警员请示</span>"
-                  return "警员请示"
-                }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_REJECT'){
-                  // return "<span class='layui-badge layui-bg-green'>部门驳回</span>"
-                  return "部门驳回"
-                }else if(d.status === 'INSTRUCTIONS_POLICE_REJECT'){
-                  // return "<span class='layui-badge layui-bg-green'>警员驳回</span>"
-                  return "警员驳回"
+                if (d.status === 'INSTRUCTIONS_DEPARTMENT_ISSUE') {
+                  // return "<span class='layui-badge'>进行中</span>"
+                  return "进行中"
+                } else if(d.status === 'INSTRUCTIONS_SUBOFFICE_CHECK') {
+                  // return "<span class='layui-badge'>待审核</span>"
+                  return "待审核"
+                }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_REJECT_OK'){
+                  // return "<span class='layui-badge layui-bg-green'>已终止</span>"
+                  return "已终止"
+                }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_ASK_REPLY'){
+                  // return "<span class='layui-badge layui-bg-green'>已批示</span>"
+                  return "已批示"
+                }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_AFFIRM'){
+                  // return "<span class='layui-badge layui-bg-green'>已完成</span>"
+                  return "已完成"
                 }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_NOT_ISSUE'){
-                  // return "<span class='layui-badge layui-bg-green'>分局未下发</span>"
-                  return "分局未下发"
+                  // return "<span class='layui-badge layui-bg-green'>未下发</span>"
+                  return "未下发"
                 }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_ISSUE'){
-                  // return "<span class='layui-badge layui-bg-green'>分局已批示</span>"
-                  return "分局已批示"
-                }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_ISSUE'){
-                  // return "<span class='layui-badge layui-bg-green'>部门、派出所已批示</span>"
-                  return "部门、派出所已批示"
+                  // return "<span class='layui-badge layui-bg-green'>已下发</span>"
+                  return "已下发"
+                }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_SUBMIT'){
+                  // return "<span class='layui-badge layui-bg-green'>待确认</span>"
+                  return "待确认"
+                }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_REJECT_NOT'){
+                  // return "<span class='layui-badge layui-bg-green'>驳回无效</span>"
+                  return " 驳回无效"
+                }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_ASK'){
+                  // return "<span class='layui-badge layui-bg-green'>待批示</span>"
+                  return "待批示"
                 }
               }
             }
@@ -267,8 +273,7 @@ export default function Table(props) {
                   return '<div id="star'+d.id+'"></div>'
                 } 
               }
-            // , { field: 'priority', title: '优先级', width: 80, align: "center", sort: true, }
-            , { field: '', title: "操作", align: "center", width: 330, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 220, toolbar: "#bar" }
         ]],
         done: function (res, curr, count) {
          var data = res.data;
@@ -331,44 +336,38 @@ export default function Table(props) {
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
-        <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/xiangqing.png")} style={{marginTop:"-5px"}}/>
-          <div>详情</div>
-        </button>
-        <button type='button' lay-event="bian" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/xiafa.png")} style={{marginTop:"-5px"}}/>
-          <div>下发</div>
-        </button>
-        <button type='button' lay-event="jin" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/jincheng.png")} style={{marginTop:"-5px"}}/>
-          <div>进程</div>
-        </button>
-        <button type='button' lay-event="pi" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/pishi.png")} style={{marginTop:"-5px"}}/>
-          <div>批示</div>
-        </button>
-        <button type='button' lay-event="shen" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/shenpi.png")} style={{marginTop:"-5px"}}/>
-          <div>审批</div>
-        </button>
-        <button type='button' lay-event="ping" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/pingfen.png")} style={{marginTop:"-5px"}}/>
-          <div>评分</div>
-        </button>
-        <button type='button' lay-event="shan" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/shanchu.png")} style={{marginTop:"-5px"}}/>
-          <div>删除</div>
-        </button>
-        <button type='button' lay-event="que" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/queren.png")} style={{marginTop:"-5px"}}/>
-          <div>确认</div>
-        </button>
-        {/* <button type='button' lay-event="qing" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe6b2;</i>请示
-        </button>
-        <button type='button' lay-event="ping" className='layui-btn layui-btn-normal layui-btn-xs'>
-          <i className="layui-icon">&#xe67a;</i>评分
-        </button> */}
+        {`
+        {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="xia">下发</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_DEPARTMENT_ASK" ){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="pi">批示</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" ){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="shen">审批</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="que">确认</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="ping">评分</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" || d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE"
+        || d.status === "INSTRUCTIONS_DEPARTMENT_ASK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" 
+        || d.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK"
+        || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM"){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="jin">进程</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="shan">删除</button>
+        {{#  } }}
+        {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" || d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" || d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE"
+             || d.status === "INSTRUCTIONS_DEPARTMENT_ASK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" 
+             || d.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK"
+             || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM"){ }}
+          <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="go">详情</button>
+        {{#  } }}
+        `}
       </script>
     </>
   )
