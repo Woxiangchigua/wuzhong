@@ -10,8 +10,10 @@ const query = graphql`
 query Constable_InstructListQuery( 
   $order: String = ""
   $disposePeople: String
+  $name: String = ""
+  $source: String = ""
 ){
-  policeToDoList(first:100000,skip:0,order:$order,disposePeople:$disposePeople){
+  policeToDoList(first:100000,skip:0,order:$order,disposePeople:$disposePeople,name:$name,source:$source){
     edges{
       deadline
       id
@@ -60,6 +62,7 @@ export default function Table(props) {
   const [meetingList, setmeetingList] = useState([]);
   let history = useHistory();
   var table = window.layui.table;
+  var $ = window.$
   let searchKey = ""
   useEffect(
     () => {
@@ -130,8 +133,8 @@ export default function Table(props) {
             , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
                 templet: function (d) {
                   if (d.status === 'INSTRUCTIONSTODO_REJECT_NOT') {
-                    // return "<span class='layui-badge'>驳回无效</span>"
-                    return "驳回无效"
+                    // return "<span class='layui-badge'>进行中</span>"
+                    return "进行中"
                   }else if(d.status === 'INSTRUCTIONSTODO_SUBMIT') {
                     // return "<span class='layui-badge'>已完成</span>"
                     return "已完成"
@@ -148,29 +151,31 @@ export default function Table(props) {
                     // return "<span class='layui-badge layui-bg-green'>待处理</span>"
                     return "待处理"
                   }else if(d.status === 'INSTRUCTIONSTODO_REJECT_OK'){
-                    // return "<span class='layui-badge layui-bg-green'>同意驳回</span>"
-                    return "同意驳回"
+                    // return "<span class='layui-badge layui-bg-green'>已终止</span>"
+                    return "已终止"
                   }
                 }
               }
-            , {field:'deadline', title: '来源时间', width: 150, align: "center", 
+              ,{field:'deadline', title: '截至时间', width: 150, align: "center", sort: true,
                 templet: function (d) {
-                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.deadline))}</div>`
+                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.deadline))}</div>`
                 }
               }
-            , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 220, toolbar: "#bar" }
         ]]
     });
   }
 
-  function getList(searchKey) {
+  function getList(searchKey1,searchKey2) {
     // init()
   // setInterval(function(){
     fetchQuery(props.environment, query, {
         first: 10,
         skip: 0,
-        order: '',
+        order: 'deadline asc',
         disposePeople: '普通用户',
+        name:searchKey1,
+        source:searchKey2,
     }).then(data => {
       if (data) {
         if (data.policeToDoList) {
@@ -190,7 +195,9 @@ export default function Table(props) {
   }
 
   function search() {
-    getList(searchKey)
+    const searchKey1 = "%" + $('#tablename').val() + "%";
+    const searchKey2 = "%" + $('#tablesource').val() + "%";;
+    getList(searchKey1,searchKey2)
   }
   return (
     <>
@@ -202,14 +209,23 @@ export default function Table(props) {
           </div>
         </div>
         <div style={{clear:"both"}}></div> */}
+        <div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablename" placeholder="请输入名称" />
+          </div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablesource" placeholder="请输入来源"/>
+          </div>
+          <button className="layui-btn" data-type="reload" onClick={search}>搜索</button>
+        </div>
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
         {`
-          {{#  if(d.status === "INSTRUCTIONSTODO_SUBMIT" || d.status !== "INSTRUCTIONSTODO_REJECT_OK" && d.status !== "INSTRUCTIONSTODO_REJECT_NOT" ){ }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_YES"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="bo">驳回</button>
           {{#  } }}
-          {{#  if(d.status !== "INSTRUCTIONSTODO_REPLY" || d.status === "INSTRUCTIONSTODO_SUBMIT" ){ }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_YES"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="qing">请示</button>
           {{#  } }}
           {{#  if(d.status !== "INSTRUCTIONSTODO_SUBMIT" ){ }}
