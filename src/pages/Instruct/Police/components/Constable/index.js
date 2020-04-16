@@ -103,7 +103,7 @@ export default function Table(props) {
               , { field: 'classify', title: '指令类型', width: 130,
                   templet: function (d) {
                     if (d.instructions.classify === 'INSTRUCTIONS_CASE') {
-                      return "案件督导"
+                      return "事件督导"
                     } else if(d.instructions.classify === 'INSTRUCTIONS_NOTICE') {
                       return "会议通知"
                     }else if(d.instructions.classify === 'INSTRUCTIONS_INFORM'){
@@ -129,18 +129,27 @@ export default function Table(props) {
               }
             , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
                 templet: function (d) {
-                  if (d.status === 'INSTRUCTIONSTODO_NOT') {
-                    // return "<span class='layui-badge'>警员已处理</span>"
-                    return "未完成"
-                  } else if(d.status === 'INSTRUCTIONSTODO_YES') {
-                    // return "<span class='layui-badge'>部门请示</span>"
+                  if (d.status === 'INSTRUCTIONSTODO_REJECT_NOT') {
+                    // return "<span class='layui-badge'>驳回无效</span>"
+                    return "驳回无效"
+                  }else if(d.status === 'INSTRUCTIONSTODO_SUBMIT') {
+                    // return "<span class='layui-badge'>已完成</span>"
                     return "已完成"
+                  }else if(d.status === 'INSTRUCTIONSTODO_YES'){
+                    // return "<span class='layui-badge layui-bg-green'>进行中</span>"
+                    return "进行中"
                   }else if(d.status === 'INSTRUCTIONSTODO_ASK'){
-                    // return "<span class='layui-badge layui-bg-green'>警员请示</span>"
-                    return "警员请示"
+                    // return "<span class='layui-badge layui-bg-green'>已请示</span>"
+                    return "已请示"
+                  }else if(d.status === 'INSTRUCTIONSTODO_REPLY') {
+                    // return "<span class='layui-badge'>已批示</span>"
+                    return "已批示"
                   }else if(d.status === 'INSTRUCTIONSTODO_REJECT'){
-                    // return "<span class='layui-badge layui-bg-green'>部门驳回</span>"
-                    return "警员驳回"
+                    // return "<span class='layui-badge layui-bg-green'>待处理</span>"
+                    return "待处理"
+                  }else if(d.status === 'INSTRUCTIONSTODO_REJECT_OK'){
+                    // return "<span class='layui-badge layui-bg-green'>同意驳回</span>"
+                    return "同意驳回"
                   }
                 }
               }
@@ -186,7 +195,7 @@ export default function Table(props) {
   return (
     <>
       <div>
-        <div className={'divclear'}></div>
+        <div className={'divclear'}></div>
         {/* <div className="topBtn">
           <div>
             <button type="button" onClick={open} lay-event="delAll" className="layui-btn layui-btn-sm" style={{float:"left"}}>公文归档</button>
@@ -196,22 +205,22 @@ export default function Table(props) {
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
-        <button type='button' lay-event="go" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/xiangqing.png")} style={{marginTop:"-5px"}}/>
-          <div>详情</div>
-        </button>
-        <button type='button' lay-event="qing" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/qingshi.png")} style={{marginTop:"-5px"}}/>
-          <div>请示</div>
-        </button>
-        <button type='button' lay-event="hui" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/huifu.png")} style={{marginTop:"-5px"}}/>
-          <div>回复</div>
-        </button>
-        <button type='button' lay-event="bo" className='layui-btn layui-btn-primary layui-btn-xs' style={{border:"none"}}>
-          <img src={require("../../../../../img/bohui.png")} style={{marginTop:"-5px"}}/>
-          <div>驳回</div>
-        </button>
+        {`
+          {{#  if(d.status === "INSTRUCTIONSTODO_SUBMIT" || d.status !== "INSTRUCTIONSTODO_REJECT_OK" && d.status !== "INSTRUCTIONSTODO_REJECT_NOT" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="bo">驳回</button>
+          {{#  } }}
+          {{#  if(d.status !== "INSTRUCTIONSTODO_REPLY" || d.status === "INSTRUCTIONSTODO_SUBMIT" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="qing">请示</button>
+          {{#  } }}
+          {{#  if(d.status !== "INSTRUCTIONSTODO_SUBMIT" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="hui">回复</button>
+          {{#  } }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_YES" || d.status === "INSTRUCTIONSTODO_ASK" || d.status === "INSTRUCTIONSTODO_REPLY"
+              || d.status === "INSTRUCTIONSTODO_REJECT" || d.status === "INSTRUCTIONSTODO_REJECT_OK" || d.status === "INSTRUCTIONSTODO_REJECT_NOT" 
+              || d.status === "INSTRUCTIONSTODO_SUBMIT" ){ }}
+            <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="go">详情</button>
+          {{#  } }}
+        `}
       </script>
     </>
   )

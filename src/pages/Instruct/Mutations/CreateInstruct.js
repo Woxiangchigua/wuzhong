@@ -20,7 +20,7 @@ const mutation = graphql`
     $name: String!
     $startDepartment: String!
     $startTime: DateTime!
-    $receiptRequire: String = ""
+    $receiptRequire: String!
 ) {
    createInstructions(classify: $classify,jointlyDepartment: $jointlyDepartment,sourceTime: $sourceTime,status: $status,deadline: $deadline,
     annex: $annex,isNeedReceipt: $isNeedReceipt,source: $source,hostDepartment: $hostDepartment,initiator: $initiator

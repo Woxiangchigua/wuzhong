@@ -586,3 +586,14 @@ button.rbc-input::-moz-focus-inner {
 .layui-input{
 	padding-right: 30px;
 }
+
+.hide{
+	display: none;
+}
+input[type=radio]{
+    display: inline-block!important;
+		margin-right: 5px;
+}
+.allhide .layui-icon{
+	display: none!important;
+}

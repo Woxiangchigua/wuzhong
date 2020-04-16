@@ -67,24 +67,24 @@ function AddMeeting(props) {
   const data = [];
   var dataBak = [];
   useEffect(
-        () => {
+        () => {
       init(data)
-    /* global layer */
-          layui.use(['form', 'laydate'], function () {
-       //执行一个laydate实例
+    /* global layer */
+          layui.use(['form', 'laydate'], function () {
+       //执行一个laydate实例
             form.render();
           });
           //提交
-          form.on('submit(formDemo)', function(data){
+          form.on('submit(formDemo)', function(data){
             // console.log(dataBak)
-            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
             // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
             Submit(data.field)//提交
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
           });
-        }
-      )
+        }
+      )
     //提交
     function Submit(values) {
       Batch.commit(
@@ -135,7 +135,7 @@ function AddMeeting(props) {
           <Descriptions.Item label="指令来源">{Detail.source}</Descriptions.Item>
           <Descriptions.Item label="指令分类">
             <span>
-              {Detail.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
+              {Detail.classify === "INSTRUCTIONS_CASE" ? '事件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
                Detail.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :  Detail.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
             </span>
           </Descriptions.Item>
@@ -146,11 +146,11 @@ function AddMeeting(props) {
           </Descriptions.Item>
           <Descriptions.Item label="指令状态">
             <span>
-              {Detail.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
-               Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
-               Detail.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
-               Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
-               Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
+              {Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '进行中' : Detail.status === "INSTRUCTIONS_SUBOFFICE_CHECK" ? '待审核' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK" ? '已终止' : Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" ? '已批示' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" ? '已完成' : Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '未下发' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '已下发' : Detail.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ? '待确认' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
             </span>
           </Descriptions.Item>
           <Descriptions.Item label="来源时间">{dateFormat("YYYY-mm-dd", new Date(Detail.sourceTime))}</Descriptions.Item>
@@ -171,22 +171,22 @@ function AddMeeting(props) {
         </Descriptions>
         </Card>
         <Card title="批示信息">
-        <form className="layui-form"  action="">
+        <form className="layui-form"  action="">
           <div className="layui-form-item">
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>批示内容</label>
-              <div className="layui-input-block" style={{ width:'612px' }}>
-                <textarea name="askFor" required lay-verify="required" placeholder="请输入批示内容" className="layui-textarea"></textarea>
+              <div className="layui-input-block" style={{ width:'612px' }}>
+                <textarea name="askFor" required lay-verify="required" placeholder="请输入批示内容" className="layui-textarea"></textarea>
               </div>
             </div>
           </div>
           <div className="layui-form-item">
             <div className="layui-input-block">
               <button className="layui-btn" lay-submit="true" lay-filter="formDemo">提交</button>
-              <button className="layui-btn layui-btn-primary" onClick={goBack}>取消</button>
+              <button className="layui-btn layui-btn-primary" onClick={goBack}>取消</button>
             </div>
           </div>
-        </form>
+        </form>
         </Card>
       <script type="text/html" id="bar">
         <button type='button' lay-event="bao" className='layui-btn layui-btn-success layui-btn-xs'>

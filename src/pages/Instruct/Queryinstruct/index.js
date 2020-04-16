@@ -41,12 +41,12 @@ const query = graphql`
         url
       }
       receiptReply
-      receiptReply
       require
       source
       sourceTime
       startDepartment
       startTime
+			receiptRequire
       status
     }
   }`
@@ -71,25 +71,25 @@ function InstructDetail(props) {
           <Descriptions.Item label="指令名称">{Detail.name}</Descriptions.Item>
 					<Descriptions.Item label="指令状态">
 					  <span>
-					    {Detail.status === "INSTRUCTIONS_DEPARTMENT_REJECT" ? '部门驳回' : Detail.status === "INSTRUCTIONS_POLICE_REJECT" ? '警员驳回' : 
-					     Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '分局未下发' : Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '分局已批示' : 
-					     Detail.status === "INSTRUCTIONS_POLICE_ASK" ? '警员请示' :  Detail.status === "INSTRUCTIONS_DEPARTMENT_REPLY" ? '部门已回复' : 
-					     Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '部门、派出所已批示' : Detail.status === "INSTRUCTIONS_POLICE_DISPOSE" ? '警员已处理' : 
-					     Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '部门请示' :  ''}
+            {Detail.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ? '进行中' : Detail.status === "INSTRUCTIONS_SUBOFFICE_CHECK" ? '待审核' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK" ? '已终止' : Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" ? '已批示' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" ? '已完成' : Detail.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '未下发' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '已下发' : Detail.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ? '待确认' : 
+               Detail.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
 					  </span>
 					</Descriptions.Item>
 				</Descriptions>
 				<Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
 					<Descriptions.Item label="指令分类">
 					  <span>
-					    {Detail.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
+					    {Detail.classify === "INSTRUCTIONS_CASE" ? '事件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
 					     Detail.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :  Detail.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
 					  </span>
 					</Descriptions.Item>
           <Descriptions.Item label="指令来源">{Detail.source}</Descriptions.Item>
 					<Descriptions.Item label="指令发起人">
 					  <span>
-					    {Detail.initiator === 1 ? '王建国' :  ''}
+					    {Detail.initiator === "account-1" ? '王建国' :  ''}
 					  </span>
 					</Descriptions.Item>
 				</Descriptions>
@@ -116,7 +116,7 @@ function InstructDetail(props) {
 							{Detail.isNeedReceipt === "INSTRUCTIONS_NOT_NEED" ? '不需要回执' : Detail.isNeedReceipt === "INSTRUCTIONS_NEED" ? '需要回执' : ''}
 						</span>
 					</Descriptions.Item>
-          <Descriptions.Item label="回执内容">{Detail.receiptReply}</Descriptions.Item>
+          <Descriptions.Item label="回执内容">{Detail.receiptRequire}</Descriptions.Item>
         </Descriptions>
         <Col span={24} style={{ marginTop: "40px" }}>
           <Button type="primary" onClick={goBack} style={{ marginLeft: "48%" }}>

@@ -57,8 +57,10 @@ function InstructDetail(props) {
     show.push(
       <Timeline.Item color={ Detail[i].status === "INSTRUCTIONSTODO_NOT" ? "red" : Detail[i].status === "INSTRUCTIONSTODO_YES" ? "green" : 
         Detail[i].status === "INSTRUCTIONSTODO_ASK" ? "" :Detail[i].status === "INSTRUCTIONSTODO_REJECT" ? "red" :"" }>
-        <p>{ Detail[i].status === "INSTRUCTIONSTODO_NOT" ? "未完成" : Detail[i].status === "INSTRUCTIONSTODO_YES" ? "已完成" : 
-          Detail[i].status === "INSTRUCTIONSTODO_ASK" ? "警员请示" : Detail[i].status === "INSTRUCTIONSTODO_REJECT" ? "警员驳回" : "" }
+        <p>{Detail.status === "INSTRUCTIONSTODO_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONSTODO_SUBMIT" ? '已完成' : 
+          Detail.status === "INSTRUCTIONSTODO_YES" ? '进行中' : Detail.status === "INSTRUCTIONSTODO_ASK" ? '待批示' :
+          Detail.status === "INSTRUCTIONSTODO_REPLY" ? '已批示' : Detail.status === "INSTRUCTIONSTODO_REJECT" ? '待处理' :
+          Detail.status === "INSTRUCTIONSTODO_REJECT_OK" ? '同意驳回' : ''}
         </p>
         <p>{ "开始时间：" + dateFormat("YYYY-mm-dd", new Date(Detail[i].startTime)) }</p>
         <p>{ "指令要求：" + Detail[i].askFor }</p>

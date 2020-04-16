@@ -594,6 +594,6 @@ input[type=radio]{
     display: inline-block!important;
 		margin-right: 5px;
 }
-.layui-anim{
+.allhide .layui-icon{
 	display: none!important;
 }

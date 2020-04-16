@@ -7,14 +7,15 @@ import  'echarts/lib/chart/bar';
 // 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
-
+import  'echarts/theme/shine.js';
 class EchartsTest extends Component {
     componentDidMount() {
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main2'));
+		
+        var myChart = echarts.init(document.getElementById('main2'),'shine');
         // 绘制图表
         myChart.setOption({
-			color: ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622'],
+			color: ['#37a2da','#67e0e3', '#21c7b9', '#d48265', '#91c7ae','#749f83',  '#ca8622'],
             tooltip: {
 				trigger: 'axis',
 				axisPointer: {            // 坐标轴指示器，坐标轴触发有效

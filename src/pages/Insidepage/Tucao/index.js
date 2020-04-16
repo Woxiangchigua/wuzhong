@@ -26,8 +26,7 @@ function Lists(props) {
     <div style={{ backgroundColor: '#f0f2f5' }}>
       <Card title="" bordered={false} >
         <Breadcrumb style={{ margin: '0px 0px 0px 0px' }}>
-          <Breadcrumb.Item>公文管理</Breadcrumb.Item>
-          <Breadcrumb.Item>吐槽池</Breadcrumb.Item>
+          <Breadcrumb.Item>政务公告</Breadcrumb.Item>
         </Breadcrumb>
       </Card>
       {/* <Divider /> */}

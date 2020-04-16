@@ -40,12 +40,12 @@ const query = graphql`
           url
         }
         receiptReply
-        receiptReply
         require
         source
         sourceTime
         startDepartment
         startTime
+				receiptRequire
         status
       }
     }`
@@ -67,13 +67,17 @@ function AddMeeting(props) {
   const $ = window.$
   var stars = ''
   var  typelist = [
-    {value:'INSTRUCTIONS_CASE',name:'案件督导'},
-    {value:'INSTRUCTIONS_NOTICE',name:'会议通知'},
-    {value:'INSTRUCTIONS_OTHERS',name:'其他'},
     {value:'INSTRUCTIONS_INFORM',name:'通知通报'},
     {value:'INSTRUCTIONS_EMPHASIS',name:'重点人员下发'},
+    {value:'INSTRUCTIONS_CASE',name:'事件督导'},
+    {value:'INSTRUCTIONS_NOTICE',name:'会议通知'},
+    {value:'INSTRUCTIONS_OTHERS',name:'其他'},
   ]
-
+	var  sourcelist = [
+	  {name:'市局官网'},
+	  {name:'维稳平台'},
+	  {name:'省厅通知'},
+	]
   var annex= []
   const uploadlist = {
     name: 'file',
@@ -166,8 +170,8 @@ function AddMeeting(props) {
       //指令来源
      $("#dep").empty();
      $('#dep').append(`<option value=""></option>`)
-       for (let i = 0; i <deplist.length; i++) {
-         $('#dep').append(`<option value=${deplist[i].name}>${deplist[i].name}</option>`);
+       for (let i = 0; i <sourcelist.length; i++) {
+         $('#dep').append(`<option value=${sourcelist[i].name}>${sourcelist[i].name}</option>`);
        }
 //发起部门
  $("#startdep").empty();
@@ -267,11 +271,11 @@ function AddMeeting(props) {
       values.hostDepartment,
       1,
       values.require,
-			values.receiptRequire,
       0,
       values.name,
       values.startDepartment,
       startTime,
+			values.receiptRequire,
       (response, errors) => {
         if (errors) {
           console.log(errors)
@@ -325,11 +329,11 @@ function AddMeeting(props) {
 	    values.hostDepartment,
 	    1,
 	    values.require,
-			values.receiptRequire,
 	    0,
 	    values.name,
 	    values.startDepartment,
 	    startTime,
+			values.receiptRequire,
 	    (response, errors) => {
 	      if (errors) {
 	        console.log(errors)
@@ -451,7 +455,7 @@ function AddMeeting(props) {
 					<div className="layui-form-item">
 					  <div className="layui-inline">
 					    <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>是否回执</label>
-					    <div className="layui-input-block">
+					    <div className="layui-input-block allhide">
 					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NOT_NEED" id="noneed" title="不需要" defaultChecked/>
 					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" id="need" title="需要"/>
 					    </div>
