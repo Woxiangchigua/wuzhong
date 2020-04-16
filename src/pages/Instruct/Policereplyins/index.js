@@ -210,10 +210,10 @@ function AddMeeting(props) {
     <Descriptions size="small" column={4}>
       <Descriptions.Item label="指令状态">
         <span>
-          {Detail.status === "INSTRUCTIONSTODO_REJECT_NOT" ? '驳回无效' : Detail.status === "INSTRUCTIONSTODO_SUBMIT" ? '已完成' : 
+          {Detail.status === "INSTRUCTIONSTODO_REJECT_NOT" ? '进行中' : Detail.status === "INSTRUCTIONSTODO_SUBMIT" ? '已完成' : 
           Detail.status === "INSTRUCTIONSTODO_YES" ? '进行中' : Detail.status === "INSTRUCTIONSTODO_ASK" ? '待批示' :
           Detail.status === "INSTRUCTIONSTODO_REPLY" ? '已批示' : Detail.status === "INSTRUCTIONSTODO_REJECT" ? '待处理' :
-          Detail.status === "INSTRUCTIONSTODO_REJECT_OK" ? '同意驳回' : ''}
+          Detail.status === "INSTRUCTIONSTODO_REJECT_OK" ? '已终止' : ''}
         </span>
       </Descriptions.Item>
       <Descriptions.Item label="开始时间">{dateFormat("YYYY-mm-dd", new Date(Detail.startTime))}</Descriptions.Item>
@@ -247,7 +247,7 @@ function AddMeeting(props) {
                Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK" ? '已终止' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" ? '已批示' : 
                Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" ? '已完成' : Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ? '未下发' : 
                Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" ? '已下发' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" ? '待确认' : 
-               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '驳回无效' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
+               Detail.instructions.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" ? '进行中' : Detail.instructions.status === "INSTRUCTIONS_DEPARTMENT_ASK" ? '待批示' : ''}
               </span>
             </Descriptions.Item>
             <Descriptions.Item label="来源时间">{dateFormat("YYYY-mm-dd", new Date(Detail.instructions.sourceTime))}</Descriptions.Item>

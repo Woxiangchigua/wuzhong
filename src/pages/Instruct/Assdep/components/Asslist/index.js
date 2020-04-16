@@ -147,15 +147,15 @@ export default function Table(props) {
                   // return "<span class='layui-badge layui-bg-green'>待确认</span>"
                   return "待确认"
                 }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_REJECT_NOT'){
-                  // return "<span class='layui-badge layui-bg-green'>驳回无效</span>"
-                  return " 驳回无效"
+                  // return "<span class='layui-badge layui-bg-green'>进行中</span>"
+                  return " 进行中"
                 }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_ASK'){
                   // return "<span class='layui-badge layui-bg-green'>待批示</span>"
                   return "待批示"
                 }
               }
             }
-					  ,{field:'deadline', title: '来源时间', width: 150, align: "center", 
+					  ,{field:'deadline', title: '截至时间', width: 150, align: "center", sort: true,
               templet: function (d) {
                   return `<div>${dateFormat("YYYY-mm-dd", new Date(d.deadline))}</div>`
               }
@@ -170,7 +170,7 @@ export default function Table(props) {
     fetchQuery(props.environment, query,{
       first: 10,
       skip: 0,
-      order: '',
+      order: 'deadline asc',
       departmentName: '办公室',
       name:searchKey1,
       source:searchKey2,
@@ -212,17 +212,16 @@ export default function Table(props) {
       </div>
       <script type="text/html" id="bar">
         {`
-          {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" && d.status !== "INSTRUCTIONS_DEPARTMENT_ISSUE" ){ }}
+          {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="xia">下发</button>
           {{#  } }}
-          {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" && d.status !== "INSTRUCTIONS_SUBOFFICE_REJECT_NOT" && d.status !== "INSTRUCTIONS_SUBOFFICE_REJECT_OK"
-           && d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE"){ }}
+          {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="bo">驳回</button>
           {{#  } }}
-          {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" && d.status !== "INSTRUCTIONS_DEPARTMENT_ASK_REPLY" && d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" ){ }}
+          {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="qing">请示</button>
           {{#  } }}
-          {{#  if(d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" && d.status !== "INSTRUCTIONS_SUBOFFICE_REJECT_OK" && d.status !== "INSTRUCTIONS_SUBOFFICE_AFFIRM" ){ }}
+          {{#  if(d.status !== "INSTRUCTIONS_SUBOFFICE_ISSUE"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="shang">上报</button>
           {{#  } }}
           {{#  if(d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT"

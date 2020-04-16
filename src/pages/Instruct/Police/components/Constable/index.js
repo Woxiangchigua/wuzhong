@@ -133,8 +133,8 @@ export default function Table(props) {
             , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
                 templet: function (d) {
                   if (d.status === 'INSTRUCTIONSTODO_REJECT_NOT') {
-                    // return "<span class='layui-badge'>驳回无效</span>"
-                    return "驳回无效"
+                    // return "<span class='layui-badge'>进行中</span>"
+                    return "进行中"
                   }else if(d.status === 'INSTRUCTIONSTODO_SUBMIT') {
                     // return "<span class='layui-badge'>已完成</span>"
                     return "已完成"
@@ -151,14 +151,14 @@ export default function Table(props) {
                     // return "<span class='layui-badge layui-bg-green'>待处理</span>"
                     return "待处理"
                   }else if(d.status === 'INSTRUCTIONSTODO_REJECT_OK'){
-                    // return "<span class='layui-badge layui-bg-green'>同意驳回</span>"
-                    return "同意驳回"
+                    // return "<span class='layui-badge layui-bg-green'>已终止</span>"
+                    return "已终止"
                   }
                 }
               }
-            , {field:'deadline', title: '来源时间', width: 150, align: "center", 
+              ,{field:'deadline', title: '截至时间', width: 150, align: "center", sort: true,
                 templet: function (d) {
-                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.deadline))}</div>`
+                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.deadline))}</div>`
                 }
               }
             , { field: '', title: "操作", align: "center", width: 220, toolbar: "#bar" }
@@ -172,7 +172,7 @@ export default function Table(props) {
     fetchQuery(props.environment, query, {
         first: 10,
         skip: 0,
-        order: '',
+        order: 'deadline asc',
         disposePeople: '普通用户',
         name:searchKey1,
         source:searchKey2,
@@ -222,10 +222,10 @@ export default function Table(props) {
       </div>
       <script type="text/html" id="bar">
         {`
-          {{#  if(d.status === "INSTRUCTIONSTODO_SUBMIT" || d.status !== "INSTRUCTIONSTODO_REJECT_OK" && d.status !== "INSTRUCTIONSTODO_REJECT_NOT" ){ }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_YES"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="bo">驳回</button>
           {{#  } }}
-          {{#  if(d.status !== "INSTRUCTIONSTODO_REPLY" || d.status === "INSTRUCTIONSTODO_SUBMIT" ){ }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_YES"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="qing">请示</button>
           {{#  } }}
           {{#  if(d.status !== "INSTRUCTIONSTODO_SUBMIT" ){ }}
