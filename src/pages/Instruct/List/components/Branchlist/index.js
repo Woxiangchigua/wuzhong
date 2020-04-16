@@ -72,7 +72,7 @@ export default function Table(props) {
         }else if(obj.event==="bian"){
           history.push('/Instruct/Updateinstruct/' + JSON.stringify({id:data.id,review:data.review}))
        }else if(obj.event==="xia"){
-          issued(data.id)
+          history.push('/Instruct/Updateinstruct/' + JSON.stringify({id:data.id,review:data.review}))
         }else if(obj.event==="jin"){
           history.push('/Instruct/Timeline/' + JSON.stringify({id:data.id,review:data.review}))
         }else if(obj.event==="ping"){
@@ -227,7 +227,7 @@ export default function Table(props) {
             , { field: 'classify', title: '指令类型', width: 130,
                 templet: function (d) {
                   if (d.classify === 'INSTRUCTIONS_CASE') {
-                    return "案件督导"
+                    return "事件督导"
                   } else if(d.classify === 'INSTRUCTIONS_NOTICE') {
                     return "会议通知"
                   }else if(d.classify === 'INSTRUCTIONS_INFORM'){
@@ -349,7 +349,7 @@ export default function Table(props) {
   return (
     <>
       <div>
-        <div className={'divclear'}></div>
+        <div className={'divclear'}></div>
         {/* <div className="topBtn">
           <div>
             <button type="button" onClick={open} lay-event="delAll" className="layui-btn layui-btn-sm" style={{float:"left"}}>公文归档</button>

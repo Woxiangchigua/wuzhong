@@ -143,24 +143,24 @@ function AddMeeting(props) {
     },
   };
   useEffect(
-        () => {
+        () => {
       init(data)
-    /* global layer */
-          layui.use(['form', 'laydate'], function () {
-       //执行一个laydate实例
+    /* global layer */
+          layui.use(['form', 'laydate'], function () {
+       //执行一个laydate实例
             form.render();
           });
           //提交
-          form.on('submit(formDemo)', function(data){
+          form.on('submit(formDemo)', function(data){
             // console.log(dataBak)
-            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
+            // console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
+            // console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
             // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
             Submit(data.field)//提交
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
           });
-        }
-      )
+        }
+      )
     //提交
     function Submit(values) {
       Policereply.commit(
@@ -231,7 +231,7 @@ function AddMeeting(props) {
             <Descriptions.Item label="指令来源">{Detail.instructions.source}</Descriptions.Item>
             <Descriptions.Item label="指令分类">
               <span>
-                {Detail.instructions.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.instructions.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
+                {Detail.instructions.classify === "INSTRUCTIONS_CASE" ? '事件督导' : Detail.instructions.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
                 Detail.instructions.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.instructions.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :
                 Detail.instructions.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
               </span>
@@ -268,20 +268,20 @@ function AddMeeting(props) {
           </Descriptions>
         </Card>
         <Card title="回执信息">
-        <form className="layui-form"  action="">
+        <form className="layui-form"  action="">
           <div className="layui-form-item">
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>回执内容</label>
-              <div className="layui-input-block" style={{ width:'612px' }}>
-                <textarea name="receiptReply" placeholder="请输入回执内容" className="layui-textarea"></textarea>
+              <div className="layui-input-block" style={{ width:'612px' }}>
+                <textarea name="receiptReply" placeholder="请输入回执内容" className="layui-textarea"></textarea>
               </div>
             </div>
           </div>
           <div className="layui-form-item">
             <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}>附件上传</label>
-              <div className="layui-input-block" style={{ width:'612px' }}>
-                 <Upload {...uploadlist}>
+              <div className="layui-input-block" style={{ width:'612px' }}>
+                 <Upload {...uploadlist}>
                   <Button>点击上传</Button>
                 </Upload>
               </div>
@@ -290,10 +290,10 @@ function AddMeeting(props) {
           <div className="layui-form-item">
             <div className="layui-input-block">
               <button className="layui-btn" lay-submit="true" lay-filter="formDemo">提交</button>
-              <button className="layui-btn layui-btn-primary" onClick={goBack}>取消</button>
+              <button className="layui-btn layui-btn-primary" onClick={goBack}>取消</button>
             </div>
           </div>
-        </form>
+        </form>
         </Card>
       <script type="text/html" id="bar">
         <button type='button' lay-event="bao" className='layui-btn layui-btn-success layui-btn-xs'>

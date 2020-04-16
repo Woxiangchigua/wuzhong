@@ -114,7 +114,7 @@ export default function Table(props) {
                   return `<div>${d.instructions.name}</div>`
                 }
               }
-            , { field: 'source', title: '指令来源', width: 130,
+            , { field: 'source', title: '指令来源', width: 150,
                 templet: function (d) {
                   return `<div>${d.instructions.source}</div>`
                 }
@@ -126,7 +126,7 @@ export default function Table(props) {
                   }
                 }
               }
-            , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
+            , { field: 'status', title: '指令状态', align: "center", width: 150, sort: true,
                 templet: function (d) {
                   if (d.status === 'INSTRUCTIONSTODO_REJECT_NOT') {
                     // return "<span class='layui-badge'>进行中</span>"

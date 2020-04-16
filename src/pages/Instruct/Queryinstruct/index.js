@@ -41,12 +41,12 @@ const query = graphql`
         url
       }
       receiptReply
-      receiptReply
       require
       source
       sourceTime
       startDepartment
       startTime
+			receiptRequire
       status
     }
   }`
@@ -82,7 +82,7 @@ function InstructDetail(props) {
 				<Descriptions size="small" column={4} style={{ marginTop: "20px" }}>
 					<Descriptions.Item label="指令分类">
 					  <span>
-					    {Detail.classify === "INSTRUCTIONS_CASE" ? '案件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
+					    {Detail.classify === "INSTRUCTIONS_CASE" ? '事件督导' : Detail.classify === "INSTRUCTIONS_NOTICE" ? '会议通知' : 
 					     Detail.classify === "INSTRUCTIONS_OTHERS" ? '其他' : Detail.classify === "INSTRUCTIONS_INFORM" ? '通知通报' :  Detail.classify === "INSTRUCTIONS_EMPHASIS" ? '重点人员下发' : ''}
 					  </span>
 					</Descriptions.Item>
@@ -116,7 +116,7 @@ function InstructDetail(props) {
 							{Detail.isNeedReceipt === "INSTRUCTIONS_NOT_NEED" ? '不需要回执' : Detail.isNeedReceipt === "INSTRUCTIONS_NEED" ? '需要回执' : ''}
 						</span>
 					</Descriptions.Item>
-          <Descriptions.Item label="回执内容">{Detail.receiptReply}</Descriptions.Item>
+          <Descriptions.Item label="回执内容">{Detail.receiptRequire}</Descriptions.Item>
         </Descriptions>
         <Col span={24} style={{ marginTop: "40px" }}>
           <Button type="primary" onClick={goBack} style={{ marginLeft: "48%" }}>

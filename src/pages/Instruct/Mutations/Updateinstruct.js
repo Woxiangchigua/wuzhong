@@ -21,7 +21,7 @@ const mutation = graphql`
     $startTime: DateTime!
     $status: enumTypeInstructionsStatus!
     $isNeedReceipt: enumTypeInstructionsIsNeedReceipt!
-    $receiptRequire: String = ""
+    $receiptRequire: String!
     ) {
     updateInstructions(id: $id,classify: $classify,jointlyDepartment: $jointlyDepartment,sourceTime: $sourceTime,status: $status,deadline: $deadline,
         annex: $annex,isNeedReceipt: $isNeedReceipt,source: $source,hostDepartment: $hostDepartment,initiator: $initiator

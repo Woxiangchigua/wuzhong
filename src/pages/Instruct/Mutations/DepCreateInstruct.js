@@ -18,11 +18,12 @@ const mutation = graphql`
     $priority: Int!
     $name: String!
     $startDepartment: String!
-    $startTime: DateTime!
+    $startTime: DateTime!,
+		$receiptRequire: String = ""
 ) {
     depCreateInstructions(classify: $classify,disposePeople: $disposePeople,sourceTime: $sourceTime,deadline: $deadline,
     annex: $annex,isNeedReceipt: $isNeedReceipt,source: $source,hostDepartment: $hostDepartment,initiator: $initiator
-    require: $require,priority: $priority,name: $name,startDepartment: $startDepartment,startTime: $startTime) {
+    require: $require,priority: $priority,name: $name,startDepartment: $startDepartment,startTime: $startTime,receiptRequire: $receiptRequire) {
       id
     }
   }
@@ -44,6 +45,7 @@ function commit(
   name,
   startDepartment,
   startTime,
+	receiptRequire,
   onCompleted,
   error
 ) {
@@ -64,6 +66,7 @@ function commit(
         name: name,
         startDepartment: startDepartment,
         startTime: startTime,
+				receiptRequire: receiptRequire,
     },
     onCompleted: onCompleted,
     onError: error,
