@@ -15,8 +15,10 @@ query Branchlist_InstructListQuery(
   $order: String = ""
   $kind: enumTypeInstructionsKind
   $hostDepartment: String = ""
+  $name: String = ""
+  $source: String = ""
 ){
-  instructionsList(first:100000,skip:0,order:$order,hostDepartment:$hostDepartment,kind:$kind){
+  instructionsList(first:100000,skip:0,order:$order,hostDepartment:$hostDepartment,name:$name,source:$source,kind:$kind){
     totalCount
     edges{
       annex{
@@ -56,6 +58,7 @@ export default function Table(props) {
   var layui = window.layui
   var table = layui.table;
   var rate = layui.rate
+  var $ = window.$
   let searchKey = ""
   useEffect(
     () => {
@@ -84,6 +87,22 @@ export default function Table(props) {
           iscon(data.id)
         }
       })
+      //监听排序事件 
+      table.on('sort(test)', function(obj){ //注：sort 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        console.log(obj.field); //当前排序的字段名
+        console.log(obj.type); //当前排序类型：desc（降序）、asc（升序）、null（空对象，默认排序）
+        console.log(this); //当前排序的 th 对象
+
+        //尽管我们的 table 自带排序功能，但并没有请求服务端。
+        //有些时候，你可能需要根据当前排序的字段，重新向服务端发送请求，从而实现服务端排序，如：
+        table.reload('idTest', {
+          initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+          ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+            field: obj.field //排序字段
+            ,order: 'deadline asc,status desc', //排序方式
+          }
+        });
+      });
     }
   )
   
@@ -255,15 +274,15 @@ export default function Table(props) {
                   // return "<span class='layui-badge layui-bg-green'>待确认</span>"
                   return "待确认"
                 }else if(d.status === 'INSTRUCTIONS_SUBOFFICE_REJECT_NOT'){
-                  // return "<span class='layui-badge layui-bg-green'>驳回无效</span>"
-                  return " 驳回无效"
+                  // return "<span class='layui-badge layui-bg-green'>进行中</span>"
+                  return "进行中"
                 }else if(d.status === 'INSTRUCTIONS_DEPARTMENT_ASK'){
                   // return "<span class='layui-badge layui-bg-green'>待批示</span>"
                   return "待批示"
                 }
               }
             }
-					  ,{field:'deadline', title: '截至时间', width: 150, align: "center",
+					  ,{field:'deadline', title: '截至时间', width: 150, align: "center", sort: true,
               templet: function (d) {
                   return `<div>${dateFormat("YYYY-mm-dd", new Date(d.deadline))}</div>`
               }
@@ -273,7 +292,7 @@ export default function Table(props) {
                   return '<div id="star'+d.id+'"></div>'
                 } 
               }
-            , { field: '', title: "操作", align: "center", width: 220, toolbar: "#bar" }
+            , { field: '', title: "操作", align: "center", width: 300, toolbar: "#bar" }
         ]],
         done: function (res, curr, count) {
          var data = res.data;
@@ -303,13 +322,15 @@ export default function Table(props) {
     });
   }
 
-  function getList(searchKey) {
+  function getList(searchKey1,searchKey2) {
     // init()
     fetchQuery(props.environment, query,{
         first: 10,
         skip: 0,
-        order: '',
+        order: 'deadline asc',
         hostDepartment: '',
+        name:searchKey1,
+        source:searchKey2,
     }).then(data => {
       if (data) {
         if (data.instructionsList) {
@@ -321,7 +342,9 @@ export default function Table(props) {
   }
 
   function search() {
-    getList(searchKey)
+    const searchKey1 = "%" + $('#tablename').val() + "%";
+    const searchKey2 = "%" + $('#tablesource').val() + "%";;
+    getList(searchKey1,searchKey2)
   }
   return (
     <>
@@ -333,6 +356,15 @@ export default function Table(props) {
           </div>
         </div>
         <div style={{clear:"both"}}></div> */}
+        <div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablename" placeholder="请输入名称" />
+          </div>
+          <div className="layui-inline">
+            <input className="layui-input" id="tablesource" placeholder="请输入来源"/>
+          </div>
+          <button className="layui-btn" data-type="reload" onClick={search}>搜索</button>
+        </div>
         <table id="demo" lay-filter="test"></table>
       </div>
       <script type="text/html" id="bar">
@@ -355,7 +387,7 @@ export default function Table(props) {
         {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" || d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE"
         || d.status === "INSTRUCTIONS_DEPARTMENT_ASK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" 
         || d.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK"
-        || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM"){ }}
+        || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT"){ }}
           <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="jin">进程</button>
         {{#  } }}
         {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" ){ }}
@@ -364,7 +396,7 @@ export default function Table(props) {
         {{#  if(d.status === "INSTRUCTIONS_SUBOFFICE_NOT_ISSUE" || d.status === "INSTRUCTIONS_SUBOFFICE_ISSUE" || d.status === "INSTRUCTIONS_DEPARTMENT_ISSUE"
              || d.status === "INSTRUCTIONS_DEPARTMENT_ASK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" || d.status === "INSTRUCTIONS_SUBOFFICE_CHECK" 
              || d.status === "INSTRUCTIONS_DEPARTMENT_SUBMIT" || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_OK"
-             || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM"){ }}
+             || d.status === "INSTRUCTIONS_SUBOFFICE_AFFIRM" || d.status === "INSTRUCTIONS_SUBOFFICE_REJECT_NOT"){ }}
           <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="go">详情</button>
         {{#  } }}
         `}

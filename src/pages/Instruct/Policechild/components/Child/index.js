@@ -129,8 +129,8 @@ export default function Table(props) {
             , { field: 'status', title: '指令状态', align: "center", width: 200, sort: true,
                 templet: function (d) {
                   if (d.status === 'INSTRUCTIONSTODO_REJECT_NOT') {
-                    // return "<span class='layui-badge'>驳回无效</span>"
-                    return "驳回无效"
+                    // return "<span class='layui-badge'>进行中</span>"
+                    return "进行中"
                   }else if(d.status === 'INSTRUCTIONSTODO_SUBMIT') {
                     // return "<span class='layui-badge'>已完成</span>"
                     return "已完成"
@@ -147,14 +147,14 @@ export default function Table(props) {
                     // return "<span class='layui-badge layui-bg-green'>待处理</span>"
                     return "待处理"
                   }else if(d.status === 'INSTRUCTIONSTODO_REJECT_OK'){
-                    // return "<span class='layui-badge layui-bg-green'>同意驳回</span>"
-                    return "同意驳回"
+                    // return "<span class='layui-badge layui-bg-green'>已终止</span>"
+                    return "已终止"
                   }
                 }
               }
-            , {field:'sourceTime', title: '来源时间', width: 150,
+              ,{field:'deadline', title: '截至时间', width: 150, align: "center", sort: true,
                 templet: function (d) {
-                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.instructions.sourceTime))}</div>`
+                    return `<div>${dateFormat("YYYY-mm-dd", new Date(d.deadline))}</div>`
                 }
               }
               , { field: 'grade', title: '评分', width: 200,
@@ -196,7 +196,7 @@ export default function Table(props) {
     fetchQuery(props.environment, query, {
         first: 10,
         skip: 0,
-        order: '',
+        order: 'deadline asc',
         instructionsId: id,
     }).then(data => {
       if (data) {
@@ -225,10 +225,10 @@ export default function Table(props) {
       </div>
       <script type="text/html" id="bar">
         {`
-          {{#  if(d.status === "INSTRUCTIONSTODO_REJECT" && d.status !== "INSTRUCTIONSTODO_REJECT_NOT" && d.status !== "INSTRUCTIONSTODO_REJECT_OK" ){ }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_REJECT"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="shen">审批</button>
           {{#  } }}
-          {{#  if(d.status === "INSTRUCTIONSTODO_ASK" && d.status !== "INSTRUCTIONSTODO_REPLY" ){ }}
+          {{#  if(d.status === "INSTRUCTIONSTODO_ASK"){ }}
             <button class='layui-btn layui-btn-primary layui-btn-xs' lay-event="pi">批示</button>
           {{#  } }}
           {{#  if(d.status === "INSTRUCTIONSTODO_SUBMIT"){ }}
