@@ -40,7 +40,7 @@ class EchartsTest extends Component {
 			},
 			series: [
 				{
-					name: '访问来源',
+					name: '综合评价',
 					type: 'pie',
 					radius: '55%',
 					center: ['50%', '50%'],

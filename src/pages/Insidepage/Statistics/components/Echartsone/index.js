@@ -15,7 +15,7 @@ class EchartsTest extends Component {
         var myChart = echarts.init(document.getElementById('main2'),'shine');
         // 绘制图表
         myChart.setOption({
-			color: ['#37a2da','#67e0e3', '#21c7b9', '#d48265', '#91c7ae','#749f83',  '#ca8622'],
+			color: ['#0f8d80','#1dc9b7', '#21c7b9', '#d48265', '#91c7ae','#749f83',  '#ca8622'],
             tooltip: {
 				trigger: 'axis',
 				axisPointer: {            // 坐标轴指示器，坐标轴触发有效

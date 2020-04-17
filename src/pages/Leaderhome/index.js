@@ -176,7 +176,7 @@ export default class Leaderhome extends Component {
 					</div>
 				</div>
 			</Card>
-			<Card title="全局概览" bordered={false} className="head3-1 layui-col-md4" extra={<a href="#">...</a>} style={{ marginTop: 10 }}>
+			<Card title="全局概览" bordered={false} className="head3-1 layui-col-md4" extra={<a href="../../../Insidepage/Statistics">...</a>} style={{ marginTop: 10 }}>
 				<div className="layui-row">
 					<div className="layui-col-lg4 layui-col-md4 layui-col-sm4 num_list">
 						<h3 className="blue1">6,560</h3>
