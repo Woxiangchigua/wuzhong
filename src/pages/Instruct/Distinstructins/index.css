@@ -570,3 +570,20 @@ td .layui-form-select{
 .layui-table-body{
     overflow:visible;
 }
+.downpanel .layui-select-title span {
+  line-height: 38px;
+}
+
+/*继承父类颜色*/
+.downpanel dl dd:hover {
+  background-color: inherit;
+}
+.layui-form-checkbox span {
+  height: 30px;
+}
+.layui-field-title {
+  border-top: 1px solid white;
+}
+.layui-tree-entry {
+  height: 35px !important;
+}

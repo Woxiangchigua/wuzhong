@@ -66,6 +66,7 @@ function AddMeeting(props) {
   var layui = window.layui
   var table = window.layui.table;
   var laydate = layui.laydate;
+  var tree = layui.tree;
   var form = layui.form;
   const $ = window.$
   const environment = props.environment
@@ -74,14 +75,193 @@ function AddMeeting(props) {
 
   const data = [];
   var dataBak = [];
+  var newdep = []
+  var data1 = [{
+    title: '分局部门'
+    ,children: [{
+      title: '办公室'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '政治处'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '监察室'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '指挥中心'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '巡特警大队'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '交警大队'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    }]
+  },{
+    title: '下辖派出所'
+    ,children: [{
+      title: '东山所'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '郭巷所'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '临湖所'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '木渎所'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '横泾所'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },{
+      title: '甪直所'
+      ,children: [{
+        title: '管理人员'
+      },{
+        title: '申请人'
+      },{
+        title: '普通用户'
+      },{
+        title: '内勤'
+      }]
+    },]
+  }]
+  
   useEffect(
         () => {
       init(data)
     /* global layer */
-          layui.use(['form', 'laydate'], function () {
+          layui.use(['form', 'laydate', 'tree',], function () {
        //执行一个laydate实例
             laydate.render({
               elem: '#test1',
+            });
+            tree.render({
+              elem: '#treedep'
+              ,data: data1
+              ,showLine: false  //是否开启连接线
+              ,showCheckbox: true //是否开启复选框
+              ,oncheck: function(obj){
+                // console.log(obj.data); //得到当前点击的节点数据
+                // console.log(obj.checked); //得到当前节点的展开状态：open、close、normal
+                // console.log(obj.elem); //得到当前节点元素
+                newdep.push(obj.data.title)
+                if(obj.data.children && obj.checked == true){
+                  for (var i = 0; i < obj.data.children.length; i++) {
+                    newdep.push(obj.data.children[i].title)
+                  }
+                }
+                if(obj.data.children && obj.checked == false){
+                  newdep = []
+                }
+                for (var i = 0; i < newdep.length; i++) {
+                  for (var j = i + 1; j < newdep.length; j++) {
+                    if (newdep[i] == newdep[j]) {
+                      //第一个等同于第二个，splice方法删除第二个
+                      newdep.splice(j, 1);
+                      j--
+                    }
+                  }
+                }
+                if(obj.checked == false){
+                  for (var i = 0; i < newdep.length; i++) {
+                    if (newdep[i] == obj.data.title) {
+                      //第一个等同于第二个，splice方法删除第二个
+                      newdep.splice(i, 1);
+                      i--
+                    }
+                  }
+                }
+              }
             });
         //责任民警
         $("#police").empty();
@@ -115,7 +295,7 @@ function AddMeeting(props) {
         props.environment,
         values.require,
         id,
-        values.disposePeople,
+        newdep,
         "INSTRUCTIONSTODO_MAIN",
         (response, errors) => {
           if (errors) {
@@ -209,9 +389,13 @@ function AddMeeting(props) {
         <Card title="下发信息">
         <form className="layui-form"  action="">
           <div className="layui-form-item">
-            <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
+            {/* <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
               <div className="layui-input-block" id='police' style={{ width: 700 }}>
-            </div>
+            </div> */}
+              <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
+              <br/>
+              <br/>
+              <div id="treedep" className="demo-tree demo-tree-box"></div>
           </div>
           <div className="layui-form-item">
             <div className="layui-inline">

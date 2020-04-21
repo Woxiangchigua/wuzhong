@@ -360,7 +360,7 @@ export default function Table(props) {
           <div className="layui-inline">
             <input className="layui-input" id="tablename" placeholder="请输入名称" />
           </div>
-          <div className="layui-inline">
+          <div className="layui-inline" style={{marginLeft:"5px"}}>
             <input className="layui-input" id="tablesource" placeholder="请输入来源"/>
           </div>
           <button className="layui-btn" data-type="reload" onClick={search}>搜索</button>

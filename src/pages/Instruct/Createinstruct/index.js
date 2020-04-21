@@ -34,6 +34,7 @@ function AddMeeting(props) {
   var form = layui.form;
   var laydate = layui.laydate;
   var rate = layui.rate;
+  var tree = layui.tree;
   const environment = props.environment
   const deplist = props.orgList.edges
   const loading = false
@@ -46,6 +47,39 @@ function AddMeeting(props) {
     {value:'INSTRUCTIONS_NOTICE',name:'会议通知'},
     {value:'INSTRUCTIONS_OTHERS',name:'其他'},
   ]
+  var newdep = []
+  var data1 = [{
+    title: '分局部门'
+    ,children: [{
+      title: '办公室'
+    },{
+      title: '政治处'
+    },{
+      title: '监察室'
+    },{
+      title: '指挥中心'
+    },{
+      title: '巡特警大队'
+    },{
+      title: '交警大队'
+    }]
+  },{
+    title: '下辖派出所'
+    ,children: [{
+      title: '东山所'
+    },{
+      title: '郭巷所'
+    },{
+      title: '临湖所'
+    },{
+      title: '木渎所'
+    },{
+      title: '横泾所'
+    },{
+      title: '甪直所'
+    },]
+  }]
+  
 	var  sourcelist = [
 	  {name:'市局官网'},
 	  {name:'维稳平台'},
@@ -115,7 +149,7 @@ function AddMeeting(props) {
   useEffect(
     () => {
       /* global layer */
-      layui.use(['form', 'laydate'], function () {
+      layui.use(['form', 'laydate', 'tree',], function () {
          //执行一个laydate实例
         //来源时间
         laydate.render({
@@ -138,6 +172,44 @@ function AddMeeting(props) {
             // if(value > 4) alert( '么么哒' )
             stars = value
             console.log(stars)
+          }
+        });
+        tree.render({
+          elem: '#treedep'
+          ,data: data1
+          ,showLine: false  //是否开启连接线
+          ,showCheckbox: true //是否开启复选框
+          ,oncheck: function(obj){
+            // console.log(obj.data); //得到当前点击的节点数据
+            // console.log(obj.checked); //得到当前节点的展开状态：open、close、normal
+            // console.log(obj.elem); //得到当前节点元素
+            newdep.push(obj.data.title)
+            if(obj.data.children && obj.checked == true){
+              for (var i = 0; i < obj.data.children.length; i++) {
+                newdep.push(obj.data.children[i].title)
+              }
+            }
+            if(obj.data.children && obj.checked == false){
+              newdep = []
+            }
+            for (var i = 0; i < newdep.length; i++) {
+              for (var j = i + 1; j < newdep.length; j++) {
+                if (newdep[i] == newdep[j]) {
+                  //第一个等同于第二个，splice方法删除第二个
+                  newdep.splice(j, 1);
+                  j--
+                }
+              }
+            }
+            if(obj.checked == false){
+              for (var i = 0; i < newdep.length; i++) {
+                if (newdep[i] == obj.data.title) {
+                  //第一个等同于第二个，splice方法删除第二个
+                  newdep.splice(i, 1);
+                  i--
+                }
+              }
+            }
           }
         });
         //指令来源
@@ -226,7 +298,7 @@ function AddMeeting(props) {
     CreateInstruct.commit(
       props.environment,
       values.classify,
-      values.orgIds,
+      newdep,
       sourceTime,
       'INSTRUCTIONS_SUBOFFICE_NOT_ISSUE',  //指令状态，分局未下发
       deadline,
@@ -279,7 +351,7 @@ function AddMeeting(props) {
     CreateInstruct.commit(
       props.environment,
       values.classify,
-      values.orgIds,
+      newdep,
       sourceTime,
       'INSTRUCTIONS_SUBOFFICE_ISSUE',  //指令状态，分局下发
       deadline,
@@ -365,10 +437,14 @@ function AddMeeting(props) {
                 <select name="hostDepartment" id="hostdep" required lay-verify="required" lay-search="" placeholder="请选择主办部门"></select>
               </div>
             </div>
-            <div className="layui-inline">
+            {/* <div className="layui-inline">
               <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>协办部门</label>
               <div className="layui-input-block" id='org' style={{ width: 700 }}>
               </div>
+            </div> */}
+            <div className="layui-inline">
+              <label className="layui-form-label" style={{ width: 100 }}>协办部门</label>
+              <div id="treedep" className="demo-tree demo-tree-box"></div> 
             </div>
           </div>
 					<div className="layui-form-item">
@@ -423,7 +499,7 @@ function AddMeeting(props) {
 					      <input type="radio" name="isNeedReceipt" value="INSTRUCTIONS_NEED" id="need" title="需要"/>
 					    </div>
 							<div className="layui-input-block" style={{ width:'612px' }}>
-                <textarea name="receiptRequire"  placeholder="请输入回执内容" required lay-verify="required" className="layui-textarea hide"></textarea>
+                <textarea name="receiptRequire"  placeholder="请输入回执内容" className="layui-textarea hide"></textarea>
 							</div>
 					  </div>
 					</div>
