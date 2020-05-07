@@ -9,7 +9,6 @@ import UploadFile from '../Mutations/Upload';
 import './index.css';
 import {
   Breadcrumb,
-  Form,
   Input,
   Card,
   Col,
@@ -18,9 +17,11 @@ import {
   Badge,
   Select,
   Divider,
-  DatePicker,Upload,Icon,message,
+  DatePicker,Upload,message,
   Modal
 } from 'antd';
+import {Icon}  from '@ant-design/compatible';
+import { Form, Mention } from '@ant-design/compatible';
 const { Option } = Select;
 const query = graphql`
 query Depreplyins_ListQuery($id:ID!){

@@ -7,14 +7,14 @@ import {
     Breadcrumb, 
     Input, 
     Modal, 
-    Form, 
     Radio, 
     Select,
-    Icon,
     Dropdown,
     Menu,
     message
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
+import Icon  from '@ant-design/icons';
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 
 import DepartmentTree from '@/components/DepartmentTree'

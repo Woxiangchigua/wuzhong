@@ -8,14 +8,15 @@ import UploadFile from '../Mutations/Uploadbull';
 import './index.css';
 import {
   Breadcrumb,
-  Form,
   Input,
   Card,
   Col,
   Button,
-  Divider,Upload,Icon,message,
+  Divider,Upload,message,
   Modal
 } from 'antd';
+import {Icon}  from '@ant-design/compatible';
+import { Form, Mention } from '@ant-design/compatible';
 
 const query = graphql`
 query Createbulletin_OrgListListQuery{

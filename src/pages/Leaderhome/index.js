@@ -16,7 +16,7 @@ export default class Leaderhome extends Component {
 		<div style={{ backgroundColor: '#f0f2f5' }}>
 		  <Card bordered={false} >
 		    <Breadcrumb>
-		      <Breadcrumb.Item>警内公共门户</Breadcrumb.Item>
+		      <Breadcrumb.Item>领导公共门户</Breadcrumb.Item>
 		      <Breadcrumb.Item>门户阅览</Breadcrumb.Item>
 		    </Breadcrumb>
 		  </Card>

@@ -8,7 +8,6 @@ import dateFormat from '../../../ utils/dateFormat'
 import './index.css';
 import {
   Breadcrumb,
-  Form,
   Input,
   Card,
   Col,
@@ -16,10 +15,12 @@ import {
   Descriptions,
   Badge,
   Select,
-  Divider, Upload, Icon,
+  Divider, Upload,
   DatePicker,
   Modal
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
+import Icon  from '@ant-design/icons';
 const { Option } = Select;
 const query = graphql`
 query Returnreceipt_OrgListListQuery($id:ID!){

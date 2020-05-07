@@ -6,7 +6,8 @@ import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
 import Meeting from '../../../components/Meeting'
 // import $ from "jquery"
 import './index.css';
-import {Breadcrumb,Form,Card,} from 'antd';
+import {Breadcrumb,Card,} from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 
 import ModalAddAttendees from '@/components/ModalAddAttendees';
 

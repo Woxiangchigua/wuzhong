@@ -1,13 +1,13 @@
 import React , { useState }from 'react';
 import { 
   Modal,
-  Form,
   Input,
   Radio,
   Button,
   message,
   Select,
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 
 import DepartmentTreeSelect from '@/components/DepartmentTreeSelect'
 import JobSelect from '@/components/JobSelect'

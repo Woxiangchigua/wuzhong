@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Calendar from '../../../components/Calendar/index'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';
-import { Button, Breadcrumb, Card, Table, Divider,Icon } from 'antd';
+import { Button, Breadcrumb, Card, Table, Divider } from 'antd';
+import Icon  from '@ant-design/icons';
 import './index.css';
 import dateFormat from '../../../ utils/dateFormat'
 import { Link } from "react-router-dom";

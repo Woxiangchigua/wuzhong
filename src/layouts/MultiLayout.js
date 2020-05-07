@@ -49,7 +49,7 @@ function MultiLayout(props) {
                         </Switch>
 
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>copyright©2020 同蒙信息技术(苏州)有限公司</Footer>
+                    {/* <Footer style={{ textAlign: 'center' }}>copyright©2020 同蒙信息技术(苏州)有限公司</Footer> */}
                 </Layout>
             </Layout>
         </Layout>

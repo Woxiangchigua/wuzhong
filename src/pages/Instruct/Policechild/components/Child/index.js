@@ -6,7 +6,6 @@ import dateFormat from '../../../../../ utils/dateFormat'
 import './index.css';
 import {
   Breadcrumb,
-  Form,
   Input,
   Card,
   Col,
@@ -15,9 +14,11 @@ import {
   Badge,
   Select,
   Divider,
-  DatePicker,Upload,Icon,
+  DatePicker,Upload,
   Modal
 } from 'antd';
+import {Icon}  from '@ant-design/compatible';
+import { Form, Mention } from '@ant-design/compatible';
 const { Option } = Select;
 const query = graphql`
 query Child_ListQuery(

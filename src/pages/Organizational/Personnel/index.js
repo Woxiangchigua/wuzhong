@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Row, Col, Table, Button, Breadcrumb, Input, Modal, Form, Radio, Select, } from 'antd';
+import { Row, Col, Table, Button, Breadcrumb, Input, Modal, Radio, Select, } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 import DragTree from '../../../components/Tree/DragTree/index'
 // import './index.css'
 const { Search } = Input;

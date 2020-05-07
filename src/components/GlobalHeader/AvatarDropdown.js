@@ -1,5 +1,6 @@
 import React from 'react';
-import { Avatar, Icon, Menu, Spin } from 'antd';
+import { Avatar, Menu, Spin } from 'antd';
+import Icon  from '@ant-design/icons';
 import HeaderDropdown from '../HeaderDropdown';
 import useLocalStorage from 'react-use-localstorage';
 import {

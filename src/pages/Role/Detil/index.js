@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { QueryRenderer, graphql } from 'react-relay';
 import {
   Breadcrumb,
-  Form,
   Input,
   Button,
   Divider,
@@ -11,6 +10,7 @@ import {
   message,
   Tree
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 const { TreeNode } = Tree;
 // import UpdateAuthority from '../mutations/UpdateAuthority';
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { 
   Breadcrumb,
-  Form,
   Input,
   Button,
   Divider
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 
 
 function EditPwd(props) {

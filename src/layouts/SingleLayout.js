@@ -3,7 +3,8 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu } from 'antd';
+import Icon  from '@ant-design/icons';
 import logo from '../logo.svg';
 import ViewManager from '../components/ViewManager/index'
 
@@ -31,7 +32,7 @@ function SingleLayout() {
                 </Switch>
             </Content>
 
-            <Footer style={{ textAlign: 'center' }}>copyright©2020 同蒙信息技术(苏州)有限公司</Footer>
+            {/* <Footer style={{ textAlign: 'center' }}>copyright©2020 同蒙信息技术(苏州)有限公司</Footer> */}
         </Layout>
     );
 }

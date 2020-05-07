@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { QueryRenderer, graphql } from 'react-relay';
 import { 
   Breadcrumb,
-  Form,
   Input,
   Button,
   Divider,
@@ -10,6 +9,7 @@ import {
   Radio,
   message
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 
 import UpdateAccount from '../mutations/UpdateAccount';
 

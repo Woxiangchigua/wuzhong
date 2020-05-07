@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Tree, Menu, Dropdown, Icon } from 'antd';
+import { Tree, Menu, Dropdown } from 'antd';
+import Icon  from '@ant-design/icons';
 import './index.css'
 const menu = (
   <Menu>

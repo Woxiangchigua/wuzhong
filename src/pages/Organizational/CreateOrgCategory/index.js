@@ -1,11 +1,11 @@
 import React from 'react';
 import { 
   Modal,
-  Form,
   Input,
   Button,
   message
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 import CreateOrgCategoryMutation from '../mutations/CreateOrgCategory';
 
 const { TextArea } = Input;

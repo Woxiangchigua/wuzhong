@@ -45,7 +45,7 @@
                     if (data && data.data.createToken && data.data.createToken.code == 200) {
                         localStorage.setItem('token', data.data.createToken.token);
                         localStorage.setItem("loginurl",window.location)
-                        alert("登陆成功");
+                        // alert("登陆成功");
                         window.location = "/";
                     }
                 })
@@ -112,12 +112,13 @@
     </form> -->
 	
 	<div class='login'>
-				<div class='login_title'>
+        <!-- <div class='login_title'> -->
+             <div style="text-align: center;font-size: 50px;margin-top: 50px ">
 					<!--<span>苏州市公安局吴中分局</span>-->
 					<!-- <img src="img/tianqiong1.png" alt="天穹"/> -->
 					<span>吴中分局</span>
 				</div>
-				<p class="title_name">苏州市公安局吴中分局一体化平台系统</p>
+				<p class="title_name">苏州市公安局吴中分局指令平台系统</p>
 				<div class="login_type">
 					<a href="javascript:void(0);" id="type1">账号密码登录</a>
 					<a href="javascript:void(0);" id="type2">手机号登录</a>
@@ -178,10 +179,10 @@
 				</div>
 				<div class='success'>
 				</div>
-				<div class='disclaimer'>
+				<!-- <div class='disclaimer'>
 					<span>帮助</span><span>隐私</span><span>条款</span>
 					<p>Copyright ©2020 江苏同蒙科技出品</p>
-				</div>
+				</div> -->
 			</div>
 
 

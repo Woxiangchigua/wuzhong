@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Breadcrumb, Card } from 'antd';
 import Meeting from '../../components/Meeting'
 // import './index.css';
-import Tabletoday from '../Home/components/Tabletoday/index'
-import Tabletowait from "../Home/components/Tabletowait/index"
+import Tabletoday from '../Dashboard/components/Tabletoday/index'
+import Tabletowait from "../Dashboard/components/Tabletowait/index"
 
 const list = [
     { title: '会议1', message: '这是会议1' },

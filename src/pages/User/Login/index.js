@@ -6,13 +6,14 @@ import {
 
 import {
   Card,
-  Form,
-  Icon,
   Input,
   Button,
   Avatar,
   message
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
+import '@ant-design/compatible/assets/index.css';
+import Icon  from '@ant-design/icons';
 import Background from './background.svg';
 
 import environment from '../../../environment';
@@ -20,17 +21,22 @@ import CreateToken from '../mutations/CreateToken';
 import useLocalStorage from 'react-use-localstorage';
 import { setTimeout } from 'timers';
 import './login.css';
-import rylogo from '../../../img/rylogo.png';
+import rylogo from '../../../img/logo.png';
 
 function Login(props) {
   // window.location="/User/Login/"
-  if(localStorage.getItem("loginurl")){
-    window.location=localStorage.getItem("loginurl")
-  }
+  // if(localStorage.getItem("loginurl")){
+  //   window.location=localStorage.getItem("loginurl")
+  // }
   const [token, setToken] = useLocalStorage('token', '');
+  const [loginurl, setLoginurl] = useLocalStorage('loginurl', '');
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || { from: { pathname: "/" } };
+  if(loginurl){
+    window.location=loginurl
+    return 
+  }
   // console.log("from:",from, token);
   const qLoginType = props.id;
   //logintype:  costomer  hospital
@@ -74,7 +80,7 @@ function Login(props) {
 
   const { getFieldDecorator } = props.form;
   const loginTitle = '吴中分局';
-  const loginTitleDetil = '苏州公安局吴中分局一体化平台系统';
+  const loginTitleDetil = '苏州公安局吴中分局指令平台系统';
   return (
     <div style={{
       margin: "120px 90px 80px 80px",

@@ -8,7 +8,6 @@ import dateFormat from '../../../ utils/dateFormat'
 import './index.css';
 import {
   Breadcrumb,
-  Form,
   Input,
   Card,
   Col,
@@ -20,6 +19,7 @@ import {
   DatePicker,
   Modal
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 const { Option } = Select;
 const query = graphql`
 query Distinstructins_ListQuery($id:ID!){
@@ -70,8 +70,14 @@ function AddMeeting(props) {
   const $ = window.$
   const environment = props.environment
 
-  const policelist = props.accounts.edges
-
+  // const policelist = props.accounts.edges
+  var policelist=[
+    {username:'周警官'},
+    {username:'张警官'},
+    {username:'李警官'},
+    {username:'王警官'},
+    {username:'吴警官'},
+  ]
   const data = [];
   var dataBak = [];
   var newdep = []
@@ -294,7 +300,8 @@ function AddMeeting(props) {
         props.environment,
         values.require,
         id,
-        newdep,
+        // newdep,
+        values.disposePeople,
         "INSTRUCTIONSTODO_ASSIST",
         (response, errors) => {
           if (errors) {
@@ -378,14 +385,14 @@ function AddMeeting(props) {
         <Card title="下发信息">
         <form className="layui-form"  action="">
           <div className="layui-form-item">
-            {/* <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
-              <div className="layui-input-block" id='police' style={{ width: 700 }}>
-            </div> */}
-            
             <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
+              <div className="layui-input-block" id='police' style={{ width: 700 }}>
+            </div>
+            
+            {/* <label className="layui-form-label" style={{ width: 100 }}><span style={{ color: 'red', marginRight: 4 }}>*</span>责任民警</label>
               <br/>
               <br/>
-              <div id="treedep" className="demo-tree demo-tree-box"></div>
+              <div id="treedep" className="demo-tree demo-tree-box"></div> */}
           </div>
           <div className="layui-form-item">
             <div className="layui-inline">

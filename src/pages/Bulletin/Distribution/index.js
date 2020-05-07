@@ -8,7 +8,6 @@ import dateFormat from '../../../ utils/dateFormat'
 import './index.css';
 import {
   Breadcrumb,
-  Form,
   Input,
   Card,
   Col,
@@ -20,6 +19,7 @@ import {
   DatePicker,
   Modal
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 const { Option } = Select;
 const query = graphql`
 query Distribution_OrgListListQuery($id:ID!){

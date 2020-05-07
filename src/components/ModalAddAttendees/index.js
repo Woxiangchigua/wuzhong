@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
 	Modal,
-	Form,
 	Button,
 	Input,
 	Transfer,
 	Table
 }
 	from 'antd';
+	import { Form, Mention } from '@ant-design/compatible';
 import difference from 'lodash/difference';
 import DepartmentTreeSelect from '@/components/DepartmentTreeSelect'
 import { fetchQuery, QueryRenderer, graphql } from 'react-relay';

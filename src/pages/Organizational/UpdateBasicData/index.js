@@ -1,11 +1,11 @@
 import React from 'react';
 import { 
   Modal,
-  Form,
   Input,
   Button,
   message
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 import UpdateTitleMutation from '../mutations/UpdateTitle';
 import UpdateJobMutation from '../mutations/UpdateJob';
 import UpdateOfferCategoryMutation from '../mutations/UpdateOfferCategory';

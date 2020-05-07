@@ -8,13 +8,13 @@ import Meeting from '../../../components/MeetingUpdate'
 import './index.css';
 import {
   Breadcrumb,
-  Form,
 
   Card,
 
   Modal,
 
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 import moment from 'moment';
 import ModalAddAttendees from '@/components/ModalAddAttendees';
 

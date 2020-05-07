@@ -1,11 +1,11 @@
 import React from 'react';
 import { 
   Modal,
-  Form,
   Input,
   Button,
   message
 } from 'antd';
+import { Form, Mention } from '@ant-design/compatible';
 import CreateTitleMutation from '../mutations/CreateTitle';
 
 const { TextArea } = Input;
