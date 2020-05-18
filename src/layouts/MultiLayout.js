@@ -16,7 +16,7 @@ function MultiLayout(props) {
         <Layout style={{ minHeight: '100vh' }}>
             <Header className="header" >
                 <Avatar className="logo-icon" src={Logo} shape="square" />
-                <span style={{ color: "#fff", fontSize: "16px" }}>苏州吴中公安分局会议系统</span>
+                <span style={{ color: "#fff", fontSize: "16px" }}>吴中公安民警工作台</span>
 
                 <div className="right">
                     <GlobalHeader className="right" user={props.user} />
